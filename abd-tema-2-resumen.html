@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen Tema 2 - ABD</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --border: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --ok: #22c55e;
+    --ko: #ef4444;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    padding: 24px 16px 80px;
+  }
+  header {
+    max-width: 860px;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+  header h1 { font-size: 1.7rem; letter-spacing: 0.3px; }
+  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+  header a.back { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 0.85rem; text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; }
+  header a.back:hover { background: rgba(255,255,255,0.35); }
+  .toc {
+    max-width: 860px; margin: 0 auto 26px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    position: sticky; top: 10px; z-index: 10;
+    background: rgba(15,23,42,0.92);
+    backdrop-filter: blur(6px);
+    padding: 8px 0;
+  }
+  .toc a {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-decoration: none;
+    background: var(--card);
+  }
+  .toc a:hover { border-color: var(--accent); color: var(--accent); }
+  section.cat { max-width: 860px; margin: 0 auto 44px; }
+  .cat-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding: 10px 16px;
+    background: rgba(56,189,248,0.12);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    color: var(--accent);
+  }
+  .bloque {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .bloque h4 { color: var(--accent); font-size: 1rem; margin-bottom: 8px; }
+  .bloque p { margin: 6px 0; font-size: 0.95rem; }
+  .bloque ul, .bloque ol { margin: 6px 0 6px 20px; font-size: 0.95rem; }
+  .bloque li { margin: 4px 0; }
+  .bloque b { color: #fff; }
+  .key {
+    border-left: 4px solid var(--accent);
+    background: rgba(56,189,248,0.1);
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 0.9rem;
+  }
+  .key b { color: var(--accent); }
+  .warn {
+    border-left: 4px solid var(--ko);
+    background: rgba(239,68,68,0.1);
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 0.9rem;
+  }
+  .warn b { color: var(--ko); }
+  table.tbl { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.88rem; }
+  table.tbl th { background: #24344d; color: var(--accent); text-align: left; padding: 8px 10px; border: 1px solid var(--border); }
+  table.tbl td { padding: 8px 10px; border: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  table.tbl tr:nth-child(even) td { background: rgba(30,41,59,0.5); }
+  code { background: #0b1220; border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; font-size: 0.88em; color: #7dd3fc; }
+  pre { background: #0b1220; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; color: #7dd3fc; margin: 8px 0; }
+  footer { max-width: 860px; margin: 30px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Resumen Tema 2 - Introducción a Oracle</h1>
+  <p><a class="back" href="index.html">← Volver al índice</a></p>
+  <p>Oracle como plataforma: historia, ecosistema, herramientas, Piedra Rosetta y certificación.</p>
+</header>
+
+<nav class="toc" id="toc">
+  <a href="#sec0">2.1 Plataforma Empresarial</a>
+  <a href="#sec1">2.2 Ecosistema Oracle</a>
+  <a href="#sec2">2.3 Herramientas</a>
+  <a href="#sec3">2.4 Piedra Rosetta</a>
+  <a href="#sec4">2.5 Certificación</a>
+</nav>
+
+<section class="cat" id="sec0">
+  <div class="cat-title">Sección 2.1 - Oracle como Plataforma Empresarial</div>
+
+  <div class="bloque">
+    <h4>Oracle Corporation vs Oracle Database</h4>
+    <p><b>Oracle Corporation</b> es la empresa tecnológica global. <b>Oracle Database</b> es su producto emblemático: un SGBD relacional destinado a bases de datos de <b>misión crítica</b> (transaccional, multiusuario, seguro, escalable y fuertemente administrable).</p>
+  </div>
+
+  <div class="bloque">
+    <h4>Principales hitos históricos</h4>
+    <table class="tbl">
+      <tr><th>Versión</th><th>Año</th><th>Clave</th></tr>
+      <tr><td>V1 / V2</td><td>1977-79</td><td>V2 = primera BD relacional <b>comercial</b>; implementó SQL por primera vez, adelantándose a IBM.</td></tr>
+      <tr><td>V3</td><td>1983</td><td>Reescritura en <b>C</b> → portabilidad (mainframes, minis, PC) e introdujo la <b>atomicidad ACID</b>.</td></tr>
+      <tr><td>V4 / V5</td><td>1984-85</td><td>V4: consistencia de lectura. V5: pionera en <b>cliente-servidor</b> y consultas distribuidas.</td></tr>
+      <tr><td>V6</td><td>1988</td><td><b>Row-level locking</b> (bloqueo por fila) e introducción de PL/SQL.</td></tr>
+      <tr><td>Oracle 7</td><td>1992</td><td>"La BD programable": <b>procedimientos almacenados, triggers</b> e integridad referencial declarativa.</td></tr>
+      <tr><td>Oracle 8</td><td>1997</td><td>Objeto-relacional (VARRAY, NESTED TABLE, CREATE TYPE) y particionamiento.</td></tr>
+      <tr><td>8i</td><td>1999</td><td>"i" de Internet: <b>JVM nativa</b>, soporte Java, XML y HTTP.</td></tr>
+      <tr><td>9i</td><td>2001</td><td><b>RAC</b>: múltiples instancias accediendo a la misma BD (alta disponibilidad).</td></tr>
+      <tr><td>10g</td><td>2003</td><td>"g" de Grid: <b>ASM, Clusterware y Recycle Bin</b>.</td></tr>
+      <tr><td>11g</td><td>2007</td><td><b>Active Data Guard</b> (lee la standby), compresión y Database Vault.</td></tr>
+      <tr><td>12c</td><td>2013</td><td>"c" de Cloud: <b>arquitectura Multitenant (CDB/PDB)</b> e In-Memory.</td></tr>
+      <tr><td>18c / 19c</td><td>2018-19</td><td>18c: capacidades autónomas. 19c: versión <b>LTS</b> de la familia 12c (Automatic Indexing).</td></tr>
+      <tr><td>21c</td><td>2021</td><td>Innovation Release: tablas Blockchain, JSON nativo (OSON), ML (OML4SQL/Py/R).</td></tr>
+      <tr><td>23ai</td><td>2023-24</td><td><b>AI Vector Search</b>, <b>JSON Relational Duality</b> y True Cache.</td></tr>
+      <tr><td>26ai</td><td>2026</td><td><b>AI-Native</b>: ejecuta LLMs dentro de la BD, vectores, seguridad inteligente.</td></tr>
+    </table>
+  </div>
+
+  <div class="bloque">
+    <h4>Casos de uso 2026</h4>
+    <table class="tbl">
+      <tr><th>Caso</th><th>Problema / Ventaja Oracle</th></tr>
+      <tr><td><b>1. Core transaccional</b> (Neo-banco)</td><td><b>MVCC vía Undo Tablespace</b>: los lectores jamás bloquean a los escritores. <b>RAC</b> redirige la transacción si un servidor explota.</td></tr>
+      <tr><td><b>2. JSON Relational Duality</b> (SuperApp)</td><td>La app ve <b>JSON</b>, pero Oracle lo guarda en <b>tablas relacionales normalizadas</b>: cero duplicación y total ACID.</td></tr>
+      <tr><td><b>3. Seguridad</b> (Ministerio de Salud)</td><td><b>Database Vault</b>: el DBA gestiona el rendimiento pero no ve los datos. <b>Tablas Blockchain</b>: inmutables (append-only) frente a ransomware.</td></tr>
+      <tr><td><b>4. Analítica real-time</b> (Logística)</td><td><b>In-Memory Dual Format</b>: filas en disco (OLTP) + columnas en RAM (OLAP) sin mover el dato.</td></tr>
+      <tr><td><b>5. AI-Native 26ai</b> (Bufete)</td><td>Lleva <b>la IA hacia los datos</b> (vectores + LLM en el núcleo); los datos confidenciales nunca salen del perímetro.</td></tr>
+    </table>
+  </div>
+
+  <div class="bloque">
+    <h4>Ediciones: Oracle Free / Developer</h4>
+    <p>Para laboratorios, PoC y desarrollo. <b>Límites duros:</b> 2 GB RAM, 12 GB de datos de usuario, 2 hilos de CPU y máximo 3 PDBs.</p>
+    <p><b>Incluye:</b> motor relacional completo, JSON Relational Duality, Multitenant básico y AI Vector Search.</p>
+    <div class="warn"><b>No incluye:</b> Advanced Partitioning, In-Memory Column Store, Advanced Security (TDE), Database Vault, Diagnostic/Tuning Pack (AWR/ADDM), RAC/Data Guard, ni parches OPatch / soporte MOS.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>Ediciones: Standard Edition 2 (SE2)</h4>
+    <p>Pymes y entornos departamentales. <b>Capada por código:</b> máximo 2 sockets físicos y nunca más de 16 hilos de CPU.</p>
+    <p><b>Incluye:</b> motor corporativo, failover pasivo (SEHA), Multitenant limitado a 3 PDBs, Data Pump y RMAN.</p>
+    <div class="warn"><b>No incluye:</b> Advanced Partitioning, In-Memory, TDE, Database Vault, RAC/Data Guard. <b>Prohibido</b> usar Diagnostic Pack (AWR) y Tuning Pack.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>Ediciones: Enterprise Edition (EE)</h4>
+    <p>Core bancario, telecomunicaciones, gobiernos, data warehouses masivos, ERPs globales. <b>Sin restricciones técnicas</b>: el único límite es financiero (terabytes de RAM, cientos de procesadores con Exadata).</p>
+    <p>Opciones avanzadas (con <b>licencias extra</b>): RAC, Active Data Guard, Advanced Security (TDE/Redaction), Database Vault, Diagnostic & Tuning Pack, Advanced Partitioning.</p>
+    <div class="key">El DBA debe <b>verificar qué ha pagado la empresa</b> antes de activar cualquier paquete o parámetro.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>Trampas del licenciamiento</h4>
+    <ul>
+      <li><b>Soft Partitioning (VMware)</b>: Oracle no reconoce VMware como límite físico. Como la VM migra (vMotion), exige licenciar <b>todos los procesadores físicos de la granja</b> (~$100.000 → $3.000.000 en una auditoría).</li>
+      <li><b>Shadow features</b>: ejecutar una opción Enterprise no pagada (p.ej. AWR, índice bitmap) en SE2 deja una <b>marca indeleble</b> en el diccionario (dba_feature_usage_statistics).</li>
+      <li><b>Hardware desproporcionado</b>: muchos núcleos lentos (Core Factor) = licencias carísimas y rendimiento mediocre. Mejor <b>Scale-Up</b>: pocos núcleos a alta frecuencia (8×4.0 GHz &gt; 16×2.0 GHz).</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Protección FinOps</h4>
+    <pre>-- 1. Botón de pánico: apagar acceso a Management Packs no pagados
+ALTER SYSTEM SET control_management_pack_access = 'NONE' SCOPE=BOTH;
+
+-- 2. Vista chivata: detectar opciones usadas no pagadas
+SELECT name, currently_used, first_usage_date
+FROM dba_feature_usage_statistics
+WHERE currently_used = 'TRUE';</pre>
+    <ul>
+      <li><b>Hard Partitioning</b> legal: Oracle Linux KVM, OVM o LPARs de IBM (barrera de contención legal).</li>
+      <li><b>Desarrollo/testing</b>: contenedores Docker/Podman con Free/Developer.</li>
+      <li><b>Producción comercial</b>: evita Kubernetes para el motor → Bare Metal, VMs con KVM o PaaS/DBaaS (OCI Autonomous, RDS).</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>OCI vs otras nubes (AWS, Azure, GCP)</h4>
+    <ul>
+      <li><b>BYOL a AWS/Azure</b>: Oracle elimina el Core Factor 0,5 → necesitas el doble de licencias.</li>
+      <li><b>RAC</b>: solo funciona en OCI; Oracle lo <b>bloquea técnicamente</b> en AWS, Azure y GCP.</li>
+      <li><b>Exadata Cloud Service</b>: fusiona almacenamiento de red + BD a nivel hardware (analítica pesada en milisegundos).</li>
+      <li><b>License Included en OCI</b>: gasto operativo (OpEx) por horas; el riesgo de licencia lo asume el proveedor.</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>TNS, Listener y cadena de conexión</h4>
+    <p><b>Oracle Net Services</b>: capa de red propietaria (datos cifrados entre cliente y servidor). <b>TNS</b> = el "DNS interno" de Oracle: <code>tnsnames.ora</code> traduce un alias (ej. PROD_DB) en <b>Host (IP) + Puerto (1521) + Service Name</b>.</p>
+    <p><b>Listener (tnslsnr)</b>: demonio independiente que escucha en el 1521 como recepcionista: verifica el servicio, conecta el cliente con un server process y se desentiende.</p>
+    <div class="key"><b>Regla SRE</b>: si el Listener muere, las conexiones establecidas siguen funcionando; solo los <b>nuevos</b> usuarios no podrán entrar.</div>
+    <pre>sqlplus admin/miClave@192.168.1.50:1521/PDB_Ventas</pre>
+    <ol>
+      <li>Cliente empaqueta la solicitud (SQLcl / SQL*Plus).</li>
+      <li>El paquete viaja por TCP/IP hasta el host.</li>
+      <li>El Listener intercepta la petición en el puerto 1521.</li>
+      <li>Resolución lógica: verifica que la PDB existe y está abierta.</li>
+      <li>El SO crea un <b>Server Process</b> dedicado.</li>
+      <li><b>Handoff</b>: el Listener se desconecta de la conversación.</li>
+      <li>El Server Process se "sumerge" en el contexto de la PDB (solo ve esa oficina).</li>
+      <li><b>Autenticación</b> contra <code>SYS.USER$</code> de esa PDB (ORA-01017 si el hash no coincide).</li>
+    </ol>
+    <div class="warn">Un ataque de fuerza bruta <b>no ataca al Listener</b>: ataca a los <b>Server Processes</b>, que son quienes validan credenciales.</div>
+  </div>
+</section>
+
+<section class="cat" id="sec1">
+  <div class="cat-title">Sección 2.2 - Navegación por el Ecosistema Oracle</div>
+
+  <div class="bloque">
+    <h4>Plano físico vs plano lógico: Instance y Database</h4>
+    <table class="tbl">
+      <tr><th>Concepto</th><th>Dónde vive</th><th>Auditar</th><th>Qué observar</th></tr>
+      <tr><td><b>Instance</b></td><td>RAM (SGA/PGA + procesos). <b>Muere al apagar el servidor.</b></td><td><code>SELECT * FROM v$instance;</code></td><td>status OPEN/MOUNTED.</td></tr>
+      <tr><td><b>Database</b></td><td>Disco (datafiles, control files, redo logs). <b>Es eterna.</b></td><td><code>SELECT * FROM v$database;</code></td><td>log_mode (ARCHIVELOG).</td></tr>
+    </table>
+    <ul>
+      <li>Una instancia <b>NO</b> monta dos bases de datos a la vez.</li>
+      <li>Una base de datos <b>SÍ</b> puede ser montada por varias instancias: eso es <b>RAC</b>.</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Service, Session y Schema</h4>
+    <ul>
+      <li><b>Service</b>: abstracción de red que usa el Listener para saber a qué contenedor dirigirte. Auditoría: <code>v$services</code>.</li>
+      <li><b>Session</b>: interacción activa cliente-instancia; consume RAM. Auditoría: <code>v$session</code> (sid, serial#, username, status).</li>
+      <li><b>Schema</b>: <b>Schema = Usuario</b> (regla de oro). Es el contenedor lógico propietario de los objetos, NO es un disco. Auditoría: <code>dba_users</code>.</li>
+    </ul>
+    <div class="key"><b>Schema vs Tablespace</b>: el Schema define <b>quién es el dueño</b>; el Tablespace define <b>en qué disco se guarda</b>. Un usuario puede tener tablas en varios tablespaces; no se contienen mutuamente.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>Arquitectura Multitenant: CDB y PDB</h4>
+    <ul>
+      <li><b>CDB</b> (Container Database) = el edificio: infraestructura principal que gestiona memoria, instancia y procesos. Auditoría: <code>SELECT cdb FROM v$database;</code> (YES).</li>
+      <li><b>PDB</b> (Pluggable Database) = la oficina: base conectable, lógicamente aislada. Auditoría: <code>SHOW CON_NAME;</code> y <code>SELECT con_id, name, open_mode FROM v$pdbs;</code>.</li>
+    </ul>
+    <p>El diccionario se dividió: dentro de una PDB, <code>DBA_USERS</code> solo muestra esa oficina. Desde CDB$ROOT usa <b><code>CDB_USERS</code> siempre con <code>CON_ID</code></b>.</p>
+    <div class="warn"><b>Trampa clásica</b>: si omites CON_ID en CDB_USERS verás varios "ADMIN" sin saber a qué PDB pertenece cada uno.</div>
+    <p><b>Modelo de 2 niveles</b>: un CDB (padre) aloja PDBs (hijos). Un CDB no puede estar dentro de otro CDB y una PDB no puede contener PDBs.</p>
+  </div>
+
+  <div class="bloque">
+    <h4>Application Container (modelo de 3 niveles, 12c R2)</h4>
+    <div class="key">Resuelve el problema SaaS: parchear <b>una sola vez</b> el Application Root actualiza la estructura de todos los clientes.</div>
+    <ol>
+      <li><b>CDB</b> (contenedor raíz).</li>
+      <li><b>Application Root</b> (PDB especial contenedor: instala la estructura maestra, ej. tabla Facturas).</li>
+      <li><b>Application PDBs</b> (PDBs de clientes que heredan la estructura del Root).</li>
+    </ol>
+  </div>
+</section>
+
+<section class="cat" id="sec2">
+  <div class="cat-title">Sección 2.3 - Herramientas de Oracle</div>
+
+  <div class="bloque">
+    <h4>Tres familias de herramientas</h4>
+    <ul>
+      <li><b>CLI</b> (supervivencia y automatización): innegociables para CI/CD y recuperación.</li>
+      <li><b>IDE / GUI</b> (desarrollo y modelado): orientadas al desarrollador PL/SQL y analistas.</li>
+      <li><b>Observabilidad y gestión de flota</b>: monitoreo centralizado de cientos de BDs.</li>
+    </ul>
+    <div class="key">Máxima SRE: <b>"Las interfaces gráficas son para tiempos de paz; la línea de comandos para tiempos de guerra."</b> Con memoria agotada o red saturada, las GUIs no conectan; el CLI es el único salvavidas.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>CLI y herramientas de desarrollo</h4>
+    <ul>
+      <li><b>SQL*Plus</b>: CLI nativo clásico, integrado con el motor. Sin autocompletado ni colores, pero garantía absoluta.</li>
+      <li><b>Oracle SQL Developer</b>: IDE gráfico gratuito en Java. PL/SQL, depuración paso a paso, EXPLAIN PLAN, modelado ER e ingeniería inversa.</li>
+      <li><b>Database Actions</b> (antes SQL Developer Web): experiencia de cero instalación en navegador, basada en <b>ORDS</b>, integrada por defecto en OCI y Autonomous.</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Database Actions</h4>
+    <ul>
+      <li><b>Performance Hub</b>: métricas en tiempo real, historial ASH, SQL lentas, eventos de espera CPU/I/O.</li>
+      <li><b>AutoREST</b>: exponer tablas/vistas/procedimientos como endpoints REST (GET/POST/PUT/DELETE) con seguridad <b>OAuth 2.0</b>.</li>
+      <li><b>SODA / JSON Studio</b>: la BD relacional como almacén de documentos tipo MongoDB, con consultas <b>Query by Example (QBE)</b>.</li>
+      <li><b>Data Modeler + Data Studio</b>: ER y DDL; carga de CSV/Excel/JSON/Avro.</li>
+      <li><b>Wallets (mTLS)</b>: descarga de carteras de seguridad, requisito estricto para conectar a Autonomous.</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Oracle Enterprise Manager (OEM / Cloud Control)</h4>
+    <p>La <b>torre de control</b>: gestión <b>1 a N</b> (SQL Developer/DB Actions son <b>1 a 1</b>). Requiere arquitectura OMS + base de datos de repositorio + agentes.</p>
+    <p><b>Tareas que SOLO se hacen con OEM:</b></p>
+    <ul>
+      <li><b>Fleet Patching</b>: orquestar parches (RU/RUR) a cientos de servidores.</li>
+      <li><b>AWR/ADDM global</b>: comparar rendimiento de toda la flota (hoy vs. hace meses).</li>
+      <li><b>Capacity Planning</b>: proyectar tendencias de crecimiento.</li>
+      <li><b>Compliance Framework</b>: auditoría contra CIS, PCI DSS, STIG.</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Administración y soporte: OPatch y AWR</h4>
+    <ul>
+      <li><b>OPatch</b>: inyecta los <b>Release Updates (RUs)</b> en los binarios para cerrar vulnerabilidades (CVEs), con mínimo downtime (parcheo rodante en RAC).</li>
+      <li><b>AWR</b> (Automatic Workload Repository): la "caja negra" del motor; fotografías (snapshots) horarias del estado de memoria, CPU y eventos de espera.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cat" id="sec3">
+  <div class="cat-title">Sección 2.4 - Oracle como "Piedra de Rosetta"</div>
+
+  <div class="bloque">
+    <h4>80% commodity + 20% diferenciador</h4>
+    <div class="key">El <b>80%</b> del funcionamiento de una BD relacional es estándar universal (commodity); las empresas pagan Oracle por el <b>20%</b> diferenciador.</div>
+    <p><b>Conocimiento transferible</b> (a cualquier motor):</p>
+    <ul>
+      <li>Árboles B y la física de la búsqueda</li>
+      <li>Transacciones ACID</li>
+      <li>Optimizador basado en coste (CBO) y estadísticas</li>
+      <li>Separación lógico-física</li>
+      <li>Diccionario de datos</li>
+      <li>Niveles de aislamiento y bloqueos</li>
+    </ul>
+    <p><b>Diferenciadores absolutos de Oracle</b> (intentar replicarlos igual en otros motores es un error de diseño):</p>
+    <ul>
+      <li>Undo Tablespace + Flashback</li>
+      <li>Redo Logs físicos (base de RAC y Active Data Guard)</li>
+      <li>PL/SQL como motor de cómputo cercano al dato</li>
+      <li>Arquitectura Multitenant nativa (unplug/plug)</li>
+      <li>Consistencia de lectura a nivel de sentencia</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Equivalencias aproximadas entre motores</h4>
+    <table class="tbl">
+      <tr><th>Concepto (el "qué")</th><th>Oracle</th><th>PostgreSQL</th><th>SQL Server</th><th>MySQL (InnoDB)</th></tr>
+      <tr><td>Motor en ejecución</td><td>Instance</td><td>Cluster / Server Process</td><td>Instance</td><td>Proceso mysqld</td></tr>
+      <tr><td>Capa física (disco)</td><td>Database</td><td>PGDATA</td><td>.mdf/.ndf</td><td>datadir</td></tr>
+      <tr><td>Contenedor lógico</td><td>Schema (= Usuario)</td><td>Database → Schema</td><td>Database → Schema</td><td>Database (= Schema)</td></tr>
+      <tr><td>Propietario de objetos</td><td>User</td><td>Role/User</td><td>Login → DB User</td><td>User</td></tr>
+      <tr><td>Log transaccional</td><td>Redo Log</td><td>WAL</td><td>Transaction Log (.ldf)</td><td>Redo Log</td></tr>
+      <tr><td>MVCC (datos viejos)</td><td>Undo Tablespace</td><td>MVCC interno (en la tabla)</td><td>Version Store (TempDB)</td><td>Undo Tablespaces</td></tr>
+      <tr><td>Limpieza de "basura"</td><td>Automático (Undo)</td><td>Autovacuum</td><td>Automático</td><td>Purge threads</td></tr>
+      <tr><td>Lenguaje procedural</td><td>PL/SQL</td><td>PL/pgSQL</td><td>T-SQL</td><td>SQL/PSM</td></tr>
+    </table>
+  </div>
+
+  <div class="bloque">
+    <h4>Por qué las empresas pagan la licencia</h4>
+    <ul>
+      <li><b>Alta disponibilidad activo-activo real</b> (RAC)</li>
+      <li><b>Concurrencia sin "basura"</b> (Undo Tablespace)</li>
+      <li><b>La máquina del tiempo</b> (Flashback Database / Query)</li>
+      <li><b>BD convergente</b> (Duality Views + AI Vector)</li>
+      <li><b>Gobernanza paranoica</b> (Database Vault)</li>
+    </ul>
+    <div class="key">"Las empresas no compran Oracle por SELECTs más bonitos": compran los <b>diferenciadores</b> de misión crítica. No se debe elegir marca por tradición, sino por la topología de la carga y las exigencias del negocio.</div>
+  </div>
+</section>
+
+<section class="cat" id="sec4">
+  <div class="cat-title">Sección 2.5 - Ruta Formativa y Certificación 26ai</div>
+
+  <div class="bloque">
+    <h4>Portafolio SRE de élite</h4>
+    <ul>
+      <li><b>Runbooks</b>: scripts Bash/SQLcl para automatizar despliegues de PDBs.</li>
+      <li><b>Análisis forense</b>: casos documentados interpretando AWR reales.</li>
+      <li><b>Simulaciones de desastres</b>: recuperación con RMAN (bitácoras).</li>
+      <li><b>Casos de IA</b>: AI Vector Search combinando datos relacionales con LLMs.</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Mapa de certificación 23ai / 26ai</h4>
+    <table class="tbl">
+      <tr><th>Nivel</th><th>Certificación</th><th>Entidad</th><th>Precio neto alumno</th></tr>
+      <tr><td><b>1. Logro inmediato</b></td><td>Oracle Academy Certificate: Database Foundations</td><td>Oracle Academy</td><td>$0 (al aprobar la asignatura)</td></tr>
+      <tr><td><b>2. Nube e IA</b></td><td>Oracle AI Autonomous Database Professional</td><td>Oracle University</td><td>$0 (vía campañas Academy)</td></tr>
+      <tr><td><b>3. Filtro técnico</b></td><td>Oracle AI Database Administration <b>Associate</b></td><td>Pearson VUE / Oracle</td><td>$122.50 (~115 €)</td></tr>
+      <tr><td><b>4. Élite corporativa</b></td><td>Oracle AI Database Administration <b>Professional</b></td><td>Pearson VUE / Oracle</td><td>$122.50 (~115 €)</td></tr>
+    </table>
+  </div>
+
+  <div class="bloque">
+    <h4>Pilares estratégicos para llegar a SRE</h4>
+    <ol>
+      <li><b>Romper en local, certificar en global</b>: destruye tu BD a propósito en docker (Free) para aprender a repararla.</li>
+      <li><b>Construcción de evidencia técnica</b>: tu portafolio SRE (bitácoras, repos git, <b>Golden Image</b> desplegada en segundos).</li>
+      <li><b>Aprovechar el ecosistema</b>: Oracle Academy (Student Hub, vouchers) → Pearson VUE (validación externa) → Oracle University (insignia digital en LinkedIn).</li>
+      <li><b>Entrenar el triaje forense, no la memoria</b>: los exámenes presentan un servidor colapsado y exigen elegir la solución arquitectónicamente viable; estudia el diccionario (<code>DBA_</code>/<code>V$</code>) entendiendo el <i>porqué</i>.</li>
+      <li><b>Evolucionar hacia el valor del negocio</b>: datos seguros, protección anti-ransomware e inteligencia competitiva (AI Database).</li>
+    </ol>
+  </div>
+</section>
+
+<footer>Resumen basado en "ABD - Tema 2 - Introducción a Oracle y al Ecosistema Actual de Datos". Complementa el <a href="abd-tema-2.html" style="color:var(--accent)">Test del Tema 2</a>.</footer>
+
+</body>
+</html>

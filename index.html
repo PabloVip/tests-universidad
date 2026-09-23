@@ -70,23 +70,40 @@
   .subject.open .subject-body { display: block; }
   .subject-body .subtitle { color: var(--muted); font-size: 0.85rem; margin: 14px 0 10px; }
   .tema {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
     padding: 14px 16px;
     margin-bottom: 10px;
     background: #0f172a;
     border: 1px solid var(--border);
     border-radius: 10px;
-    text-decoration: none;
-    color: var(--text);
-    transition: border-color .15s, transform .1s;
+    transition: border-color .15s;
   }
-  .tema:hover { border-color: var(--accent); transform: translateX(3px); }
+  .tema:hover { border-color: var(--accent); }
+  .tema-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
   .tema .t-name { font-weight: 600; }
   .tema .t-meta { color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
-  .tema .go { color: var(--accent); font-weight: 700; font-size: 1.4rem; line-height: 1; }
+  .tema-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tema-links a {
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform .1s, border-color .15s;
+  }
+  .tema-links a:active { transform: scale(0.98); }
+  a.link-temario { background: rgba(56,189,248,0.12); color: var(--accent); border: 1px solid var(--accent); }
+  a.link-temario:hover { background: rgba(56,189,248,0.22); }
+  a.link-test { background: rgba(34,197,94,0.12); color: var(--ok); border: 1px solid var(--ok); }
+  a.link-test:hover { background: rgba(34,197,94,0.22); }
   footer { max-width: 860px; margin: 30px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
 </style>
 </head>
@@ -94,14 +111,14 @@
 
 <header>
   <h1>Mis Tests de Universidad</h1>
-  <p>Selecciona una asignatura y después el test de su temario. Corrección instantánea con explicación.</p>
+  <p>Selecciona una asignatura: estudia con el temario resumido y luego practica con el test.</p>
 </header>
 
-<div class="hint">Haz clic en una asignatura para ver sus tests.</div>
+<div class="hint">Haz clic en una asignatura para ver su temario (resumen) y sus tests.</div>
 
 <div id="list"></div>
 
-<footer>Tests basados en los apuntes de las asignaturas.</footer>
+<footer>Resúmenes y tests basados en los apuntes de las asignaturas.</footer>
 
 <script>
 const SUBJECTS = [
@@ -110,8 +127,8 @@ const SUBJECTS = [
     initial: "ABD",
     meta: "Bloque 1 - Fundamentos de sistemas de bases de datos y ecosistema Oracle",
     temas: [
-      { name: "Tema 1 - Fundamentos de Administración de Bases de Datos", meta: "66 preguntas · Secciones 1.1–1.6", href: "abd-tema-1.html" },
-      { name: "Tema 2 - Introducción a Oracle y al Ecosistema Actual de Datos", meta: "80 preguntas · Secciones 2.1–2.5", href: "abd-tema-2.html" }
+      { name: "Tema 1 - Fundamentos de Administración de Bases de Datos", meta: "66 preguntas · Secciones 1.1–1.6", resumen: "abd-tema-1-resumen.html", test: "abd-tema-1.html" },
+      { name: "Tema 2 - Introducción a Oracle y al Ecosistema Actual de Datos", meta: "80 preguntas · Secciones 2.1–2.5", resumen: "abd-tema-2-resumen.html", test: "abd-tema-2.html" }
     ]
   }
 ];
@@ -126,12 +143,14 @@ SUBJECTS.forEach((s, si) => {
   html += '<div class="chevron">\u25bc</div>';
   html += "</div>";
   html += '<div class="subject-body">';
-  html += '<div class="subtitle">Temario disponible (' + s.temas.length + ' tests):</div>';
+  html += '<div class="subtitle">Temario y tests disponibles (' + s.temas.length + '):</div>';
   s.temas.forEach(t => {
-    html += '<a class="tema" href="' + t.href + '">';
-    html += '<div><div class="t-name">' + t.name + '</div><div class="t-meta">' + t.meta + "</div></div>";
-    html += '<div class="go">\u2192</div>';
-    html += "</a>";
+    html += '<div class="tema">';
+    html += '<div class="tema-head"><div><div class="t-name">' + t.name + '</div><div class="t-meta">' + t.meta + "</div></div></div>";
+    html += '<div class="tema-links">';
+    html += '<a class="link-temario" href="' + t.resumen + '">Temario (resumen)</a>';
+    html += '<a class="link-test" href="' + t.test + '">Hacer el test</a>';
+    html += "</div></div>";
   });
   html += "</div></div>";
 });
