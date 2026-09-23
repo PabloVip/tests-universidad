@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tests de Universidad</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --border: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --ok: #22c55e;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 24px 16px 80px;
+  }
+  header {
+    max-width: 860px;
+    margin: 0 auto 28px;
+    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+    border-radius: var(--radius);
+    padding: 30px;
+    text-align: center;
+  }
+  header h1 { font-size: 1.8rem; letter-spacing: 0.3px; }
+  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+  .hint { max-width: 860px; margin: 0 auto 24px; text-align: center; color: var(--muted); font-size: 0.9rem; }
+  .subject {
+    max-width: 860px;
+    margin: 0 auto 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color .15s;
+  }
+  .subject.open { border-color: var(--accent); }
+  .subject-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 20px 22px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .subject-head:hover { background: #24344d; }
+  .subject .icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 700; color: #0f172a;
+    background: linear-gradient(135deg, #22d3ee, #3b82f6);
+  }
+  .subject .info { flex: 1; }
+  .subject .info .name { font-size: 1.15rem; font-weight: 700; }
+  .subject .info .meta { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+  .subject .chevron { color: var(--muted); transition: transform .2s; font-size: 1.1rem; }
+  .subject.open .chevron { transform: rotate(180deg); }
+  .subject-body { display: none; padding: 4px 22px 22px; }
+  .subject.open .subject-body { display: block; }
+  .subject-body .subtitle { color: var(--muted); font-size: 0.85rem; margin: 14px 0 10px; }
+  .tema {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: #0f172a;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color .15s, transform .1s;
+  }
+  .tema:hover { border-color: var(--accent); transform: translateX(3px); }
+  .tema .t-name { font-weight: 600; }
+  .tema .t-meta { color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+  .tema .go { color: var(--accent); font-weight: 700; font-size: 1.4rem; line-height: 1; }
+  footer { max-width: 860px; margin: 30px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mis Tests de Universidad</h1>
+  <p>Selecciona una asignatura y después el test de su temario. Corrección instantánea con explicación.</p>
+</header>
+
+<div class="hint">Haz clic en una asignatura para ver sus tests.</div>
+
+<div id="list"></div>
+
+<footer>Tests basados en los apuntes de las asignaturas. UCAM.</footer>
+
+<script>
+const SUBJECTS = [
+  {
+    name: "Administración de Bases de Datos (ABD)",
+    initial: "ABD",
+    meta: "Bloque 1 - Fundamentos de sistemas de bases de datos y ecosistema Oracle",
+    temas: [
+      { name: "Tema 1 - Fundamentos de Administración de Bases de Datos", meta: "66 preguntas · Secciones 1.1–1.6", href: "abd-tema-1.html" },
+      { name: "Tema 2 - Introducción a Oracle y al Ecosistema Actual de Datos", meta: "80 preguntas · Secciones 2.1–2.5", href: "abd-tema-2.html" }
+    ]
+  }
+];
+
+const list = document.getElementById("list");
+let html = "";
+SUBJECTS.forEach((s, si) => {
+  html += '<div class="subject" id="subj' + si + '">';
+  html += '<div class="subject-head" onclick="toggleSubject(' + si + ')">';
+  html += '<div class="icon">' + s.initial + "</div>";
+  html += '<div class="info"><div class="name">' + s.name + '</div><div class="meta">' + s.meta + "</div></div>";
+  html += '<div class="chevron">\u25bc</div>';
+  html += "</div>";
+  html += '<div class="subject-body">';
+  html += '<div class="subtitle">Temario disponible (' + s.temas.length + ' tests):</div>';
+  s.temas.forEach(t => {
+    html += '<a class="tema" href="' + t.href + '">';
+    html += '<div><div class="t-name">' + t.name + '</div><div class="t-meta">' + t.meta + "</div></div>";
+    html += '<div class="go">\u2192</div>';
+    html += "</a>";
+  });
+  html += "</div></div>";
+});
+list.innerHTML = html;
+
+function toggleSubject(si) {
+  document.getElementById("subj" + si).classList.toggle("open");
+}
+
+if (SUBJECTS.length === 1) toggleSubject(0);
+</script>
+</body>
+</html>
