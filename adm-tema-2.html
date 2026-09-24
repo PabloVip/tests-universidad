@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test ADM Tema 2 · Introducción a Kotlin</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
+</head>
+<body data-crumb="ADM · Tema 2 · Test">
+
+<main class="wrap">
+  <div class="page-head">
+    <span class="eyebrow">Aplicaciones para Dispositivos Móviles · Tema 2</span>
+    <h1>Test: Introducción a Kotlin</h1>
+    <p class="lead">35 preguntas sobre los apuntes: variables, tipos, colecciones, control de flujo, funciones y POO. Las opciones se barajan y tu progreso se guarda en este navegador.</p>
+    <div class="actions-row">
+      <a class="btn" href="adm-tema-2-resumen.html">Ver el resumen</a>
+      <a class="btn" href="adm-tema-2-ejercicios.html">Ejercicios resueltos</a>
+    </div>
+  </div>
+  <div id="app"></div>
+  <footer class="page-foot">Basado en los apuntes «Tema 2 – Introducción a Kotlin» (Aplicaciones para Dispositivos Móviles).</footer>
+</main>
+
+<script>
+/* La opción correcta es SIEMPRE la primera de cada lista; el motor las baraja al mostrarlas. */
+window.TEST = {
+  id: "adm-tema-2",
+  cats: [
+    "¿Qué es Kotlin?",
+    "Variables y tipos",
+    "Colecciones",
+    "Control de flujo",
+    "Funciones",
+    "Clases y POO"
+  ],
+  qs: [
+  {cat:0, t:"¿Quién creó Kotlin y en qué año?",
+   o:["JetBrains, en 2011","Google, en 2017","Oracle, en 2014","Apple, en 2011"],
+   e:"Kotlin lo creó JetBrains (2011). Google lo hizo oficial para Android en 2017."},
+  {cat:0, t:"¿Desde cuándo Kotlin es lenguaje oficial para Android?",
+   o:["Desde 2017","Desde 2011","Desde 2014","Desde 2020"],
+   e:"Google lo anunció como lenguaje oficial de Android en 2017."},
+  {cat:0, t:"¿A qué plataformas compila Kotlin?",
+   o:["JVM, JavaScript y nativo","Solo a la JVM de Java","Solo a Android (ART)","JVM y .NET (CLR)"],
+   e:"Además es la base de Kotlin Multiplatform."},
+  {cat:0, t:"Sobre la interoperabilidad con Java, Kotlin:",
+   o:["Es totalmente interoperable: puede usar librerías y código Java","Solo puede llamar a Java mediante un puente nativo","Necesita reescribir las librerías Java","No es compatible con Java"],
+   e:"Por eso se adoptó rápidamente en proyectos Android existentes."},
+  {cat:0, t:"La «null safety» de Kotlin sirve para:",
+   o:["Evitar errores por referencias nulas","Borrar automáticamente variables sin uso","Evitar fugas de memoria en Android","Proteger las contraseñas en memoria"],
+   e:"Es una de sus características clave según los apuntes."},
+
+  {cat:1, t:"Diferencia entre <code>var</code> y <code>val</code>:",
+   o:["<code>var</code> cambia; <code>val</code> es de solo lectura","<code>val</code> cambia; <code>var</code> es constante","<code>var</code> es para números; <code>val</code> para texto","No hay diferencia: son sinónimos"],
+   e:"<code>val</code> es como <code>final</code> en Java."},
+  {cat:1, t:"¿Qué pasa al ejecutar <code>numero = 11</code> si <code>numero</code> se declaró con <code>val</code>?",
+   o:["Error de compilación: «Val cannot be reassigned»","Se reasigna sin problema","Se lanza una excepción en tiempo de ejecución","Se crea una variable nueva con el mismo nombre"],
+   e:"Kotlin lo detecta al compilar."},
+  {cat:1, t:"¿Cómo se inserta el valor de una variable dentro de un String?",
+   o:["<code>$nombre</code>","<code>%nombre</code>","<code>{nombre}</code>","<code>#nombre</code>"],
+   e:"Interpolación: <code>\"El corredor $nombre\"</code>; para expresiones, <code>${expresión}</code>, p. ej. <code>${ciclista.key}</code>."},
+  {cat:1, t:"¿Cuál es el tipo de <code>69.5f</code>?",
+   o:["<code>Float</code>","<code>Double</code>","<code>Int</code>","<code>Long</code>"],
+   e:"La <code>f</code> indica Float; sin sufijo, un decimal es Double."},
+  {cat:1, t:"¿Qué tipos son enteros sin signo en Kotlin?",
+   o:["<code>UByte, UShort, UInt, ULong</code>","<code>Byte, Short, Int, Long</code>","<code>Float, Double</code>","<code>Char, String</code>"],
+   e:"Byte/Short/Int/Long son enteros con signo."},
+
+  {cat:2, t:"¿Qué función crea una lista de solo lectura?",
+   o:["<code>listOf()</code>","<code>mutableListOf()</code>","<code>arrayOf()</code>","<code>setOf()</code>"],
+   e:"<code>listOf()</code> → <code>List&lt;T&gt;</code> (lectura); <code>mutableListOf()</code> → <code>MutableList&lt;T&gt;</code>."},
+  {cat:2, t:"¿Qué imprime <code>println(setOf(\"A\", \"B\", \"A\").size)</code>?",
+   o:["2","3","1","Error de compilación"],
+   e:"Un Set solo guarda elementos únicos: el duplicado se descarta."},
+  {cat:2, t:"En un <code>Map</code>, las claves:",
+   o:["Son únicas y cada una tiene un valor","Pueden repetirse","Son siempre números enteros consecutivos","Se ordenan alfabéticamente siempre"],
+   e:"Map = pares clave-valor con claves únicas."},
+  {cat:2, t:"Con <code>val edades: Map&lt;String, Int&gt; = mapOf(\"Carlos\" to 22)</code>, ¿qué pasa con <code>edades[1]</code>?",
+   o:["No compila: la clave es String","Devuelve 22","Devuelve null","Lanza IndexOutOfBoundsException"],
+   e:"Los Map se consultan por clave: <code>edades[\"Carlos\"]</code>. El ejemplo de los apuntes con <code>[1]</code> es un error."},
+  {cat:2, t:"¿Se puede hacer <code>lista.add(\"x\")</code> si <code>lista</code> es <code>List&lt;String&gt;</code>?",
+   o:["No: <code>List</code> es de solo lectura y no tiene <code>add</code>","Sí, siempre","Solo si se declaró con <code>var</code>","Sí, pero lanza excepción al ejecutar"],
+   e:"Para añadir necesitas <code>MutableList</code>. Declararla con <code>var</code> solo permite reasignar la referencia."},
+  {cat:2, t:"Una <code>MutableList</code> declarada con <code>val</code>:",
+   o:["Se puede modificar su contenido, pero no reasignarla","No permite añadir ni quitar elementos","No compila: val no admite colecciones mutables","Se convierte automáticamente en List de lectura"],
+   e:"<code>val</code> fija la referencia, no el contenido. Por eso lo habitual es <code>val ciclistas = mutableListOf(...)</code>."},
+
+  {cat:3, t:"¿Qué valor toma <code>mensaje</code>? <code>val edad = 18; val mensaje = if (edad &gt;= 18) \"Adulto\" else \"Menor\"</code>",
+   o:["\"Adulto\"","\"Menor\"","true","No compila: if no devuelve valor"],
+   e:"En Kotlin <code>if</code> es una expresión y devuelve valor."},
+  {cat:3, t:"¿Qué estructura de Kotlin sustituye al <code>switch</code>?",
+   o:["<code>when</code>","<code>case</code>","<code>match</code>","<code>select</code>"],
+   e:"<code>when (dia) { 1 -&gt; ...; in 4..5 -&gt; ...; else -&gt; ... }</code>"},
+  {cat:3, t:"¿Qué números imprime <code>for (i in 1..5) println(i)</code>?",
+   o:["1, 2, 3, 4, 5","1, 2, 3, 4","0, 1, 2, 3, 4","2, 3, 4"],
+   e:"<code>..</code> incluye ambos extremos."},
+  {cat:3, t:"¿Qué imprime <code>for (i in 0 until 10 step 2) print(i)</code>?",
+   o:["02468","0246810","13579","0123456789"],
+   e:"<code>until</code> excluye el 10 y <code>step 2</code> salta de dos en dos."},
+  {cat:3, t:"¿Cómo se recorre de 10 a 1?",
+   o:["<code>for (i in 10 downTo 1)</code>","<code>for (i in 10..1)</code>","<code>for (i in 10 until 1)</code>","<code>for (i in reverse(1..10))</code>"],
+   e:"<code>10..1</code> es un rango vacío: no imprime nada."},
+  {cat:3, t:"En <code>for (ciclista in clasificacion)</code>, con <code>clasificacion</code> un Map, ¿cómo accedes a la clave y al valor?",
+   o:["<code>ciclista.key</code> y <code>ciclista.value</code>","<code>ciclista[0]</code> y <code>ciclista[1]</code>","<code>ciclista.first</code> y <code>ciclista.second</code>","<code>clasificacion.key</code> y <code>clasificacion.value</code>"],
+   e:"Cada elemento es un <code>Map.Entry</code>."},
+  {cat:3, t:"¿Qué función da índice y valor al recorrer una lista?",
+   o:["<code>forEachIndexed { index, valor -&gt; }</code>","<code>forEach { index, valor -&gt; }</code>","<code>mapIndexed</code> sin devolver nada","<code>withIndex { }</code>"],
+   e:"<code>forEach</code> solo da el elemento."},
+
+  {cat:4, t:"<code>fun asignarNumero(): Int = Random.nextInt(0, 190)</code> es una función:",
+   o:["De expresión única (cuerpo con <code>=</code>)","Declarada con la palabra clave <code>inline</code>","Lambda anónima","Sin valor de retorno (Unit)"],
+   e:"Los apuntes la llaman «in-line» por ir en una línea, pero en Kotlin <code>inline</code> es otra palabra clave (inserta el cuerpo en el sitio de la llamada). Esto es una single-expression function."},
+  {cat:4, t:"¿Qué valores puede devolver <code>Random.nextInt(0, 190)</code>?",
+   o:["De 0 a 189","De 0 a 190","De 1 a 190","De 1 a 189"],
+   e:"El límite superior es exclusivo. Para posiciones 1–190: <code>nextInt(1, 191)</code>."},
+  {cat:4, t:"Una función que no devuelve nada tiene tipo de retorno:",
+   o:["<code>Unit</code>","<code>Void</code>","<code>Nothing</code>","<code>Null</code>"],
+   e:"<code>Unit</code> equivale a <code>void</code> de C/Java y se puede omitir."},
+  {cat:4, t:"¿Qué imprime <code>val cuadrado = { x: Int -&gt; x * x }; println(cuadrado(4))</code>?",
+   o:["16","8","4","Error: una lambda no se puede guardar en una variable"],
+   e:"Una lambda es una función anónima que se usa como valor."},
+  {cat:4, t:"Dada <code>fun operar(a: Int, b: Int, op: (Int, Int) -&gt; Int) = op(a, b)</code>, ¿qué devuelve <code>operar(5, 3) { x, y -&gt; x - y }</code>?",
+   o:["2","8","-2","15"],
+   e:"La lambda se pasa como último argumento (trailing lambda): 5 − 3 = 2."},
+
+  {cat:5, t:"Por defecto, las clases de Kotlin son:",
+   o:["<code>final</code> (hace falta <code>open</code>)","Abiertas a herencia","Abstractas","Estáticas"],
+   e:"Y los métodos que se redefinen deben ser <code>open</code> y sobrescribirse con <code>override</code>."},
+  {cat:5, t:"¿Qué permite Kotlin en cuanto a herencia?",
+   o:["Heredar de una sola clase e implementar varias interfaces","Herencia múltiple de clases","Solo implementar interfaces, nunca heredar clases","Heredar de varias clases si son abstractas"],
+   e:"No hay herencia múltiple de clases."},
+  {cat:5, t:"¿Qué NO genera automáticamente una <code>data class</code>?",
+   o:["Un constructor vacío","<code>toString()</code>","<code>equals()</code> y <code>hashCode()</code>","<code>copy()</code> y <code>componentN()</code>"],
+   e:"Genera toString, equals/hashCode, copy y componentN (desestructuración)."},
+  {cat:5, t:"Con <code>data class C(val n: String, val e: Int)</code>, <code>val a = C(\"Dani\", 33)</code> y <code>val b = a.copy()</code>, ¿qué da <code>a == b</code>?",
+   o:["true","false","Error de compilación","Depende del hashCode de memoria"],
+   e:"En data class, equals compara por valor, no por referencia."},
+  {cat:5, t:"Sobre las clases abstractas:",
+   o:["No se instancian y sus hijos implementan los <code>abstract</code>","Se pueden instanciar si tienen constructor","Solo pueden contener métodos abstractos","Son exactamente lo mismo que las interfaces"],
+   e:"Sirven para que todas las subclases compartan los mismos métodos."},
+  {cat:5, t:"Una interfaz en Kotlin:",
+   o:["Un contrato de qué debe hacer una clase","Un tipo que solo puede contener constantes","Una clase que se instancia directamente","Una clase que no puede declarar propiedades"],
+   e:"Una interfaz dice qué debe hacer una clase sin imponer cómo. Puede tener propiedades abstractas y métodos con implementación por defecto: en los apuntes, <code>ParticiparCarrera</code> define <code>nombreCarrera</code>, <code>atacar()</code> con cuerpo y <code>sprintar()</code> abstracto."},
+  {cat:5, t:"Las coroutines de Kotlin sirven para:",
+   o:["Tareas asíncronas escritas como código secuencial","Heredar de varias clases a la vez sin conflictos","Compilar el código a binarios nativos","Gestionar automáticamente la null safety"],
+   e:"Forma simple y eficiente de manejar tareas asíncronas."}
+  ]
+};
+</script>
+<script src="assets/test.js"></script>
+</body>
+</html>

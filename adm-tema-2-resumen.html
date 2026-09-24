@@ -3,114 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resumen Tema 2 - Aplicaciones para Dispositivos Móviles</title>
-<style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --border: #334155;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --ok: #22c55e;
-    --ko: #ef4444;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.55;
-    padding: 24px 16px 80px;
-  }
-  header {
-    max-width: 860px;
-    margin: 0 auto 24px;
-    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
-    border-radius: var(--radius);
-    padding: 28px;
-    text-align: center;
-  }
-  header h1 { font-size: 1.7rem; letter-spacing: 0.3px; }
-  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
-  header a.back { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 0.85rem; text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; }
-  header a.back:hover { background: rgba(255,255,255,0.35); }
-  .toc {
-    max-width: 860px; margin: 0 auto 26px;
-    display: flex; flex-wrap: wrap; gap: 8px;
-    position: sticky; top: 10px; z-index: 10;
-    background: rgba(15,23,42,0.92);
-    backdrop-filter: blur(6px);
-    padding: 8px 0;
-  }
-  .toc a {
-    padding: 6px 12px;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    color: var(--muted);
-    font-size: 0.82rem;
-    text-decoration: none;
-    background: var(--card);
-  }
-  .toc a:hover { border-color: var(--accent); color: var(--accent); }
-  section.cat { max-width: 860px; margin: 0 auto 44px; }
-  .cat-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    padding: 10px 16px;
-    background: rgba(56,189,248,0.12);
-    border-left: 4px solid var(--accent);
-    border-radius: 6px;
-    color: var(--accent);
-  }
-  .bloque {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    margin-bottom: 14px;
-  }
-  .bloque h4 { color: var(--accent); font-size: 1rem; margin-bottom: 8px; }
-  .bloque p { margin: 6px 0; font-size: 0.95rem; }
-  .bloque ul, .bloque ol { margin: 6px 0 6px 20px; font-size: 0.95rem; }
-  .bloque li { margin: 4px 0; }
-  .bloque b { color: #fff; }
-  .key {
-    border-left: 4px solid var(--accent);
-    background: rgba(56,189,248,0.1);
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin: 10px 0;
-    font-size: 0.9rem;
-  }
-  .key b { color: var(--accent); }
-  .warn {
-    border-left: 4px solid var(--ko);
-    background: rgba(239,68,68,0.1);
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin: 10px 0;
-    font-size: 0.9rem;
-  }
-  .warn b { color: var(--ko); }
-  table.tbl { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.88rem; }
-  table.tbl th { background: #24344d; color: var(--accent); text-align: left; padding: 8px 10px; border: 1px solid var(--border); }
-  table.tbl td { padding: 8px 10px; border: 1px solid var(--border); color: var(--text); vertical-align: top; }
-  table.tbl tr:nth-child(even) td { background: rgba(30,41,59,0.5); }
-  code { background: #0b1220; border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; font-size: 0.88em; color: #7dd3fc; }
-  pre { background: #0b1220; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; color: #7dd3fc; margin: 8px 0; }
-  footer { max-width: 860px; margin: 30px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
-</style>
+<title>Resumen ADM Tema 2 · Introducción a Kotlin</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
 </head>
-<body>
+<body data-crumb="ADM · Tema 2 · Resumen">
 
-<header>
-  <h1>Resumen Tema 2 - Introducción a Kotlin</h1>
-  <p><a class="back" href="index.html">← Volver al índice</a></p>
-  <p>Aplicaciones para Dispositivos Móviles · ¿Qué es Kotlin? + Componentes.</p>
-</header>
+<main class="wrap">
+<div class="page-head">
+  <span class="eyebrow">Aplicaciones para Dispositivos Móviles · Tema 2</span>
+  <h1>Resumen: Introducción a Kotlin</h1>
+  <p class="lead">Qué es Kotlin y sus componentes: variables, tipos, colecciones, control de flujo, funciones, clases, data class, abstract, interfaces y coroutines.</p>
+  <div class="actions-row"><a class="btn primary" href="adm-tema-2.html">Hacer el test (35 preguntas)</a><a class="btn" href="adm-tema-2-ejercicios.html">Ejercicios resueltos</a><a class="btn" href="https://play.kotlinlang.org/" target="_blank" rel="noopener">Abrir Play Kotlin</a></div>
+</div>
 
 <nav class="toc" id="toc">
   <a href="#sec0">1. ¿Qué es Kotlin?</a>
@@ -125,7 +30,7 @@
 </nav>
 
 <section class="cat" id="sec0">
-  <div class="cat-title">1. ¿Qué es Kotlin?</div>
+  <h2 class="cat-title">1. ¿Qué es Kotlin?</h2>
   <div class="bloque">
     <h4>Características (según apuntes)</h4>
     <ul>
@@ -144,7 +49,7 @@
 </section>
 
 <section class="cat" id="sec1">
-  <div class="cat-title">2. Primer programa y entorno</div>
+  <h2 class="cat-title">2. Primer programa y entorno</h2>
   <div class="bloque">
     <h4>Hello World</h4>
     <p>Editor online: <code>https://play.kotlinlang.org/</code></p>
@@ -155,7 +60,7 @@
 </section>
 
 <section class="cat" id="sec2">
-  <div class="cat-title">3. Variables: var / val y tipos</div>
+  <h2 class="cat-title">3. Variables: var / val y tipos</h2>
   <div class="bloque">
     <h4>var vs val + interpolación $</h4>
     <ul>
@@ -179,7 +84,7 @@
 
   <div class="bloque">
     <h4>Tipos básicos</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Categoría</th><th>Tipos</th><th>Ejemplo</th></tr>
       <tr><td>Enteros</td><td><code>Byte, Short, Int, Long</code></td><td><code>var posicion: Int = 100</code></td></tr>
       <tr><td>Enteros sin signo</td><td><code>UByte, UShort, UInt, ULong</code></td><td><code>val x: UInt = 1u</code></td></tr>
@@ -187,27 +92,27 @@
       <tr><td>Booleanos</td><td><code>Boolean</code></td><td><code>val ok: Boolean = true</code></td></tr>
       <tr><td>Caracteres</td><td><code>Char</code></td><td><code>val c: Char = 'A'</code></td></tr>
       <tr><td>Cadenas</td><td><code>String</code></td><td><code>val nombre: String = "Primoz Roglic"</code></td></tr>
-    </table>
+    </table></div>
 <pre>val nombre: String = "Primoz Roglic"
 var posicion: Int = 100
 val numero: Int = 1
 val v_sprint: Float = 69.5f
 println("El corredor $nombre (numero: $numero) ocupa la posicion $posicion." +
-  "Tiene un valor de sprint de $v_sprint")</pre>
+  " Tiene un valor de sprint de $v_sprint") // ojo al espacio inicial</pre>
     <div class="key"><b>Truco:</b> <code>Float</code> lleva <b>f</b> al final (<code>69.5f</code>). Sin sufijo es <code>Double</code>.</div>
   </div>
 </section>
 
 <section class="cat" id="sec3">
-  <div class="cat-title">4. Colecciones: List, Set, Map</div>
+  <h2 class="cat-title">4. Colecciones: List, Set, Map</h2>
   <div class="bloque">
     <h4>Idea general</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Colección</th><th>Lectura</th><th>Mutable</th><th>Característica</th></tr>
       <tr><td><b>List</b> (ordenada)</td><td><code>List&lt;&gt; / listOf()</code></td><td><code>MutableList&lt;&gt; / mutableListOf()</code></td><td>Admite duplicados, ordenada</td></tr>
       <tr><td><b>Set</b> (desordenada)</td><td><code>Set&lt;&gt; / setOf()</code></td><td><code>MutableSet&lt;&gt; / mutableSetOf()</code></td><td>Solo elementos <b>únicos</b></td></tr>
       <tr><td><b>Map</b> (clave-valor)</td><td><code>Map&lt;&gt; / mapOf()</code></td><td><code>MutableMap&lt;&gt; / mutableMapOf()</code></td><td>Claves <b>únicas</b>, con valor</td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="bloque">
@@ -222,6 +127,7 @@ println("El corredor $nombre (numero: $numero) ocupa la posicion $posicion." +
     mutableListOf("Juan Ayuso", "Carlos Verona", "Wout van Aert")
   println(ciclistas)
 }</pre>
+    <div class="key"><b>val o var con colecciones:</b> los apuntes usan <code>var ciclistas: MutableList</code>. Lo habitual es <code>val</code>: la lista sigue siendo modificable (<code>add</code>, <code>remove</code>); <code>val</code> solo impide reasignar la variable a otra lista.</div>
   </div>
 
   <div class="bloque">
@@ -255,12 +161,12 @@ println("El corredor $nombre (numero: $numero) ocupa la posicion $posicion." +
           "Enric Mas" to 28)
   println(ciclistasEdadMap)
 }</pre>
-    <div class="warn"><b>Ojo apuntes:</b> el ejemplo accede con índice <code>[1]</code> a un Map de claves String, eso no devuelve la edad esperada. La forma correcta es por clave: <code>ciclistasEdadMap["Carlos Rodriguez"]</code> o <code>${ciclistasEdadMap["Carlos Rodriguez"]}</code>.</div>
+    <div class="warn"><b>Ojo, error en los apuntes:</b> el ejemplo hace <code>ciclistasEdadMap[1]</code>. En un <code>Map&lt;String, Int&gt;</code> eso <b>no compila</b> (la clave debe ser <code>String</code>, no <code>Int</code>). Los Map se consultan por clave: <code>ciclistasEdadMap["Carlos Rodriguez"]</code> (dentro de un String, <code>${ciclistasEdadMap["Carlos Rodriguez"]}</code>). Si la clave no existe, devuelve <code>null</code>.</div>
   </div>
 </section>
 
 <section class="cat" id="sec4">
-  <div class="cat-title">5. Flujos de control</div>
+  <h2 class="cat-title">5. Flujos de control</h2>
 
   <div class="bloque">
     <h4>if / else (también como expresión)</h4>
@@ -322,7 +228,7 @@ numeros.forEachIndexed { index, valor -&gt;
 </section>
 
 <section class="cat" id="sec5">
-  <div class="cat-title">6. Funciones</div>
+  <h2 class="cat-title">6. Funciones</h2>
   <div class="bloque">
     <h4>Sintaxis base</h4>
 <pre>fun nombreDeFuncion(parametros): TipoDeRetorno {
@@ -339,14 +245,14 @@ fun correrCarrera(): Int {
 }</pre>
   </div>
   <div class="bloque">
-    <h4>Inline, Unit y lambda</h4>
+    <h4>Funciones de una línea, Unit y lambda</h4>
     <ul>
-      <li><b>Inline / expresión única:</b> si solo hay una instrucción se acorta con <code>=</code>.</li>
+      <li><b>Función de una sola expresión</b> (los apuntes la llaman «in-line»): si el cuerpo es una única expresión se escribe con <code>=</code>. No confundir con la palabra clave <code>inline</code> de Kotlin, que es otra cosa.</li>
       <li><b>Unit:</b> sin retorno, como <code>void</code> en C/Java.</li>
       <li><b>Lambda:</b> función anónima <code>{ parametros -&gt; cuerpo }</code>, usable como valor o argumento.</li>
     </ul>
-<pre>// Inline
-fun asignarNumero(): Int = Random.nextInt(0, 190)
+<pre>// Expresión única ("in-line" en los apuntes)
+fun asignarNumero(): Int = Random.nextInt(0, 190) // devuelve 0..189
 
 // Unit (sin retorno)
 fun saludar(nombre: String): Unit {
@@ -361,12 +267,14 @@ println(cuadrado(4)) // 16
 fun operar(a: Int, b: Int, operacion: (Int, Int) -&gt; Int): Int {
   return operacion(a, b)
 }
-val suma = operar(5, 3, { x, y -&gt; x + y })</pre>
+val suma = operar(5, 3, { x, y -&gt; x + y })
+val suma2 = operar(5, 3) { x, y -&gt; x + y } // trailing lambda (idiomático)</pre>
+    <div class="key"><b>Random:</b> <code>Random.nextInt(0, 190)</code> incluye el 0 y excluye el 190. <b>Lambda al final:</b> si es el último parámetro puede ir fuera de los paréntesis.</div>
   </div>
 </section>
 
 <section class="cat" id="sec6">
-  <div class="cat-title">7. Clases y herencia</div>
+  <h2 class="cat-title">7. Clases y herencia</h2>
   <div class="bloque">
     <h4>Clase básica (parecida a Java)</h4>
 <pre>class Persona(val nombre: String, var edad: Int) {
@@ -400,11 +308,12 @@ fun main() {
   ciclista.saludar()
   persona.saludar()
 }</pre>
+    <div class="key"><b>Ojo al heredar:</b> si la clase hija recibe <code>nombre</code> y <code>edad</code> para pasarlos al padre, decláralos <b>sin</b> <code>val</code>; si pones <code>val nombre</code> en la hija, choca con la propiedad del padre y no compila.</div>
   </div>
 </section>
 
 <section class="cat" id="sec7">
-  <div class="cat-title">8. data class, abstract e interface</div>
+  <h2 class="cat-title">8. data class, abstract e interface</h2>
   <div class="bloque">
     <h4>data class</h4>
     <p>Clase para <b>almacenar datos</b> sin código repetitivo. Genera <code>toString()</code>, <code>equals()/hashCode()</code>, <code>copy()</code> y <code>componentN()</code> para desestructuración.</p>
@@ -453,7 +362,7 @@ fun main() {
   </div>
   <div class="bloque">
     <h4>Interfaces</h4>
-    <p>Un <b>contrato</b>: dice <b>qué</b> debe hacer una clase, sin imponer el <b>cómo</b>. Define métodos y propiedades a implementar.</p>
+    <p>Un <b>contrato</b>: dice <b>qué</b> debe hacer una clase, sin imponer el <b>cómo</b>. Define métodos y propiedades a implementar; un método puede traer implementación por defecto (<code>atacar()</code>).</p>
 <pre>interface ParticiparCarrera {
   val nombreCarrera: String
   fun atacar() {
@@ -462,9 +371,10 @@ fun main() {
   fun sprintar()
 }
 
+// Persona debe ser open (ver apartado 7)
 class CiclistaComp(
-  val nombre: String, val apellido: String,
-  val edad: Int, val equipo: String, val sprint: Int
+  nombre: String, val apellido: String,
+  edad: Int, val equipo: String, val sprint: Int
 ) : Persona(nombre, edad), ParticiparCarrera {
   override val nombreCarrera: String = "Tour de Francia"
   override fun sprintar() {
@@ -475,7 +385,7 @@ class CiclistaComp(
 </section>
 
 <section class="cat" id="sec8">
-  <div class="cat-title">9. Coroutines + ejercicios y referencias</div>
+  <h2 class="cat-title">9. Coroutines + ejercicios y referencias</h2>
   <div class="bloque">
     <h4>Coroutines (idea)</h4>
     <ul>
@@ -501,7 +411,11 @@ class CiclistaComp(
   </div>
 </section>
 
-<footer>Resumen basado en "Tema 2 - Introducción a Kotlin". El test se añadirá próximamente. Complementa con <a href="https://play.kotlinlang.org/" style="color:var(--accent)">Play Kotlin</a>.</footer>
+<footer class="page-foot">
+  <div class="next"><a class="btn primary" href="adm-tema-2.html">Hacer el test (35 preguntas)</a><a class="btn" href="adm-tema-2-ejercicios.html">Ejercicios resueltos</a><a class="btn" href="https://play.kotlinlang.org/" target="_blank" rel="noopener">Abrir Play Kotlin</a><a class="btn" href="index.html">Volver al inicio</a></div>
+  Resumen basado en «Tema 2 – Introducción a Kotlin» (Aplicaciones para Dispositivos Móviles).
+</footer>
+</main>
 
 </body>
 </html>

@@ -3,485 +3,242 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Tema 1 - ABD</title>
-<style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --border: #334155;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --ok: #22c55e;
-    --ko: #ef4444;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    padding: 24px 16px 80px;
-  }
-  header {
-    max-width: 860px;
-    margin: 0 auto 24px;
-    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
-    border-radius: var(--radius);
-    padding: 28px;
-    text-align: center;
-  }
-  header h1 { font-size: 1.7rem; letter-spacing: 0.3px; }
-  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
-  header a.back { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 0.85rem; text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; }
-  header a.back:hover { background: rgba(255,255,255,0.35); }
-  .progress-bar {
-    max-width: 860px;
-    margin: 0 auto 24px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    position: sticky;
-    top: 12px;
-    z-index: 10;
-    backdrop-filter: blur(6px);
-  }
-  .progress-bar .stats { font-size: 0.9rem; color: var(--muted); white-space: nowrap; }
-  .progress-bar .stats b { color: var(--text); }
-  .bar-track { flex: 1; height: 10px; background: var(--border); border-radius: 8px; overflow: hidden; }
-  .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22d3ee, #3b82f6); transition: width .3s; }
-  section.cat { max-width: 860px; margin: 0 auto 32px; }
-  .cat-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    padding: 10px 16px;
-    background: rgba(56,189,248,0.12);
-    border-left: 4px solid var(--accent);
-    border-radius: 6px;
-    color: var(--accent);
-  }
-  .q {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    margin-bottom: 16px;
-  }
-  .q .num { color: var(--muted); font-size: 0.85rem; font-weight: 600; }
-  .q .text { margin: 6px 0 14px; font-weight: 500; }
-  .opts { display: grid; gap: 8px; }
-  label.opt {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background .15s, border-color .15s;
-    font-size: 0.95rem;
-  }
-  label.opt:hover { background: #24344d; }
-  label.opt.locked { cursor: default; }
-  label.opt.locked:hover { background: transparent; }
-  input[type="radio"] { margin-top: 3px; accent-color: var(--accent); flex-shrink: 0; }
-  .q.correct { border-color: var(--ok); }
-  .q.correct .num::after { content: "  ✔ Correcto"; color: var(--ok); font-weight: 600; }
-  .q.wrong { border-color: var(--ko); }
-  .q.wrong .num::after { content: "  ✘ Incorrecto"; color: var(--ko); font-weight: 600; }
-  label.opt.selected-ok { background: rgba(34,197,94,0.15); border-color: var(--ok); }
-  label.opt.selected-ko { background: rgba(239,68,68,0.15); border-color: var(--ko); }
-  label.opt.show-ok { border-color: var(--ok); }
-  label.opt.show-ok .letter { color: var(--ok); font-weight: 700; }
-  .explain {
-    margin-top: 12px;
-    padding: 12px 14px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    display: none;
-    border: 1px solid;
-  }
-  .explain.show { display: block; }
-  .explain.correct { background: rgba(34,197,94,0.1); border-color: var(--ok); }
-  .explain.wrong { background: rgba(239,68,68,0.12); border-color: var(--ko); }
-  .explain .head { font-weight: 700; margin-bottom: 4px; }
-  .explain.correct .head { color: var(--ok); }
-  .explain.wrong .head { color: var(--ko); }
-  .actions {
-    max-width: 860px;
-    margin: 8px auto 40px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  button {
-    border: none;
-    border-radius: 10px;
-    padding: 14px 26px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform .1s, opacity .15s;
-  }
-  button:active { transform: scale(0.98); }
-  #btnReiniciar { background: var(--card); color: var(--text); border: 1px solid var(--border); }
-  #resultado {
-    max-width: 860px;
-    margin: 0 auto 30px;
-    padding: 24px;
-    border-radius: var(--radius);
-    text-align: center;
-    display: none;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-  #resultado.bien { background: rgba(34,197,94,0.15); border: 1px solid var(--ok); }
-  #resultado.aceptable { background: rgba(250,204,21,0.12); border: 1px solid #eab308; }
-  #resultado.mal { background: rgba(239,68,68,0.15); border: 1px solid var(--ko); }
-  #resultado .sub { font-size: 0.95rem; font-weight: 400; color: var(--muted); margin-top: 6px; }
-  footer { max-width: 860px; margin: 0 auto; text-align: center; color: var(--muted); font-size: 0.8rem; }
-</style>
+<title>Test ABD Tema 1 · Fundamentos de Administración de BD</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
 </head>
-<body>
+<body data-crumb="ABD · Tema 1 · Test">
 
-<header>
-  <h1>Test Tema 1 - Administración de Bases de Datos</h1>
-  <p><a class="back" href="index.html">← Volver al índice</a></p>
-  <p>66 preguntas tipo test. Elige una opción y la pregunta se corrige al instante, con explicación incluida.</p>
-</header>
-
-<div class="progress-bar">
-  <div class="stats"><b id="answered">0</b>/66 respondidas</div>
-  <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
-  <div class="stats">Aciertos <b id="correct">0</b></div>
-</div>
-
-<div id="container"></div>
-
-<div class="actions">
-  <button id="btnReiniciar">Reiniciar test</button>
-</div>
-
-<div id="resultado"></div>
-
-<footer>Basado en "ABD - Tema 1 - Fundamentos de Administración de Bases de Datos".</footer>
+<main class="wrap">
+  <div class="page-head">
+    <span class="eyebrow">Administración de Bases de Datos · Tema 1</span>
+    <h1>Test: Fundamentos de Administración de BD</h1>
+    <p class="lead">66 preguntas. Cada pregunta se corrige al responder y muestra la explicación. Las opciones se barajan y tu progreso se guarda en este navegador.</p>
+    <div class="actions-row"><a class="btn" href="abd-tema-1-resumen.html">Ver el resumen del tema</a></div>
+  </div>
+  <div id="app"></div>
+  <footer class="page-foot">Basado en los apuntes «ABD – Tema 1 – Fundamentos de Administración de Bases de Datos».</footer>
+</main>
 
 <script>
-const CATS = [
-  ["Sección 1.1 - Sistemas de Información"],
-  ["Sección 1.2 - Pensamiento de Sistemas"],
-  ["Sección 1.3 - Bases de Datos y SGBD"],
-  ["Sección 1.4 - Evolución del Rol del DBA"],
-  ["Sección 1.5 - Panorama de Tecnologías de BD"],
-  ["Sección 1.6 - Ingeniería Profesional"]
-];
-
-const QS = [
+/* La opción correcta es SIEMPRE la primera de cada lista; el motor las baraja al mostrarlas. */
+window.TEST = {
+  id: "abd-tema-1",
+  cats: [
+    "1.1 Sistemas de Información",
+    "1.2 Pensamiento de sistemas",
+    "1.3 Bases de datos y SGBD",
+    "1.4 Evolución del rol del DBA",
+    "1.5 Panorama de tecnologías de BD",
+    "1.6 Ingeniería profesional"
+  ],
+  qs: [
   {cat:0, t:"Un Sistema de Información (SI) es:",
-   o:["La base de datos y sus archivos físicos en disco","La convergencia orquestada de procesos, normativas, tecnologías, actores y datos","Solo el software que guarda los datos","El conjunto de servidores donde corre la BD"], c:1,
-   e:"Un SI es la convergencia orquestada de procesos, normativas, tecnologías, actores y datos. La base de datos es solo uno de sus componentes tecnológicos, no el sistema completo."},
+   o:["La convergencia orquestada de procesos, normativas, tecnologías, actores y datos","La base de datos corporativa junto con sus ficheros físicos y copias de seguridad","El conjunto de aplicaciones y servidores que almacenan los datos de la empresa","El software de gestión (ERP/CRM) que usan los empleados a diario"],
+   e:"Un SI es la convergencia orquestada de procesos, normativas, tecnologías, actores y datos. La base de datos es solo uno de sus componentes tecnológicos."},
   {cat:0, t:"La base de datos dentro del SI se considera:",
-   o:["Un repositorio pasivo y opcional","La memoria institucional de la organización","Una copia de seguridad de los archivos de la empresa","Un mero motor de consultas"], c:1,
-   e:"La BD no es solo tecnología aislada: es la memoria institucional, el soporte crítico de los procesos organizacionales."},
+   o:["La memoria institucional de la organización","Un componente auxiliar que se puede sustituir por ficheros compartidos","Una copia de seguridad de los documentos de la empresa","Un motor de consultas sin responsabilidad sobre los procesos"],
+   e:"La BD no es tecnología aislada: es la memoria institucional y el soporte crítico de los procesos organizacionales."},
   {cat:0, t:"Las reglas de negocio simples se incrustan en el SGBD mediante:",
-   o:["Triggers y procedimientos","Código en la aplicación","Constraints (PK, FK, UNIQUE, CHECK, NOT NULL)","Vistas materializadas"], c:2,
-   e:"Las reglas simples se mapean de forma declarativa con constraints. Los triggers y procedimientos quedan para reglas complejas o dinámicas (lógica paso a paso)."},
+   o:["Constraints declarativas (PK, FK, CHECK…)","Triggers y procedimientos almacenados","Validaciones en el código de la aplicación","Vistas materializadas con filtros de negocio"],
+   e:"Las reglas simples se mapean de forma declarativa con constraints. Triggers y procedimientos quedan para reglas complejas o dinámicas (lógica paso a paso)."},
   {cat:0, t:"¿Por qué no es buena idea delegar las validaciones solo a la aplicación?",
-   o:["Porque las apps son efímeras y propensas a fallos","Porque la aplicación no tiene acceso a la BD","Porque la aplicación siempre es más lenta que el SGBD","Porque es obligatorio por normativa"], c:0,
-   e:"Las aplicaciones son efímeras y propensas a fallos; las constraints son el escudo de gobierno corporativo que defiende la integridad de los datos."},
-  {cat:0, t:"¿Qué utilidad tienen las constraints para el optimizador basado en costo (CBO)?",
-   o:["Ninguna, son solo de seguridad","Aceleran las consultas porque sirven de insumo al CBO","Bloquean el plan de ejecución","Reemplazan a los índices"], c:1,
-   e:"Las constraints son el insumo principal del CBO: el diseño es rendimiento, le permiten acelerar y optimizar consultas."},
-  {cat:0, t:"Ordena el flujo del dato: el valor surge al gestionar este flujo.",
-   o:["Dato → Conocimiento → Información → Decisión → Control","Información → Dato → Decisión → Conocimiento → Control","Dato → Información → Conocimiento → Decisión → Control","Decisión → Control → Dato → Información → Conocimiento"], c:2,
-   e:"El flujo correcto es Dato → Información → Conocimiento → Decisión → Control. El dato en contexto es información; el patrón reconocido es conocimiento."},
-  {cat:0, t:"\"Si la temperatura supera 30 °C las ventas de café helado suben un 60%\" es un ejemplo de:",
-   o:["Información","Conocimiento","Dato","Control"], c:1,
+   o:["Las aplicaciones cambian y fallan; la constraint protege siempre","La aplicación no puede leer los metadatos del SGBD","Validar en la aplicación siempre es más lento que en el SGBD","La normativa obliga a validar exclusivamente en la BD"],
+   e:"Las aplicaciones cambian y fallan; las constraints son el escudo de gobierno corporativo que defiende la integridad sea cual sea la aplicación que escriba."},
+  {cat:0, t:"¿Qué utilidad tienen las constraints para el optimizador basado en costes (CBO)?",
+   o:["Le dan información para elegir mejores planes y acelerar consultas","Ninguna: solo sirven para la integridad de los datos","Le obligan a usar siempre el mismo plan de ejecución","Sustituyen a los índices, que dejan de ser necesarios"],
+   e:"Las constraints son insumo del CBO: «el diseño es rendimiento». Le permiten descartar caminos y optimizar consultas."},
+  {cat:0, t:"Ordena el flujo del dato (el valor surge al gestionar este flujo):",
+   o:["Dato → Información → Conocimiento → Decisión → Control","Dato → Conocimiento → Información → Decisión → Control","Información → Dato → Decisión → Conocimiento → Control","Dato → Información → Decisión → Conocimiento → Control"],
+   e:"Dato → Información → Conocimiento → Decisión → Control. El dato en contexto es información; el patrón reconocido es conocimiento."},
+  {cat:0, t:"«Si la temperatura supera 30 °C, las ventas de café helado suben un 60 %» es un ejemplo de:",
+   o:["Conocimiento","Información","Dato","Decisión"],
    e:"Es conocimiento: a partir de múltiples informaciones se reconoce un patrón o regularidad útil."},
   {cat:0, t:"¿De qué depende enteramente la confiabilidad del Business Intelligence?",
-   o:["De la herramienta de visualización usada","Del motor transaccional que gestiona el DBA","Del departamento de marketing","Del volumen de datos"], c:1,
-   e:"La confiabilidad del BI depende enteramente del motor transaccional que gestiona el DBA: si el dato está contaminado, toda la cadena lo está."},
-  {cat:0, t:"El DBA está en el epicentro entre varios actores. ¿Cuál prioriza la estabilidad del hardware y el ahorro de recursos?",
-   o:["Desarrollador","Usuario","SysAdmin","Analista"], c:2,
-   e:"El SysAdmin prioriza la estabilidad del hardware y el ahorro de recursos. El desarrollador prioriza agilidad; el usuario exige disponibilidad y respuesta instantánea."},
-  {cat:0, t:"Los fallos suelen producirse por todo lo siguiente EXCEPTO:",
-   o:["Concesión de privilegios excesivos","No registrar cambios","Operar en entornos equivocados","Documentar demasiado los procedimientos"], c:3,
-   e:"Documentar los procedimientos es una buena práctica. Los fallos típicos son privilegios excesivos, cambios no registrados, entornos equivocados, datos inconsistentes y no seguir procedimientos."},
+   o:["De la calidad del dato en el motor transaccional que gestiona el DBA","De la herramienta de visualización que se use","De la frecuencia con la que se refrescan los informes","Del volumen de datos históricos disponibles"],
+   e:"Si el dato de origen está contaminado, toda la cadena (información, conocimiento, decisiones) lo está."},
+  {cat:0, t:"El DBA está en el epicentro de varios actores. ¿Cuál prioriza la estabilidad del hardware y el ahorro de recursos?",
+   o:["SysAdmin","Desarrollador","Usuario","Analista de negocio"],
+   e:"El SysAdmin prioriza estabilidad y ahorro de recursos; el desarrollador, agilidad; el usuario, disponibilidad y respuesta instantánea."},
+  {cat:0, t:"Los fallos operativos suelen producirse por todo lo siguiente EXCEPTO:",
+   o:["Documentar los procedimientos con detalle","Conceder privilegios excesivos","No registrar los cambios realizados","Operar en el entorno equivocado"],
+   e:"Documentar es buena práctica. Los fallos típicos: privilegios excesivos, cambios no registrados, entornos equivocados, datos inconsistentes y no seguir procedimientos."},
   {cat:0, t:"RTO (Recovery Time Objective) es:",
-   o:["La pérdida de datos máxima tolerable","El tiempo máximo que el sistema puede estar caído antes de que el daño sea inaceptable","El tiempo que tarda un backup completo","La velocidad del disco"], c:1,
-   e:"RTO es el tiempo máximo de caída tolerable. La pérdida de datos máxima tolerable es el RPO (Recovery Point Objective)."},
-  {cat:0, t:"Un negocio con RTO\u2248RPO\u22480 (banca, UCI) se traduce en Oracle como:",
-   o:["Maximum Availability Architecture (MAA)","Standby desconectado","Almacenamiento simple","Desnormalización"], c:0,
-   e:"RTO\u2248RPO\u22480 exige Maximum Availability Architecture (MAA); Oracle Data Guard es una de sus piezas."},
-  {cat:0, t:"En Oracle Data Guard, el modo \"Maximum Protection\":",
-   o:["Prioriza disponibilidad sobre datos","RPO \u2248 0, prioriza datos sobre disponibilidad","Permite pérdida ilimitada de datos","No usa standby"], c:1,
-   e:"Maximum Protection: RPO \u2248 0, prioriiza los datos sobre la disponibilidad; Maximum Performance (RPO > 0) prioriza el rendimiento arriesgando datos."},
+   o:["El tiempo máximo que el sistema puede estar caído antes de que el daño sea inaceptable","La cantidad máxima de datos que se puede perder, medida en tiempo","El tiempo que tarda en completarse un backup completo","El intervalo entre dos copias de seguridad consecutivas"],
+   e:"RTO = tiempo máximo de caída tolerable. La pérdida de datos máxima tolerable es el RPO (Recovery Point Objective)."},
+  {cat:0, t:"Un negocio con RTO ≈ RPO ≈ 0 (banca, UCI) se traduce en Oracle como:",
+   o:["Maximum Availability Architecture (MAA)","Un standby manual que se sincroniza cada noche","Backups completos diarios con RMAN","Una única instancia con discos en RAID"],
+   e:"RTO ≈ RPO ≈ 0 exige Maximum Availability Architecture (MAA); Oracle Data Guard es una de sus piezas."},
+  {cat:0, t:"En Oracle Data Guard, el modo «Maximum Protection»:",
+   o:["Garantiza RPO ≈ 0: prioriza no perder datos sobre la disponibilidad","Prioriza el rendimiento y admite cierta pérdida de datos (RPO > 0)","Prioriza la disponibilidad del primario frente a la protección de datos","Funciona sin base de datos standby"],
+   e:"Maximum Protection: RPO ≈ 0, los datos por encima de la disponibilidad. Maximum Performance (RPO > 0) prioriza el rendimiento arriesgando datos."},
 
   {cat:1, t:"Independencia física de datos significa:",
-   o:["Poder cambiar el esquema lógico sin tocar el físico","Modificar la estructura física de almacenamiento sin reescribir las aplicaciones","Poder borrar tablas sin permisos","Separar BD en distintos servidores"], c:1,
-   e:"Permite modificar la estructura física (mover archivos a discos más rápidos) sin reescribir las aplicaciones ni alterar la visión lógica."},
+   o:["Cambiar la estructura física de almacenamiento sin reescribir las aplicaciones","Cambiar el esquema lógico sin que las aplicaciones se enteren","Repartir la base de datos entre varios servidores físicos","Separar los datos de producción de los de desarrollo"],
+   e:"Permite modificar lo físico (p. ej. mover ficheros a discos más rápidos) sin tocar aplicaciones ni la visión lógica. Cambiar el esquema lógico sin romper apps es independencia lógica."},
   {cat:1, t:"La independencia lógica se consigue mediante:",
-   o:["Cambiar el hardware de disco","Vistas, APIs, procedimientos o capas de acceso","Reiniciar el servidor","Desnormalizar las tablas"], c:1,
-   e:"Alterar el esquema conceptual sin romper las aplicaciones se logra con vistas, APIs, procedimientos o capas de acceso que mantienen el modelo percibido."},
-  {cat:1, t:"Un dato es \"trazable\" si:",
-   o:["Está cifrado","Se sabe de dónde procede, quién lo modificó y qué cambios se hicieron","Ocupa poco espacio","Se consulta rápido"], c:1,
-   e:"Trazable es que se conoce su procedencia, quién lo modificó y qué cambios se realizaron."},
-  {cat:1, t:"ILM (Information Lifecycle Management) define políticas para las etapas del dato. El orden correcto es:",
-   o:["Archivo → Purga → Activo → Histórico","Activo → Histórico → Archivo → Purga","Purga → Activo → Archivo → Histórico","Histórico → Activo → Purga → Archivo"], c:1,
-   e:"El ciclo es: Creación y uso (activo) → dismonuye uso (histórico) → menor actividad (archivo) → termina la retención (purga)."},
+   o:["Vistas, APIs, procedimientos o capas de acceso","Cambiar los discos por otros más rápidos","Particionar las tablas por fecha","Desnormalizar las tablas más consultadas"],
+   e:"Alterar el esquema conceptual sin romper las aplicaciones se logra con capas (vistas, APIs, procedimientos) que mantienen el modelo percibido."},
+  {cat:1, t:"Un dato es «trazable» si:",
+   o:["Se conoce su origen, quién lo cambió y qué cambió","Está cifrado tanto en reposo como en tránsito","Tiene una clave primaria que lo identifica de forma única","Se replica en varios centros de datos a la vez"],
+   e:"Trazable = se conoce su procedencia, quién lo modificó y qué cambios sufrió."},
+  {cat:1, t:"ILM (Information Lifecycle Management): orden correcto de las etapas del dato:",
+   o:["Activo → Histórico → Archivo → Purga","Activo → Archivo → Histórico → Purga","Histórico → Activo → Archivo → Purga","Activo → Purga → Histórico → Archivo"],
+   e:"Creación y uso (activo) → disminuye el uso (histórico) → mínima actividad (archivo) → fin de la retención (purga)."},
   {cat:1, t:"En ILM, el dato activo (creación y uso) requiere:",
-   o:["Almacenamiento económico","Almacenamiento de alto rendimiento","Compresión máxima","Réplicas geográficas"], c:1,
-   e:"La información activa requiere almacenamiento de alto rendimiento; la histórica/archivada puede ir a almacenamiento económico."},
-  {cat:1, t:"La \"anomalía de borrado\" consiste en:",
-   o:["No poder insertar un hecho sin inventar otro","Eliminar un registro y arrastrar/perder información valiosa","Requerir un UPDATE masivo en múltiples lugares","Perder la PK de una tabla"], c:1,
-   e:"Al borrar un registro se arrastra información valiosa (ej. perder el contacto del proveedor al borrar su último producto). La de inserción y la de actualización son las otras dos anomalías."},
-  {cat:1, t:"La única defensa estructural contra las anomalías es:",
-   o:["Más índices en la tabla","El diseño relacional normalizado","Particionar las tablas","Usar triggers"], c:1,
-   e:"El diseño relacional normalizado es la defensa estructural; las anomalías son corrupciones operativas de esquemas no normalizados."},
+   o:["Almacenamiento de alto rendimiento","Almacenamiento económico de gran capacidad","Compresión máxima para ahorrar espacio","Almacenamiento en cinta fuera de línea"],
+   e:"El dato activo va en almacenamiento de alto rendimiento; el histórico y el archivado, en almacenamiento más económico."},
+  {cat:1, t:"La «anomalía de borrado» consiste en:",
+   o:["Al borrar un registro se pierde información valiosa","No poder insertar un hecho sin inventar otro dato","Tener que actualizar el mismo dato en muchas filas","Borrar filas hijas en cascada sin querer (ON DELETE CASCADE)"],
+   e:"Ej.: perder el contacto de un proveedor al borrar su último producto. Las otras dos anomalías son la de inserción y la de actualización."},
+  {cat:1, t:"La defensa estructural contra las anomalías de inserción, actualización y borrado es:",
+   o:["El diseño relacional normalizado","Crear más índices en las tablas afectadas","Particionar las tablas grandes","Controlarlas con triggers"],
+   e:"El diseño normalizado es la defensa de arquitectura; las anomalías son corrupciones operativas de esquemas no normalizados."},
   {cat:1, t:"En data warehousing, ¿es aceptable desnormalizar?",
-   o:["Nunca","Sí, es habitual para facilitar determinadas consultas analíticas","Solo en bases pequeñas","Solo con triggers"], c:1,
-   e:"En sistemas analíticos y Data warehousing es habitual desnormalizar deliberadamente para facilitar consultas específicas."},
+   o:["Sí, es habitual para facilitar consultas analíticas concretas","No, la normalización es obligatoria en cualquier sistema","Solo si la base de datos es pequeña","Solo si se compensa con triggers de integridad"],
+   e:"En sistemas analíticos se desnormaliza deliberadamente (estrella/copo) para facilitar consultas específicas."},
 
   {cat:2, t:"Una base de datos es:",
-   o:["Una simple acumulación de registros","Una colección estructurada y persistente de datos relacionados diseñada para representar la realidad","Un archivo CSV","El software que gestiona los datos"], c:1,
-   e:"Es una colección estructurada y persistente de datos relacionados, diseñada para representar una parte significativa de la realidad."},
-  {cat:2, t:"La característica de \"persistencia en el tiempo\" implica:",
-   o:["Velocidad de consulta","Mecanismos de recuperación ante fallos (backups, logs de transacciones)","Bloqueos y colas","Modelos de negocio cambiantes"], c:1,
-   e:"Garantiza que ante fallos (corte eléctrico, etc.) los datos no se pierdan ni corrompan: copias de seguridad y logs de transacciones."},
-  {cat:2, t:"La \"capacidad de consulta\" de una BD significa que:",
-   o:["El usuario indica cómo buscar la información","El usuario indica qué información quiere y el motor calcula la ruta más rápida","Las consultas se hacen en lenguaje ensamblador","No se pueden hacer consultas complejas"], c:1,
-   e:"Con SQL no le dices al sistema cómo buscar, sino qué quieres; el motor calcula la ruta más rápida."},
+   o:["Una colección estructurada y persistente de datos relacionados","Cualquier acumulación de registros guardados en ficheros de texto","El software que gestiona, protege y optimiza el acceso a los datos","El conjunto de tablas de una aplicación, sin incluir sus restricciones"],
+   e:"Colección estructurada y persistente de datos relacionados, diseñada para representar una parte significativa de la realidad. El software que la gestiona es el SGBD."},
+  {cat:2, t:"La característica de «persistencia en el tiempo» implica:",
+   o:["Mecanismos de recuperación ante fallos (backups, logs de transacciones)","Que las consultas respondan rápido aunque crezcan los datos","Que varios usuarios puedan escribir a la vez","Que el modelo de datos no cambie nunca"],
+   e:"Ante fallos (corte eléctrico, etc.) los datos no se pierden ni corrompen gracias a copias y logs de transacciones."},
+  {cat:2, t:"La «capacidad de consulta» de una BD significa que:",
+   o:["El usuario indica qué información quiere y el motor calcula la ruta más rápida","El usuario indica paso a paso cómo recorrer las tablas","El motor devuelve siempre los datos en el orden de inserción","Solo se pueden hacer consultas previamente definidas"],
+   e:"Con SQL no dices cómo buscar, sino qué quieres; el motor decide el cómo."},
   {cat:2, t:"Un SGBD (DBMS) es:",
-   o:["Los archivos físicos en disco","El software que define, mantiene, consulta, asegura, optimiza y recupera la BD","El sistema operativo del servidor","La red de la organización"], c:1,
-   e:"El SGBD es el software especializado que actúa como capa de intermediación entre aplicaciones/usuarios y los archivos físicos."},
+   o:["El software que define, mantiene, consulta, protege y recupera la BD","El conjunto de ficheros físicos (datafiles, logs) donde residen los datos","Un sistema operativo optimizado para servir bases de datos","La herramienta gráfica con la que se diseñan tablas y relaciones"],
+   e:"El SGBD es la capa de intermediación especializada entre aplicaciones/usuarios y los ficheros físicos."},
   {cat:2, t:"Entre los servicios mínimos del SGBD NO se encuentra:",
-   o:["Gestión de metadatos / diccionario de datos","Control de concurrencia","Diseño gráfico de informes","Mecanismos de recuperación"], c:2,
-   e:"Servicios mínimos: lenguajes DDL/DML, metadatos, control de concurrencia, recuperación, seguridad/acceso y optimización de acceso."},
+   o:["El diseño gráfico de informes","La gestión de metadatos (diccionario de datos)","El control de concurrencia","Los mecanismos de recuperación"],
+   e:"Servicios mínimos: DDL/DML, metadatos, concurrencia, recuperación, seguridad/acceso y optimización."},
   {cat:2, t:"El diccionario de datos (catálogo) del SGBD registra:",
-   o:["Solo los datos de negocio","Datos sobre los propios datos: tablas, columnas, restricciones, usuarios, vistas, índices","Las contraseñas de usuarios en texto plano","Las consultas históricas"], c:1,
-   e:"El catálogo guarda metadatos (descripciones de las estructuras), lo que convierte al SGBD en un sistema reflexivo."},
-  {cat:2, t:"El \"motor de almacenamiento\" (Storage Manager):",
-   o:["Convierte SQL en plan de ejecución","Transforma estructuras lógicas en representaciones físicas eficientes en medios persistentes","Gestiona commits y rollbacks","Otorga permisos de usuario"], c:1,
-   e:"Organiza páginas/bloques, disposición de registros, índices, compresión e interacción con el sistema de archivos en medios persistentes."},
-  {cat:2, t:"El \"motor de consultas\" atraviesa fases. El orden correcto es:",
-   o:["Parser → Lexer → Optimizar → Plan de ejecución → Ejecutar","Lexer → Parser → Validar → Transformar → Optimizar/CBO → Plan de ejecución → Ejecutar","Ejecutar → Optimizar → Parser → Plan","Validar → Lexer → Ejecutar → Optimizar"], c:1,
-   e:"Primero el lexer (tokens), luego el parser (gramática), validación de significado/permisos, transformación lógica, optimización por coste (CBO), plan de ejecución y ejecución."},
-  {cat:2, t:"En la sentencia `SELECT * FORM clientes`, ¿quién detecta el error \"FROM\"?",
-   o:["Lexer","Parser","Optimizador","Motor de almacenamiento"], c:1,
-   e:"El lexer solo genera tokens (no ve errores); es el parser quien valida el orden gramatical y marca el error sintáctico."},
+   o:["Metadatos: tablas, columnas, restricciones, usuarios…","Los datos de negocio de todas las aplicaciones conectadas","El historial completo de todas las consultas ejecutadas","La planificación de las copias de seguridad y sus resultados"],
+   e:"Guarda datos sobre los propios datos, lo que convierte al SGBD en un sistema reflexivo."},
+  {cat:2, t:"El motor de almacenamiento (Storage Manager):",
+   o:["Traduce estructuras lógicas a páginas y bloques en disco","Convierte la sentencia SQL en un plan de ejecución óptimo","Coordina los COMMIT y ROLLBACK de las distintas sesiones","Comprueba los permisos de cada usuario sobre cada objeto"],
+   e:"Organiza páginas/bloques, disposición de registros, índices, compresión e interacción con el sistema de archivos. El plan lo hace el motor de consultas."},
+  {cat:2, t:"Orden correcto de las fases del motor de consultas:",
+   o:["Lexer → Parser → Validar → Transformar → Optimizar (CBO) → Plan → Ejecutar","Parser → Lexer → Validar → Optimizar (CBO) → Transformar → Plan → Ejecutar","Lexer → Validar → Parser → Plan → Optimizar (CBO) → Ejecutar","Parser → Validar → Lexer → Transformar → Plan → Ejecutar"],
+   e:"Tokens (lexer) → gramática (parser) → significado y permisos → transformación lógica → optimización por coste → plan → ejecución."},
+  {cat:2, t:"En la sentencia <code>SELECT * FORM clientes</code>, ¿qué componente detecta el error?",
+   o:["El parser","El lexer","El optimizador (CBO)","El motor de almacenamiento"],
+   e:"«FORM» es un token válido (un identificador), así que el lexer no protesta; el parser detecta que la gramática no cuadra."},
   {cat:2, t:"SQL es:",
-   o:["Un guion de ejecución paso a paso","Una especificación declarativa: el usuario dice \"qué\", el sistema decide \"cómo\"","Un lenguaje de bajo nivel","Un protocolo de red"], c:1,
-   e:"SQL es declarativo: expresas qué quieres y hay una gran distancia arquitectónica hasta lo que el motor hace."},
+   o:["Un lenguaje declarativo: el usuario dice «qué» y el sistema decide «cómo»","Un lenguaje imperativo que describe el algoritmo de búsqueda","Un lenguaje de bajo nivel ligado al formato del disco","Un protocolo de red entre cliente y servidor"],
+   e:"SQL es declarativo: hay una gran distancia arquitectónica entre lo que escribes y lo que el motor hace."},
   {cat:2, t:"El gestor de transacciones y concurrencia es responsable de:",
-   o:["Solo insertar datos","Preservar consistencia y aislamiento con varias sesiones concurrentes","Crear backups nocturnos","Definir índices"], c:1,
-   e:"Delimita transacciones, coordina commit/rollback, gestiona bloqueos, previene conflictos y se complementa con el Recovery Manager (logging, undo/redo, checkpoints)."},
+   o:["Mantener consistencia y aislamiento entre sesiones concurrentes","Programar y verificar las copias de seguridad nocturnas","Decidir qué índices crear según la carga de trabajo","Traducir las consultas SQL a lecturas de bloques en disco"],
+   e:"Delimita transacciones, coordina commit/rollback, gestiona bloqueos y conflictos; se complementa con el Recovery Manager (logging, undo/redo, checkpoints)."},
   {cat:2, t:"MVCC significa:",
-   o:["Monitor Virtual de Consultas Concurrentes","Multi-Version Concurrency Control (control de concurrencia multiversión)","Motor Variable de Control de Consultas","Manejo de Versionado de Columnas"], c:1,
-   e:"Es el control de concurrencia multiversión: versionado de datos con niveles de aislamiento (RC, RR, Serializable)."},
+   o:["Multi-Version Concurrency Control","Multi-Volume Cluster Configuration","Managed Versioning of Columns and Constraints","Master-Validated Commit Control"],
+   e:"Versionado de datos para que lectores y escritores no se bloqueen, con niveles de aislamiento (RC, RR, Serializable)."},
   {cat:2, t:"Diferencia clave entre almacenamiento simple (CSV) y gestión transaccional (SGBD):",
-   o:["El almacenamiento simple es más seguro","En el SGBD el motor rechaza operaciones que violen las reglas de negocio; en el CSV no","El CSV permite concurrencia total","No hay diferencia operacional"], c:1,
-   e:"El CSV acepta cualquier dato y se bloquea por completo; el SGBD rechaza violaciones de reglas, permite concurrencia y recupera ante fallos."},
+   o:["El SGBD rechaza lo que viola las reglas; el CSV lo acepta todo","El CSV admite más concurrencia porque no gestiona bloqueos","El CSV es más seguro porque no tiene usuarios ni permisos","No hay diferencia real si el volumen de datos es pequeño"],
+   e:"El CSV acepta cualquier dato y se bloquea entero; el SGBD rechaza violaciones, permite concurrencia y se recupera ante fallos."},
   {cat:2, t:"Los cuatro pilares de la BD como activo crítico de negocio son:",
-   o:["CPU, RAM, disco, red","Memoria organizacional, evidencia operativa/legal, continuidad funcional, motor analítico","Seguridad, velocidad, color, tamaño","Tablas, índices, vistas, secuencias"], c:1,
+   o:["Memoria organizacional, evidencia legal, continuidad y analítica","Disponibilidad, integridad, confidencialidad y rendimiento","Tablas, índices, vistas y procedimientos almacenados","Hardware, software, datos y usuarios de la organización"],
    e:"Memoria organizacional, evidencia operativa y legal, continuidad funcional y motor analítico."},
 
-  {cat:3, t:"El nuevo DBA NO se limita a gestionar sistemas que guardan datos. La pregunta clave evoluciona a:",
-   o:["¿Qué sistema operativo usamos?","¿Quién orquesta la resiliencia y la evolución a gran escala?","¿Cuánto cuesta el servidor?","¿Cuántas tablas hay?"], c:1,
-   e:"El foco pasa a la resiliencia (sobrevivir a fallos sin perder datos) y la evolución a gran escala (capacidad, usuarios, complejidad)."},
+  {cat:3, t:"El nuevo DBA no se limita a gestionar sistemas que guardan datos. La pregunta clave pasa a ser:",
+   o:["¿Quién orquesta la resiliencia y la evolución a gran escala?","¿Quién escribe las consultas SQL de la aplicación?","¿Quién compra y mantiene el hardware?","¿Quién diseña las pantallas que consultan los datos?"],
+   e:"El foco pasa a la resiliencia (sobrevivir a fallos sin perder datos) y la evolución a escala (capacidad, usuarios, complejidad)."},
   {cat:3, t:"Capacity Planning predictivo consiste en:",
-   o:["Comprar más discos cuando el sistema falle","Modelar matemáticamente el crecimiento transaccional para provisionar recursos antes de que el motor sufra","Reiniciar el servidor cada noche","Poner más RAM sin motivo"], c:1,
-   e:"Se modela el crecimiento transaccional para provisionar CPU, memoria e IOPS meses antes de que el motor sufra inanición."},
+   o:["Modelar el crecimiento para provisionar recursos con antelación","Ampliar CPU y disco cuando aparecen las primeras alertas","Reservar desde el inicio el doble de los recursos que se usan hoy","Reiniciar el servidor periódicamente para liberar memoria"],
+   e:"Se modela el crecimiento para provisionar CPU, memoria e IOPS meses antes de que el motor sufra inanición. Es proactivo, no reactivo."},
   {cat:3, t:"¿Qué ocurre si el motor no tiene suficiente RAM?",
-   o:["Aumentan las IOPS a disco, la CPU espera al disco y crece la latencia","El motor se apaga y pierde datos","Nada, solo baja la factura","La BD se desnormaliza sola"], c:1,
-   e:"Sin RAM aumentan las IOPS, la CPU espera al disco, se acumulan consultas en cola y la latencia se dispara."},
-  {cat:3, t:"Principio de menor privilegio implica que un usuario de aplicación debe tener permisos para:",
-   o:["Manipular datos (DML), nunca cambiar esquemas (DDL)","Hacer y deshacer cualquier cambio","Acceder a todo como admin","Solo leer logs"], c:1,
-   e:"Un usuario de aplicación manipula datos (DML) pero nunca cambia esquemas (DDL)."},
-  {cat:3, t:"La regla de backup \"3-2-1\" se refiere a:",
-   o:["3 discos, 2 particiones, 1 clon","3 copias, 2 soportes distintos, 1 fuera de las instalaciones","3 nodos, 2 redes, 1 cluster","3 usuarios, 2 permisos, 1 password"], c:1,
-   e:"3 copias de los datos, en 2 soportes distintos y 1 de ellas fuera de las instalaciones."},
-  {cat:3, t:"En Infraestructura como Código (IaC), el mayor peligro para la BD era:",
-   o:["El fallo de disco","Un humano tecleando un comando por error en el servidor equivocado","El virus informático","Los backups corruptos"], c:1,
-   e:"El mayor peligro es el humano tecleando por error en el servidor equivocado; IaC + tuberías CI/CD lo eliminan porque nadie toca producción a mano."},
-  {cat:3, t:"La convergencia del rol del DBA moderno es con:",
-   o:["El administrativo de sistemas y el teleoperador","El Ingeniero de Plataforma y el SRE (Site Reliability Engineer)","El abogado y el auditor","El diseñador de aplicaciones"], c:1,
-   e:"Al gestionar la BD con código y tuberías automáticas, el trabajo se fusiona con el del Ingeniero de Plataforma y el SRE."},
-  {cat:3, t:"El perfil \"T-shaped\" de alto nivel combina:",
-   o:["Especialización profunda (vertical) + conocimiento transversal (horizontal) + visión estratégica","Profundidad solo en SQL","Conocimiento superficial de todo","Solo gestión de proyectos"], c:1,
-   e:"La T combina el eje vertical (profundidad en el motor: memoria, bloqueos, índices, logs) con el horizontal (kernel, redes, lenguajes, orquestación) y visión estratégica para comunicar riesgos."},
+   o:["Aumentan las IOPS a disco, la CPU espera al disco y la latencia se dispara","El motor se detiene para proteger los datos","El SGBD comprime automáticamente las tablas para caber en memoria","No pasa nada: el disco compensa la falta de memoria sin coste"],
+   e:"Sin RAM suficiente hay más lecturas a disco, la CPU espera, las consultas se encolan y la latencia se dispara."},
+  {cat:3, t:"Según el principio de menor privilegio, un usuario de aplicación debe poder:",
+   o:["Manipular datos (DML), pero nunca cambiar esquemas (DDL)","Crear y modificar tablas (DDL) cuando lo necesite la aplicación","Actuar como administrador para evitar errores de permisos","Solo leer, nunca escribir"],
+   e:"El usuario de aplicación hace DML; el DDL queda para despliegues controlados. Segregación de funciones."},
+  {cat:3, t:"La regla de backup «3-2-1» significa:",
+   o:["3 copias, en 2 soportes distintos, 1 fuera de las instalaciones","3 backups diarios, 2 semanales y 1 mensual","3 réplicas, en 2 regiones, con 1 standby activo","3 días de retención, 2 soportes y 1 prueba de restauración"],
+   e:"3 copias de los datos, en 2 soportes distintos, y 1 de ellas fuera de las instalaciones."},
+  {cat:3, t:"Con Infraestructura como Código (IaC) y CI/CD se elimina sobre todo el riesgo de:",
+   o:["Un humano ejecutando un comando en el servidor equivocado","El fallo físico de un disco en el servidor de producción","Un backup que resulta estar corrupto al restaurarlo","Un virus que infecta el sistema operativo del servidor"],
+   e:"El mayor peligro era el error humano manual; con IaC y tuberías nadie toca producción a mano."},
+  {cat:3, t:"El rol del DBA moderno converge con:",
+   o:["El Ingeniero de Plataforma y el SRE","El desarrollador front-end y el diseñador UX","El analista de negocio y el Product Owner","El técnico de soporte y el administrador de redes"],
+   e:"Al gestionar la BD con código y tuberías automáticas, el trabajo se fusiona con Platform Engineering y SRE."},
+  {cat:3, t:"El perfil «T-shaped» de alto nivel combina:",
+   o:["Profundidad en el motor (vertical), conocimiento transversal (horizontal) y visión estratégica","Profundidad en SQL y conocimientos básicos de ofimática","Conocimiento superficial de muchas tecnologías, sin especializarse","Especialización total en un único producto, sin conocimientos de sistemas"],
+   e:"Vertical: memoria, bloqueos, índices, logs. Horizontal: kernel, redes, lenguajes, orquestación. Más visión estratégica para comunicar riesgos."},
 
-  {cat:4, t:"La familia de BD que cumple estrictamente ACID y usada en sistemas transaccionales críticos (banca, ERPs):",
-   o:["Clave-Valor","Relacional (RDBMS)","Documental","Grafos"], c:1,
-   e:"El RDBMS cumple ACID y es la opción para transacciones críticas donde consistencia e integridad referencial son innegociables."},
+  {cat:4, t:"Familia de BD que cumple estrictamente ACID y se usa en sistemas transaccionales críticos (banca, ERP):",
+   o:["Relacional (RDBMS)","Clave-valor distribuida","Documental (JSON/BSON)","Orientada a grafos"],
+   e:"El RDBMS garantiza ACID e integridad referencial, innegociables en transacciones críticas."},
   {cat:4, t:"¿Qué familia NoSQL usa esquemas flexibles con documentos jerárquicos JSON/BSON?",
-   o:["Clave-Valor","Columna","Documental","Grafos"], c:2,
-   e:"La documental usa schema-on-read con documentos autodescriptivos JSON/BSON (catálogos, CMS, perfiles)."},
-  {cat:4, t:"Un sistema Clave-Valor ofrece acceso con complejidad algorítmica:",
-   o:["O(n)","O(log n)","O(1)","O(n²)"], c:2,
-   e:"El acceso directo a través de la clave tiene complejidad O(1) (cachés, sesiones web, carritos temporales)."},
+   o:["Documental","Clave-valor","Columnar (wide-column)","Grafos"],
+   e:"Schema-on-read con documentos autodescriptivos (catálogos, CMS, perfiles)."},
+  {cat:4, t:"El acceso por clave en un sistema clave-valor tiene complejidad:",
+   o:["O(1)","O(log n)","O(n)","O(n log n)"],
+   e:"Acceso directo por la clave (hash): O(1). Usos típicos: cachés, sesiones web, carritos."},
   {cat:4, t:"OLTP está pensado para:",
-   o:["Micro-transacciones de alta frecuencia y baja latencia","Consultas masivas que escanean millones de registros","Reporting directivo anual","Data warehousing"], c:1,
-   e:"OLTP = micro-transacciones de alta frecuencia y baja latencia (inserciones, update, borrado rápido). Las consultas masivas son OLAP."},
-  {cat:4, t:"La métrica de rendimiento en OLAP es:",
-   o:["IOPS y latencia por transacción","Throughput (ancho de banda de lectura) y tiempo total de ejecución de la consulta","Velocidad de red","Número de usuarios"], c:1,
-   e:"OLTP se mide en IOPS/latencia por transacción; OLAP en throughput de lectura y tiempo total de la consulta."},
+   o:["Micro-transacciones de alta frecuencia y baja latencia","Consultas masivas que recorren millones de filas","Informes directivos periódicos","Cargas ETL nocturnas hacia el data warehouse"],
+   e:"OLTP = INSERT/UPDATE/DELETE rápidos y frecuentes. Las consultas masivas son OLAP."},
+  {cat:4, t:"Métrica de rendimiento típica en OLAP:",
+   o:["Throughput de lectura y tiempo total de consulta","IOPS y latencia por transacción individual","Transacciones confirmadas por segundo","Número de bloqueos y esperas por minuto"],
+   e:"OLTP se mide en IOPS/latencia por transacción; OLAP en ancho de banda de lectura y tiempo total."},
   {cat:4, t:"OLTP está orientado a:",
-   o:["Filas y alta normalización (3NF)","Columnas y desnormalización","Documentos JSON","Grafos"], c:1,
-   e:"OLTP: orientado a filas y alta normalización (3NF). OLAP: orientado a columnas y desnormalizado (estrella/copo)."},
+   o:["Filas y alta normalización (3FN)","Columnas y desnormalización (estrella/copo)","Documentos JSON sin esquema","Grafos de relaciones"],
+   e:"OLTP: filas + 3FN. OLAP: columnar + desnormalizado."},
   {cat:4, t:"HTAP (Hybrid Transactional/Analytical Processing) busca:",
-   o:["Eliminar los ETL nocturnos ofreciendo analítica operacional en tiempo real","Acelerar los backups","Reemplazar SQL","Reducir costes de licencias"], c:1,
-   e:"HTAP elimina el retraso de los ETL con motores duales (filas para OLTP + columnar para OLAP) y aislamiento de recursos."},
-  {cat:4, t:"El modo de despliegue donde el DBA sigue siendo responsable del modelado lógico, índices, tuning y control de accesos (y el proveedor de hardware, SO, parcheo y backups) es:",
-   o:["On-Premise","IaaS","PaaS / DBaaS","Bare-Metal"], c:1,
-   e:"En PaaS/DBaaS el proveedor gestiona hardware, SO, parcheo y a veces backups; el DBA mantiene modelado, índices, tuning, accesos y capacity."},
-  {cat:4, t:"Teorema de CAP: un sistema distribuido, ante particiones de red (P), debe elegir entre:",
-   o:["Consistencia (C) o Disponibilidad (A)","Velocidad o Seguridad","Escrituras o Lecturas","Cifrado o Compresión"], c:1,
-   e:"No se pueden garantizar las tres a la vez; ante una partición se elige entre consistencia (CP) o disponibilidad (AP)."},
-  {cat:4, t:"Un sistema CP (ej. MongoDB/HBase) ante un corte de red:",
-   o:["Sigue respondiendo con datos desactualizados","Rechaza peticiones antes que entregar datos desactualizados","Se apaga por completo","Duplica los nodos"], c:1,
-   e:"CP sacrifica disponibilidad: como el cajero automático sin conexión, prefiere dar error antes que datos desactualizados."},
-  {cat:4, t:"Un sistema AP (ej. Cassandra/DynamoDB) ante un corte de red:",
-   o:["Sacrifica consistencia estricta y responde con los datos que tiene","Rechaza todas las peticiones","Pierde la totalidad de los datos","Bloquea escrituras"], c:1,
-   e:"AP sigue respondiendo aunque los datos estén desactualizados (consistencia eventual); es la opción cuando importa la disponibilidad."},
-  {cat:4, t:"Las bases de datos autónomas (IA integrada) permiten:",
-   o:["Sustituir por completo al DBA","Auto-tuning, self-healing y elevación del rol del DBA hacia estrategia y gobernanza","Eliminar las bases de datos relacionales","Que no haga falta seguridad"], c:1,
-   e:"Automatizan el micro-mantenimiento, pero el DBA sigue enfocado en estrategia arquitectónica, normativa, FinOps y gobernanza."},
-  {cat:4, t:"Las bases de datos vectoriales, mediante arquitecturas RAG, recuperan información por:",
-   o:["Búsqueda exacta con operadores tradicionales","Similitud matemática/geométrica (coseno, kNN) entre embeddings","Recurrencia de caracteres","Orden alfabético"], c:1,
-   e:"Transforman el texto en embeddings y recuperan por distancia geométrica (similitud del coseno, kNN), buscando significado."},
+   o:["Analítica en tiempo real sin esperar a los ETL nocturnos","Acelerar los backups separando lecturas y escrituras","Sustituir SQL por APIs de documentos JSON","Reducir el coste de licencias unificando servidores"],
+   e:"Motores duales (filas para OLTP + columnar para OLAP) con aislamiento de recursos; adiós al retraso del ETL."},
+  {cat:4, t:"Modelo de despliegue en el que el proveedor gestiona hardware, SO, parcheo (y a veces backups) y el DBA sigue con modelado, índices, tuning y accesos:",
+   o:["PaaS / DBaaS","IaaS","On-premise","Bare metal dedicado"],
+   e:"Responsabilidad compartida: en PaaS/DBaaS el proveedor opera la plataforma; el DBA conserva modelado, índices, tuning, accesos y capacity. En IaaS el DBA aún parchea el SO y el motor."},
+  {cat:4, t:"Teorema CAP: ante una partición de red (P), un sistema distribuido debe elegir entre:",
+   o:["Consistencia (C) o disponibilidad (A)","Consistencia (C) o tolerancia a particiones (P)","Latencia o throughput","Durabilidad o aislamiento"],
+   e:"Con partición no se pueden garantizar las tres: se elige CP o AP."},
+  {cat:4, t:"Un sistema CP (p. ej. MongoDB, HBase) ante un corte de red:",
+   o:["Rechaza peticiones antes que entregar datos desactualizados","Sigue respondiendo con los datos que tiene aunque estén desfasados","Se apaga por completo hasta que vuelve la red","Duplica automáticamente los nodos afectados"],
+   e:"CP sacrifica disponibilidad: como un cajero sin conexión, prefiere dar error a dar un saldo desactualizado."},
+  {cat:4, t:"Un sistema AP (p. ej. Cassandra, DynamoDB) ante un corte de red:",
+   o:["Sigue respondiendo aunque haya datos desfasados","Rechaza peticiones hasta recuperar la consistencia","Bloquea las escrituras y solo permite lecturas","Descarta los datos escritos durante la partición"],
+   e:"AP prioriza disponibilidad: responde con lo que tiene y converge después (consistencia eventual)."},
+  {cat:4, t:"Las bases de datos autónomas (con IA integrada) permiten:",
+   o:["Auto-tuning y self-healing; el DBA sube a estrategia y gobernanza","Prescindir del DBA porque la IA gestiona todo el ciclo de vida","Eliminar la necesidad de modelar los datos antes de cargarlos","Olvidarse de la seguridad, que pasa a gestionar el propio motor"],
+   e:"Automatizan el micro-mantenimiento; el DBA se centra en arquitectura, normativa, FinOps y gobernanza."},
+  {cat:4, t:"Las bases de datos vectoriales, en arquitecturas RAG, recuperan información por:",
+   o:["Similitud entre embeddings (coseno, kNN)","Coincidencia exacta de palabras clave","Expresiones regulares sobre el texto original","Orden de inserción de los documentos"],
+   e:"El texto se convierte en embeddings y se recupera por distancia (coseno, kNN): se busca significado, no coincidencia literal."},
 
-  {cat:5, t:"Antes de teclear el primer comando de intervención, el DBA debe:",
-   o:["Comprar más RAM","Capturar el estado inicial (baseline): métricas de consumo y registros de error","Apagar el servidor","Borrar los logs"], c:1,
-   e:"Intervenir sin línea base es operar a ciegas: primero se capturan métricas de consumo y registros de error."},
-  {cat:5, t:"Si el motor corre nativamente sin contenedores, la evidencia del baseline debe incluir:",
-   o:["Solo el plan de ejecución de una consulta","Obligatoriamente los logs del kernel y el uso de CPU/RAM del anfitrión","El diseño de la interfaz web","La versión del navegador"], c:1,
-   e:"Sin contenedores, las anomalías del SO impactan directo en la BD: los logs del kernel y la CPU/RAM del anfitrión son obligatorios."},
-  {cat:5, t:"Documentar en Git/Markdown aporta:",
-   o:["Inmutabilidad criptográfica del historial y reproducibilidad estricta","Más velocidad de consulta","Mejores índices","Menos licencias"], c:1,
-   e:"Git aporta un historial inmutable y auditable de cada decisión/comando; la bitácora debe ser una receta reproducible por otro ingeniero."},
-  {cat:5, t:"Fases de la metodología del curso. La telemetría activa (explain plan, medir latencia) se usa:",
-   o:["Solo al final","En el diagnóstico inicial y en la validación tras la intervención (antes/después)","Nunca","Solo en producción"], c:1,
-   e:"Se mide antes (diagnóstico) y después (validación matemática) para contrastar el impacto de la intervención."},
-  {cat:5, t:"En la intervención de ejemplo, el coste pasó de 412 (TABLE ACCESS FULL) a 3 tras crear un índice. La nueva operación fue:",
-   o:["FULL TABLE SCAN","INDEX RANGE SCAN","SORT MERGE JOIN","HASH JOIN"], c:1,
-   e:"Al crear un índice B-Tree, el plan pasa de escaneo completo (TABLE ACCESS FULL) a INDEX RANGE SCAN, y el coste cae a 3."},
-  {cat:5, t:"El Principio de Menor Privilegio (PoLP) aplicado a datos sensibles se denomina en el temario:",
-   o:["Data Mining","Arquitectura Zero Trust, acceso Just-In-Time y auditoría criptográfica","Cloud Computing","Backup incremental"], c:1,
-   e:"PoLP se implementa con Zero Trust, accesos Just-In-Time y auditoría criptográfica: nadie consulta PII sin justificación temporal."},
+  {cat:5, t:"Antes de teclear el primer comando de una intervención, el DBA debe:",
+   o:["Capturar el estado inicial (baseline): métricas y errores","Reiniciar la instancia para partir de un estado limpio","Aumentar la memoria asignada por precaución","Vaciar los logs para que el diagnóstico sea más claro"],
+   e:"Intervenir sin línea base es operar a ciegas."},
+  {cat:5, t:"Si el motor corre de forma nativa (sin contenedores), el baseline debe incluir obligatoriamente:",
+   o:["Los logs del kernel y el uso de CPU/RAM del anfitrión","Solo el plan de ejecución de la consulta lenta","Solo el alert log de la base de datos","La configuración del cliente SQL del usuario"],
+   e:"Sin contenedores, las anomalías del SO impactan directamente en la BD."},
+  {cat:5, t:"Documentar las intervenciones en Git/Markdown aporta:",
+   o:["Historial auditable y una receta reproducible","Mejor rendimiento de las consultas documentadas","Copias de seguridad automáticas de la base de datos","Cifrado automático de los datos sensibles del repositorio"],
+   e:"Git da trazabilidad de cada decisión/comando; la bitácora debe poder reproducirla otro ingeniero."},
+  {cat:5, t:"En la metodología del curso, la telemetría activa (EXPLAIN PLAN, medir latencia) se usa:",
+   o:["Antes (diagnóstico) y después (validación)","Solo al final, para documentar el resultado","Solo cuando un usuario reporta lentitud","Solo en producción, nunca en entornos de prueba"],
+   e:"Se mide antes y después para contrastar matemáticamente el impacto."},
+  {cat:5, t:"En la intervención de ejemplo, el coste pasó de 412 (TABLE ACCESS FULL) a 3 tras crear un índice B-Tree. La nueva operación fue:",
+   o:["INDEX RANGE SCAN","TABLE ACCESS FULL","INDEX FAST FULL SCAN","HASH JOIN"],
+   e:"Con el índice, el plan pasa de escaneo completo a INDEX RANGE SCAN (coste 412 → 3; latencia 2,45 s → 0,02 s)."},
+  {cat:5, t:"El principio de menor privilegio (PoLP) aplicado a datos sensibles se implementa con:",
+   o:["Zero Trust, accesos Just-In-Time y auditoría criptográfica","Contraseñas largas compartidas por el equipo","Un único usuario administrador bien protegido","Cifrado de backups y nada más"],
+   e:"Nadie consulta PII sin justificación temporal; todo acceso queda auditado."},
   {cat:5, t:"El enmascaramiento de datos (Data Masking) implica:",
-   o:["Borrar todos los datos","Que los entornos de dev/QA nunca contengan PII real: ofuscar preservando integridad referencial y formato","Cifrar solo los backups","Comprimir las tablas"], c:1,
-   e:"Los entornos de desarrollo/pruebas no llevan PII real: se anonimiza preservando formato e integridad referencial pero destruyendo la confidencialidad."},
+   o:["Dev/QA sin PII real: datos ofuscados que mantienen formato y relaciones","Cifrar únicamente las copias de seguridad de producción","Borrar los datos personales de la base de datos de producción","Ocultar columnas sensibles con vistas para ciertos usuarios"],
+   e:"Se anonimiza manteniendo formato y referencias para que las pruebas sigan funcionando."},
   {cat:5, t:"Un Runbook sirve para:",
-   o:["Responder a incidentes en medio del caos","Procedimientos deterministas y secuenciales de tareas predecibles (backups, parcheos, rotación de credenciales)","Diseñar árboles de decisión estratégicos","Crear la interfaz de usuario"], c:1,
-   e:"Los runbooks son procedimientos deterministas para tareas predecibles; los playbooks son para responder a incidentes."},
+   o:["Tareas rutinarias paso a paso (backups, parches, rotar claves)","Diagnosticar y contener incidentes bajo presión","Definir la estrategia de la plataforma a largo plazo","Documentar la arquitectura para una auditoría externa"],
+   e:"Runbook = tareas rutinarias paso a paso. Los incidentes se abordan con playbooks."},
   {cat:5, t:"Un Playbook es:",
-   o:["Árboles de decisión estratégicos para diagnosticar y contener incidentes bajo presión","Una receta de parcheo","Un backup automatizado","Un script de instalación"], c:1,
-   e:"Los playbooks son árboles de decisión estratégicos para diagnosticar, contener y mitigar incidentes bajo presión extrema."},
+   o:["Un árbol de decisiones para contener incidentes","Una receta paso a paso para aplicar un parche","Un script que automatiza los backups diarios","Una guía de instalación del motor de BD"],
+   e:"Playbook = incidentes (decisiones). Runbook = tareas rutinarias."},
   {cat:5, t:"La cultura Kaizen del dato entiende los incidentes como:",
-   o:["Fracasos personales","\"Telemetría no planificada\": evidencia para rediseñar índices, memoria o modelo de datos","Motivo para despedir al DBA","Algo que debe ocultarse"], c:1,
-   e:"Los incidentes y caídas son telemetría no planificada: evidencia empírica para rediseñar índices, ajustar memoria o refinar el modelo."}
-];
-
-const N = QS.length;
-const answers = new Array(N).fill(-1);
-const LETRAS = ["a","b","c","d"];
-
-function render() {
-  const container = document.getElementById("container");
-  let html = "";
-  for (let c = 0; c < CATS.length; c++) {
-    html += '<section class="cat"><div class="cat-title">' + CATS[c][0] + "</div>";
-    QS.forEach((q, i) => {
-      if (q.cat !== c) return;
-      html += '<div class="q" id="q' + i + '">';
-      html += '<div class="num">Pregunta ' + (i+1) + "/" + N + "</div>";
-      html += '<div class="text">' + q.t + "</div>";
-      html += '<div class="opts">';
-      q.o.forEach((opt, j) => {
-        html += '<label class="opt" data-q="' + i + '" data-opt="' + j + '">';
-        html += '<input type="radio" name="q' + i + '" value="' + j + '">';
-        html += '<span><b class="letter">' + LETRAS[j] + ")</b> " + opt + "</span></label>";
-      });
-      html += "</div>";
-      html += '<div class="explain" id="exp' + i + '"></div>';
-      html += "</div>";
-    });
-    html += "</section>";
-  }
-  container.innerHTML = html;
-  container.querySelectorAll("input[type=radio]").forEach(inp => {
-    inp.addEventListener("change", () => {
-      const q = +inp.getAttribute("name").slice(1);
-      if (answers[q] !== -1) return;
-      answers[q] = +inp.value;
-      gradeQuestion(q);
-      updateLocaleProgress();
-    });
-  });
-  updateProgress();
-}
-
-function gradeQuestion(i) {
-  const q = QS[i];
-  const card = document.getElementById("q" + i);
-  const chosen = answers[i];
-  const ok = chosen === q.c;
-
-  card.classList.add(ok ? "correct" : "wrong");
-  card.querySelectorAll("label.opt").forEach(lbl => {
-    const o = +lbl.getAttribute("data-opt");
-    if (o === chosen && o === q.c) lbl.classList.add("selected-ok");
-    else if (o === chosen) lbl.classList.add("selected-ko");
-    else if (o === q.c) lbl.classList.add("show-ok");
-    lbl.classList.add("locked");
-  });
-  card.querySelectorAll("input").forEach(inp => inp.disabled = true);
-
-  const exp = document.getElementById("exp" + i);
-  exp.classList.add("show", ok ? "correct" : "wrong");
-  const head = ok
-    ? '\u2714 Correcto.'
-    : '\u2718 Incorrecto. La respuesta correcta es <b>' + LETRAS[q.c] + ")</b>.";
-  exp.innerHTML = '<div class="head">' + head + '</div><span>' + q.e + "</span>";
-}
-
-function updateProgress() {
-  const done = answers.filter(a => a !== -1).length;
-  const ok = answers.filter((a, i) => a === QS[i].c).length;
-  document.getElementById("answered").textContent = done;
-  document.getElementById("correct").textContent = ok;
-  document.getElementById("barFill").style.width = (done / N * 100) + "%";
-
-  if (done === N) showResult(ok);
-}
-
-function updateLocaleProgress() { updateProgress(); }
-
-function showResult(ok) {
-  const pct = Math.round(ok / N * 100);
-  const res = document.getElementById("resultado");
-  res.style.display = "block";
-  if (pct >= 90) { res.className = "bien"; res.innerHTML = "Excelente: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Dominas el tema. Repasa solo lo fallado.</div>"; }
-  else if (pct >= 70) { res.className = "aceptable"; res.innerHTML = "Bien: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Buen nivel, pero repasa las secciones con fallos.</div>"; }
-  else { res.className = "mal"; res.innerHTML = "A estudiar: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Reinicia y repite con calma.</div>"; }
-  window.scrollTo({top: 0, behavior: "smooth"});
-}
-
-document.getElementById("btnReiniciar").addEventListener("click", () => {
-  if (!confirm("¿Reiniciar el test? Se perderán las respuestas.")) return;
-  answers.fill(-1);
-  document.getElementById("resultado").style.display = "none";
-  render();
-});
-
-render();
+   o:["«Telemetría no planificada» para mejorar el diseño","Fallos individuales que hay que atribuir a un responsable","Eventos aislados que no merece la pena analizar","Algo que conviene no reportar para no alarmar a dirección"],
+   e:"Cada incidente es evidencia empírica para mejorar continuamente."}
+  ]
+};
 </script>
+<script src="assets/test.js"></script>
 </body>
 </html>

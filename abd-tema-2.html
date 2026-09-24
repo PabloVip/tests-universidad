@@ -3,522 +3,282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Tema 2 - ABD</title>
-<style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --border: #334155;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --ok: #22c55e;
-    --ko: #ef4444;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    padding: 24px 16px 80px;
-  }
-  header {
-    max-width: 860px;
-    margin: 0 auto 24px;
-    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
-    border-radius: var(--radius);
-    padding: 28px;
-    text-align: center;
-  }
-  header h1 { font-size: 1.7rem; letter-spacing: 0.3px; }
-  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
-  header a.back { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 0.85rem; text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; }
-  header a.back:hover { background: rgba(255,255,255,0.35); }
-  .progress-bar {
-    max-width: 860px;
-    margin: 0 auto 24px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    position: sticky;
-    top: 12px;
-    z-index: 10;
-    backdrop-filter: blur(6px);
-  }
-  .progress-bar .stats { font-size: 0.9rem; color: var(--muted); white-space: nowrap; }
-  .progress-bar .stats b { color: var(--text); }
-  .bar-track { flex: 1; height: 10px; background: var(--border); border-radius: 8px; overflow: hidden; }
-  .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22d3ee, #3b82f6); transition: width .3s; }
-  section.cat { max-width: 860px; margin: 0 auto 32px; }
-  .cat-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    padding: 10px 16px;
-    background: rgba(56,189,248,0.12);
-    border-left: 4px solid var(--accent);
-    border-radius: 6px;
-    color: var(--accent);
-  }
-  .q {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    margin-bottom: 16px;
-  }
-  .q .num { color: var(--muted); font-size: 0.85rem; font-weight: 600; }
-  .q .text { margin: 6px 0 14px; font-weight: 500; }
-  .opts { display: grid; gap: 8px; }
-  label.opt {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background .15s, border-color .15s;
-    font-size: 0.95rem;
-  }
-  label.opt:hover { background: #24344d; }
-  label.opt.locked { cursor: default; }
-  label.opt.locked:hover { background: transparent; }
-  input[type="radio"] { margin-top: 3px; accent-color: var(--accent); flex-shrink: 0; }
-  .q.correct { border-color: var(--ok); }
-  .q.correct .num::after { content: "  ✔ Correcto"; color: var(--ok); font-weight: 600; }
-  .q.wrong { border-color: var(--ko); }
-  .q.wrong .num::after { content: "  ✘ Incorrecto"; color: var(--ko); font-weight: 600; }
-  label.opt.selected-ok { background: rgba(34,197,94,0.15); border-color: var(--ok); }
-  label.opt.selected-ko { background: rgba(239,68,68,0.15); border-color: var(--ko); }
-  label.opt.show-ok { border-color: var(--ok); }
-  label.opt.show-ok .letter { color: var(--ok); font-weight: 700; }
-  .explain {
-    margin-top: 12px;
-    padding: 12px 14px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    display: none;
-    border: 1px solid;
-  }
-  .explain.show { display: block; }
-  .explain.correct { background: rgba(34,197,94,0.1); border-color: var(--ok); }
-  .explain.wrong { background: rgba(239,68,68,0.12); border-color: var(--ko); }
-  .explain .head { font-weight: 700; margin-bottom: 4px; }
-  .explain.correct .head { color: var(--ok); }
-  .explain.wrong .head { color: var(--ko); }
-  .actions { max-width: 860px; margin: 8px auto 40px; display: flex; gap: 12px; flex-wrap: wrap; }
-  button {
-    border: none;
-    border-radius: 10px;
-    padding: 14px 26px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform .1s, opacity .15s;
-  }
-  button:active { transform: scale(0.98); }
-  #btnReiniciar { background: var(--card); color: var(--text); border: 1px solid var(--border); }
-  #resultado {
-    max-width: 860px;
-    margin: 0 auto 30px;
-    padding: 24px;
-    border-radius: var(--radius);
-    text-align: center;
-    display: none;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-  #resultado.bien { background: rgba(34,197,94,0.15); border: 1px solid var(--ok); }
-  #resultado.aceptable { background: rgba(250,204,21,0.12); border: 1px solid #eab308; }
-  #resultado.mal { background: rgba(239,68,68,0.15); border: 1px solid var(--ko); }
-  #resultado .sub { font-size: 0.95rem; font-weight: 400; color: var(--muted); margin-top: 6px; }
-  footer { max-width: 860px; margin: 0 auto; text-align: center; color: var(--muted); font-size: 0.8rem; }
-</style>
+<title>Test ABD Tema 2 · Oracle y el ecosistema de datos</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
 </head>
-<body>
+<body data-crumb="ABD · Tema 2 · Test">
 
-<header>
-  <h1>Test Tema 2 - Administración de Bases de Datos</h1>
-  <p><a class="back" href="index.html">← Volver al índice</a></p>
-  <p><span id="totalText">80</span> preguntas tipo test sobre Oracle: plataforma, ediciones, ecosistema, herramientas y certificación. Corrección instantánea con explicación.</p>
-</header>
-
-<div class="progress-bar">
-  <div class="stats"><b id="answered">0</b>/<span id="total">80</span> respondidas</div>
-  <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
-  <div class="stats">Aciertos <b id="correct">0</b></div>
-</div>
-
-<div id="container"></div>
-
-<div class="actions">
-  <button id="btnReiniciar">Reiniciar test</button>
-</div>
-
-<div id="resultado"></div>
-
-<footer>Basado en "ABD - Tema 2 - Introducción a Oracle y al Ecosistema Actual de Datos".</footer>
+<main class="wrap">
+  <div class="page-head">
+    <span class="eyebrow">Administración de Bases de Datos · Tema 2</span>
+    <h1>Test: Introducción a Oracle y al ecosistema actual de datos</h1>
+    <p class="lead">80 preguntas. Cada pregunta se corrige al responder y muestra la explicación. Las opciones se barajan y tu progreso se guarda en este navegador.</p>
+    <div class="actions-row"><a class="btn" href="abd-tema-2-resumen.html">Ver el resumen del tema</a></div>
+  </div>
+  <div id="app"></div>
+  <footer class="page-foot">Basado en los apuntes «ABD – Tema 2 – Introducción a Oracle y al Ecosistema Actual de Datos».</footer>
+</main>
 
 <script>
-const CATS = [
-  ["Sección 2.1 - Oracle como Plataforma Empresarial"],
-  ["Sección 2.2 - Navegación por el Ecosistema Oracle"],
-  ["Sección 2.3 - Herramientas de Oracle"],
-  ["Sección 2.4 - Oracle como Piedra Rosetta"],
-  ["Sección 2.5 - Ruta Formativa y Certificación"]
-];
-
-const QS = [
+/* La opción correcta es SIEMPRE la primera de cada lista; el motor las baraja al mostrarlas. */
+window.TEST = {
+  id: "abd-tema-2",
+  cats: [
+    "2.1 Oracle como plataforma empresarial",
+    "2.2 Navegación por el ecosistema Oracle",
+    "2.3 Herramientas de Oracle",
+    "2.4 Oracle como Piedra Rosetta",
+    "2.5 Ruta formativa y certificación"
+  ],
+  qs: [
   {cat:0, t:"¿Qué es Oracle Database?",
-   o:["La empresa tecnológica global Oracle Corporation","Un SGBD relacional, uno de los productos emblemáticos de Oracle Corporation","El sistema operativo del servidor","El lenguaje de consultas SQL"], c:1,
-   e:"Hay que distinguir compañía (Oracle Corporation) y producto (Oracle Database): un SGBD relacional destinado a administrar bases de datos de misión crítica."},
+   o:["Un SGBD relacional, producto emblemático de Oracle Corporation","La compañía tecnológica Oracle Corporation","Un lenguaje de consultas derivado de SQL","Un sistema operativo para servidores de bases de datos"],
+   e:"Hay que distinguir compañía (Oracle Corporation) y producto (Oracle Database): un SGBD relacional para bases de datos de misión crítica."},
   {cat:0, t:"¿Cuál fue la primera versión comercial de Oracle?",
-   o:["Oracle V1","Oracle V2","Oracle V3","Oracle V4"], c:1,
-   e:"V1 fue solo un prototipo; V2 fue la primera versión comercial y la primera BD relacional comercial, implementando SQL por primera vez en el mercado (adelantándose a IBM)."},
+   o:["Oracle V2","Oracle V1","Oracle V3","Oracle V4"],
+   e:"V1 fue un prototipo interno; V2 fue la primera versión comercial y la primera BD relacional comercial con SQL, adelantándose a IBM."},
   {cat:0, t:"La reescritura del motor en C (Oracle V3, 1983) permitió:",
-   o:["El bloqueo a nivel de fila","La portabilidad a múltiples sistemas operativos y la atomicidad ACID","El soporte para Java","La arquitectura Multitenant"], c:1,
-   e:"Reescribir el motor en C hizo que Oracle se ejecutara en mainframes, minicomputadoras y PC, e introdujo la atomicidad de transacciones (ACID)."},
+   o:["Portabilidad a varios sistemas y atomicidad","El bloqueo a nivel de fila y el lenguaje PL/SQL","La arquitectura cliente-servidor en red","Los procedimientos almacenados y los triggers"],
+   e:"Escrito en C, Oracle pudo ejecutarse en mainframes, minicomputadoras y PC, e introdujo la atomicidad de las transacciones."},
   {cat:0, t:"Oracle V5 fue pionera en:",
-   o:["Los procedimientos almacenados","La arquitectura cliente-servidor y las consultas en bases de datos distribuidas","Las tablas Blockchain","La búsqueda vectorial"], c:1,
-   e:"V4 introdujo la consistencia de lectura; V5 fue pionera en arquitectura cliente-servidor y consultas distribuidas (redes)."},
+   o:["Cliente-servidor y consultas distribuidas","La consistencia de lectura (read consistency)","Los procedimientos almacenados en el servidor","El bloqueo a nivel de fila (row-level locking)"],
+   e:"V4 introdujo la consistencia de lectura; V5, cliente-servidor y consultas distribuidas en red."},
   {cat:0, t:"Oracle V6 (1988) destacó por:",
-   o:["Los procedimientos almacenados y triggers","El bloqueo a nivel de fila (row-level locking) y la introducción de PL/SQL","Real Application Clusters (RAC)","La arquitectura Multitenant"], c:1,
-   e:"V6 mejoró el rendimiento concurrente con row-level locking e introdujo el lenguaje PL/SQL (aún sin procedimientos almacenados)."},
-  {cat:0, t:"¿Qué convirtió a Oracle 7 (1992) en \"la base de datos programable\"?",
-   o:["El soporte para XML","Los procedimientos almacenados, triggers y la integridad referencial declarativa","JVM nativa","Las bases de datos autónomas"], c:1,
-   e:"En Oracle 7, el PL/SQL pasó a integrarse en el servidor con procedimientos almacenados, triggers e integridad referencial declarativa."},
+   o:["El bloqueo a nivel de fila (row-level locking) y la introducción de PL/SQL","Los procedimientos almacenados, triggers e integridad referencial declarativa","Real Application Clusters (RAC)","La JVM integrada y el soporte de XML"],
+   e:"V6 mejoró la concurrencia con row-level locking e introdujo PL/SQL (aún sin procedimientos almacenados en el servidor)."},
+  {cat:0, t:"¿Qué convirtió a Oracle 7 (1992) en «la base de datos programable»?",
+   o:["Procedimientos almacenados, triggers e integridad referencial","La JVM integrada en el motor y el soporte de Java","El bloqueo a nivel de fila y la llegada de PL/SQL","El soporte nativo de JSON y de documentos XML"],
+   e:"En Oracle 7, PL/SQL pasó a ejecutarse en el servidor con procedimientos almacenados, triggers e integridad referencial declarativa."},
   {cat:0, t:"Real Application Clusters (RAC) apareció en:",
-   o:["Oracle V6","Oracle 8i","Oracle 9i","Oracle 12c"], c:2,
-   e:"RAC llegó con Oracle 9i (2001): múltiples instancias accediendo a la misma base de datos para disponibilidad continua."},
-  {cat:0, t:"La Oracle 10g introdujo:",
-   o:["Las tablas Blockchain","Grid Computing: ASM, Clusterware y el Recycle Bin","AI Vector Search","El Database Vault"], c:1,
-   e:"La \"g\" de 10g (2003) era Grid Computing: Automatic Storage Management (ASM), Clusterware y el Recycle Bin para recuperar tablas borradas."},
+   o:["Oracle 9i","Oracle 8i","Oracle 10g","Oracle 12c"],
+   e:"RAC llegó con 9i (2001): varias instancias sobre la misma base de datos para disponibilidad continua."},
+  {cat:0, t:"Oracle 10g introdujo:",
+   o:["Grid: ASM, Clusterware y Recycle Bin","Multitenant (CDB/PDB) e In-Memory","Active Data Guard y Database Vault","AI Vector Search y JSON Duality"],
+   e:"La «g» de 10g (2003) era Grid: Automatic Storage Management, Clusterware y la Recycle Bin para recuperar tablas borradas."},
   {cat:0, t:"Oracle 11g (2007) destacó por:",
-   o:["Active Data Guard, compresión de datos y Database Vault","El bloqueo a nivel de fila","El SQL por primera vez","Las PDBs"], c:0,
-   e:"11g consolidó Active Data Guard (lectura de la BD standby), mejoras de compresión y seguridad/auditoría (Database Vault)."},
-  {cat:0, t:"La \"c\" de Oracle 12c (2013) significa:",
-   o:["Computación","Cloud","Concurrencia","Consistencia"], c:1,
-   e:"12c introduce la arquitectura Multitenant (CDB/PDB) y el procesamiento In-Memory (datos en filas en disco y en columnas en memoria), con foco en la nube."},
+   o:["Active Data Guard, compresión y Database Vault","Grid Computing con ASM y Clusterware","Multitenant (CDB/PDB) e In-Memory","Automatic Indexing como versión LTS"],
+   e:"11g consolidó Active Data Guard (standby abierta en lectura), mejoras de compresión y seguridad (Database Vault)."},
+  {cat:0, t:"La «c» de Oracle 12c (2013) significa:",
+   o:["Cloud","Cluster","Container","Compression"],
+   e:"12c introdujo Multitenant (CDB/PDB) e In-Memory con foco en la nube. (Aunque «container» suene lógico por las CDB, la c es de Cloud.)"},
   {cat:0, t:"¿Qué aportó Oracle 19c?",
-   o:["El primer SQL","Autonomous Database y Automatic Indexing, como versión LTS de la familia 12c","Las tablas Blockchain","True Cache"], c:1,
-   e:"18c estrenó capacidades de autogestión (Autonomous Database); 19c se estableció como la versión de soporte a largo plazo (LTS) con Automatic Indexing."},
-  {cat:0, t:"Oraance 23ai introdujo, entre otros:",
-   o:["RAC","AI Vector Search, JSON Relational Duality y True Cache","El Recycle Bin","Oracle Net Services"], c:1,
-   e:"23ai renombró la versión por su apuesta IA: búsqueda vectorial (Vector Search), Duality JSON-relacional y True Cache."},
-  {cat:0, t:"La característica que define a Oracle 26ai es:",
-   o:["ELT transaccional","La IA nativa en el núcleo: ejecutar LLMs dentro de la base de datos (AI-Native)","El bloqueo a nivel de página","La arquitectura cliente-servidor"], c:1,
-   e:"26ai confirma la IA como núcleo: ejecuta modelos de lenguaje (LLMs) dentro de la BD, sin exportar los datos; profundiza en vectores y seguridad inteligente."},
-
-  {cat:0, t:"Caso de uso 1 (Core Transaccional): ¿cómo evita Oracle que los lectores bloqueen a los escritores?",
-   o:["Con bloqueos a nivel de página","Con un Control de Concurrencia Multiversión (MVCC) absoluto basado en el Undo Tablespace","Apagando las consultas largas","Con colas FIFO"], c:1,
-   e:"Mediante el Undo Tablespace, los lectores ven una versión consistente: jamás bloquean a los escritores, aun con reportes masivos."},
-  {cat:0, t:"En el escenario del Neo-banco, si un servidor físico explota, ¿qué tecnología redirige la transacción a otro nodo?",
-   o:["Flashback","Real Application Clusters (RAC)","Oracle Net Services","OPatch"], c:1,
-   e:"RAC permite que otra instancia siga sirviendo sin que el usuario note una caída."},
-  {cat:0, t:"Caso de uso 2 (JSON Relational Duality): los datos JSON que escribe la aplicación se almacenan internamente como:",
-   o:["Documentos BSON en un almacén aparte","Tablas relacionales normalizadas, sin duplicación","Archivos planos","Memoria columnar exclusivamente"], c:1,
-   e:"Duality View permite al código tratar los datos como JSON, pero Oracle los guarda en tablas relacionales: cero duplicación y total integridad transaccional."},
-  {cat:0, t:"Caso de uso 3 (Seguridad): con Database Vault, el DBA:",
-   o:["Puede ver todos los datos pero no gestionar el rendimiento","Gestiona el rendimiento pero no puede ver los datos (llaves separadas)","No tiene control sobre la BD","Solo puede leer los backups"], c:1,
-   e:"Database Vault separa las llaves del reino: el administrador opera el sistema, pero el acceso a los datos queda restringido incluso para él."},
+   o:["Ser la LTS de la familia 12.2, con Automatic Indexing","Introducir la arquitectura Multitenant (CDB/PDB)","Estrenar AI Vector Search y True Cache","Introducir Real Application Clusters (RAC)"],
+   e:"18c estrenó capacidades autónomas (Autonomous Database); 19c es la release LTS con Automatic Indexing."},
+  {cat:0, t:"Oracle 23ai introdujo, entre otras novedades:",
+   o:["AI Vector Search, JSON Duality y True Cache","RAC, Clusterware y consultas distribuidas","ASM, Recycle Bin y Grid Computing","Multitenant, In-Memory y cloud"],
+   e:"23ai se renombró por su apuesta por la IA: búsqueda vectorial, Duality JSON-relacional y True Cache."},
+  {cat:0, t:"Lo que define a Oracle 26ai es:",
+   o:["La IA nativa: ejecutar modelos (LLM) dentro de la BD","Ser la primera versión con búsqueda vectorial","Sustituir SQL por consultas en lenguaje natural","Abandonar el modelo relacional por el documental"],
+   e:"26ai (AI-Native) ejecuta modelos dentro de la BD sin exportar los datos; la búsqueda vectorial ya venía de 23ai."},
+  {cat:0, t:"Caso de uso «Core transaccional»: ¿cómo evita Oracle que los lectores bloqueen a los escritores?",
+   o:["Con MVCC basado en el Undo Tablespace","Con bloqueos a nivel de página","Cancelando las consultas largas","Encolando las escrituras hasta que acaban las lecturas"],
+   e:"Gracias al Undo, los lectores ven una versión consistente y nunca bloquean a los escritores, aunque haya reportes masivos."},
+  {cat:0, t:"En el escenario del neobanco, si un servidor físico cae, ¿qué tecnología permite que otro nodo siga atendiendo las transacciones?",
+   o:["Real Application Clusters (RAC)","Flashback Database","Oracle Net Services","RMAN (Recovery Manager)"],
+   e:"En RAC, otra instancia sigue sirviendo la misma base de datos sin que el usuario note la caída."},
+  {cat:0, t:"Caso JSON Relational Duality: el JSON que escribe la aplicación se guarda internamente como:",
+   o:["Tablas relacionales normalizadas, sin duplicación","Documentos BSON en un almacén aparte","Columnas CLOB con el JSON en texto","Una copia JSON más otra relacional sincronizadas"],
+   e:"La Duality View deja que el código trabaje con JSON, pero Oracle lo guarda en tablas relacionales: cero duplicación e integridad transaccional."},
+  {cat:0, t:"Caso de seguridad con Database Vault: el DBA…",
+   o:["Gestiona el rendimiento, pero no puede ver los datos de negocio","Puede ver todos los datos, pero no tocar la configuración","Pierde todo control sobre la base de datos","Solo puede operar sobre los backups"],
+   e:"Database Vault separa «las llaves del reino»: el administrador opera el sistema, pero el acceso a los datos queda restringido incluso para él."},
   {cat:0, t:"Las tablas Blockchain de Oracle son:",
-   o:["Editables si eres superusuario","Append-only: solo insert, sin update ni delete durante su retención, incluso para el superusuario","Copias de seguridad","Tablas de monedas virtuales"], c:1,
-   e:"Son inmutables (solo INSERT) durante un periodo de retención; cada fila se relaciona criptográficamente con la anterior, incluso frente a ransomware."},
-  {cat:0, t:"Caso de uso 4 (Analítica real-time): el In-Memory Dual Format de Oracle:",
-   o:["Guardar datos solo en columnas","Almacenar por filas en disco y, simultáneamente, por columnas en RAM","Duplicar la BD en otra nube","Usar ETL nocturnos"], c:1,
-   e:"Datos en filas para transacciones rápidas (disco) y en columnas para analítica masiva (RAM), sin mover ni duplicar el dato."},
-  {cat:0, t:"Caso de uso 5 (AI-Native 26ai): el paradigma de Oracle es:",
-   o:["Llevar los datos hacia la IA en la nube pública","Llevar la IA hacia los datos: vectores y LLMs dentro del núcleo de la BD","Exportar todo a OpenAI","Solo búsqueda literal de texto"], c:1,
-   e:"En lugar de enviar gigabytes confidenciales a plataformas externas, Oracle ejecuta la búsqueda semántica y el razonamiento dentro del perímetro de la BD."},
-
-  {cat:0, t:"Límites duros de la edición Oracle Free / Developer:",
-   o:["2 GB RAM, 12 GB de datos de usuario, 2 hilos de CPU y 3 PDBs","4 sockets y 16 hilos","Terabytes de RAM sin límite","1 PDB y 8 hilos"], c:0,
-   e:"Free se limita a: 2 GB RAM, 12 GB de datos en disco, 2 hilos de CPU y un máximo de 3 bases de datos conectables (PDBs)."},
+   o:["Solo INSERT: sin UPDATE ni DELETE, ni siquiera SYS","Tablas editables solo por el superusuario SYS","Tablas pensadas para registrar criptomonedas","Tablas replicadas en una red blockchain pública"],
+   e:"Son inmutables durante el periodo de retención; cada fila se encadena criptográficamente con la anterior (útil incluso frente a ransomware)."},
+  {cat:0, t:"Caso analítica en tiempo real: el In-Memory Dual Format consiste en:",
+   o:["Guardar por filas en disco y, a la vez, por columnas en RAM","Guardar los datos solo en formato columnar","Replicar la base de datos en un data warehouse","Cargar los datos analíticos con ETL nocturnos"],
+   e:"Filas para transacciones (disco) y columnas para analítica (RAM), sin mover ni duplicar el dato en otro sistema."},
+  {cat:0, t:"Caso AI-Native (26ai): el paradigma de Oracle es:",
+   o:["Llevar la IA a los datos: vectores y modelos dentro del núcleo","Llevar los datos a servicios de IA externos","Exportar los datos a un lago de datos para entrenar","Limitarse a búsqueda literal de texto"],
+   e:"En lugar de enviar gigabytes confidenciales fuera, la búsqueda semántica y el razonamiento se ejecutan dentro del perímetro de la BD."},
+  {cat:0, t:"Límites duros de Oracle Free / Developer según el temario:",
+   o:["2 GB RAM, 12 GB de datos, 2 hilos y 3 PDBs","4 GB RAM, 20 GB de datos, 4 hilos y 1 PDB","2 sockets físicos y un máximo de 16 hilos","Sin límites técnicos, solo de licencia de uso"],
+   e:"Free: 2 GB RAM, 12 GB de datos, 2 hilos de CPU y hasta 3 PDBs (según los apuntes). 2 sockets/16 hilos es SE2."},
   {cat:0, t:"La edición Free NO incluye (técnica o legalmente):",
-   o:["El motor relacional completo","JSON Relational Duality","Advanced Partitioning, In-Memory Column Store, TDE, Database Vault, AWR/ADDM ni RAC","Multitenant básico"], c:2,
-   e:"Blanquees lo premium pero muchas opciones Enterprise quedan bloqueadas; tampoco recibe parches OPatch ni soporte MOS."},
-  {cat:0, t:"Oracle Standard Edition 2 (SE2) queda capada por código a:",
-   o:["Máximo 2 sockets físicos y 16 hilos de CPU","Máximo 2 GB de RAM","Máximo 3 sockets y 32 hilos","Sin límites de CPU"], c:0,
-   e:"SE2 se instala en servidores de hasta 2 sockets y nunca usa más de 16 hilos de CPU, sin importar los procesadores del servidor."},
+   o:["Partitioning, In-Memory, TDE, Vault, AWR, RAC","El motor relacional completo con SQL y PL/SQL","JSON Relational Duality y documentos JSON","AI Vector Search y búsqueda por similitud"],
+   e:"Free no incluye Advanced Partitioning, In-Memory Column Store, TDE, Database Vault, AWR/ADDM ni RAC (ni parches OPatch ni soporte MOS). Sí permite probar Duality y Vector Search."},
+  {cat:0, t:"Oracle Standard Edition 2 (SE2) está limitada por código a:",
+   o:["2 sockets físicos y 16 hilos de CPU","2 GB de RAM y 2 hilos de CPU","4 sockets físicos y 32 hilos de CPU","12 GB de datos de usuario y 3 PDBs"],
+   e:"SE2 se instala en servidores de hasta 2 sockets y nunca usa más de 16 hilos de CPU."},
   {cat:0, t:"SE2 NO incluye:",
-   o:["Data Pump y RMAN","Failover pasivo (SEHA)","Advanced Partitioning, In-Memory, TDE, Database Vault, RAC/Data Guard, y prohíbe Diagnostic/Tuning Pack","Multitenant de 3 PDBs"], c:2,
-   e:"SE2 es el motor desnudo: nada de nivel Enterprise; el uso de AWR (Diagnostic Pack) y Tuning Pack está prohibido (shadow features)."},
+   o:["Opciones Enterprise (RAC, Data Guard…)","Las utilidades Data Pump y RMAN","El failover pasivo SEHA de Oracle","Multitenant con hasta 3 PDBs"],
+   e:"SE2 es el motor «desnudo»: sin Advanced Partitioning, In-Memory, TDE, Database Vault, RAC ni Data Guard, y además prohíbe usar Diagnostic/Tuning Pack (AWR). Data Pump, RMAN, SEHA y Multitenant con 3 PDBs sí están."},
   {cat:0, t:"Oracle Enterprise Edition (EE):",
-   o:["Está capada a 2 sockets","Solo permite 16 hilos","No tiene restricciones técnicas: el único límite es financiero","No incluye auditoría"], c:2,
-   e:"EE escala sin límite técnico (terabytes de RAM, cientos de procesadores con Exadata); lo que manda es el presupuesto."},
+   o:["No tiene restricciones técnicas: el límite es el presupuesto","Está limitada a 2 sockets","Está limitada a 16 hilos de CPU","Incluye gratis todas las opciones (RAC, ADG…)"],
+   e:"EE escala sin límite técnico; las opciones avanzadas se pagan aparte."},
   {cat:0, t:"En Enterprise Edition, opciones como RAC, Active Data Guard o Advanced Security se obtienen:",
-   o:["Incluidas en la edición base","Como licencias extra / Management Packs","Prohibidas siempre","Solo en SE2"], c:1,
-   e:"Son productos y opciones avanzadas que se adquieren con licencias adicionales; el DBA verifica qué ha pagado la empresa antes de activarlas."},
-  {cat:0, t:"La \"Trampa de la Virtualización\" (Soft Partitioning) consiste en:",
-   o:["Usar Oracle en Docker","Instalar EE en una VM de VMware con 4 vCPUs creyendo pagar solo por ellas","Tener más RAM de la cuenta","Usar KVM"], c:1,
-   e:"Oracle no reconoce VMware como límite físico válido: como la VM migra (vMotion), exige licenciar todos los procesadores físicos de la granja."},
-  {cat:0, t:"¿Qué ocurre al ejecutar una \"shadow feature\" (característica fantasma) en SE2?",
-   o:["Nada, es gratis","El motor obedece pero deja evidencia en el diccionario de datos (dba_feature_usage_statistics)","La BD se apaga","Se bloquea el DBA"], c:1,
-   e:"Ejecutar una opción Enterprise no pagada (ej. AWR o un índice bitmap) deja una marca indeleble en el diccionario de datos que delata la infracción."},
-  {cat:0, t:"Oracle cobra por procesador aplicando el Core Factor; por eso los servidores con muchos núcleos lentos:",
-   o:["Son la opción más económica","Resultan carísimos en licencias y dan rendimiento mediocre","Están exentos de licencia","No se pueden usar con Oracle"], c:1,
-   e:"Muchos núcleos débiles = Core Factor multiplica el precio; mejor pocos núcleos rápidos (Scale-Up)."},
-  {cat:0, t:"Medida FinOps \"botón de pánico\" si no se han comprado el Diagnostic ni el Tuning Pack:",
-   o:["ALTER SYSTEM SET control_management_pack_access = 'NONE' SCOPE=BOTH","DROP TABLE dba_feature_usage_statistics","Apagar el servidor","No hacer nada"], c:0,
-   e:"Así se apaga el acceso a nivel de núcleo a los Management Packs, evitando usar funciones no pagadas por error."},
-  {cat:0, t:"Para auditar qué funciones se han usado ejecutas:",
-   o:["SELECT * FROM v$session","SELECT name, currently_used, first_usage_date FROM dba_feature_usage_statistics WHERE currently_used='TRUE'","SHOW CON_NAME","SELECT * FROM v$database"], c:1,
-   e:"dba_feature_usage_statistics es la vista forense que delata si se han ejecutado opciones como Advanced Security o RAC sin pagarlas."},
-  {cat:0, t:"Tecnologías reconocidas por Oracle como Hard Partitioning (particionado duro legal):",
-   o:["VMware y Hyper-V","Oracle Linux KVM, OVM o LPARs de IBM","Docker","Kubernetes"], c:1,
-   e:"El particionado duro aprobado crea una barrera de contención legal; VMware no lo es."},
-  {cat:0, t:"En el diseño orientado al reloj Scale-Up, ¿qué es más rentable?",
-   o:["16 núcleos a 2.0 GHz","8 núcleos a 4.0 GHz","32 núcleos a 1.0 GHz","Cualquier opción es igual"], c:1,
-   e:"Pocos núcleos a alta frecuencia: más baratos en licencias (Core Factor) y más rápidos."},
+   o:["Con licencias adicionales aparte","Incluidas en la licencia base de EE","Solo en la edición Free para desarrollo","No están disponibles on-premise"],
+   e:"Se compran aparte; el DBA debe verificar qué ha pagado la empresa antes de activarlas."},
+  {cat:0, t:"La «trampa de la virtualización» (soft partitioning) consiste en:",
+   o:["Instalar EE en una VM de VMware con 4 vCPU creyendo pagar solo esas 4","Ejecutar Oracle en un contenedor Docker en producción","Asignar a la VM más RAM de la licenciada","Usar Oracle Linux KVM con particionado duro"],
+   e:"Oracle no reconoce VMware como límite válido: como la VM puede migrar (vMotion), exige licenciar todos los procesadores físicos del clúster."},
+  {cat:0, t:"¿Qué ocurre al usar una «shadow feature» (opción no licenciada) en SE2?",
+   o:["Funciona, pero queda registrado para una auditoría","El motor rechaza la orden con un error de licencia","La instancia se detiene automáticamente al usarla","Oracle bloquea remotamente la cuenta del DBA"],
+   e:"Usar una opción Enterprise no pagada (p. ej. AWR o un índice bitmap) deja una marca en el diccionario que delata la infracción en una auditoría."},
+  {cat:0, t:"Oracle licencia por procesador aplicando el Core Factor. Por eso, los servidores con muchos núcleos lentos:",
+   o:["Salen caros en licencias y rinden peor","Son la opción más económica en licencias","Están exentos del Core Factor de Oracle","Solo se pueden usar con la edición SE2"],
+   e:"Cada núcleo cuenta: mejor pocos núcleos rápidos (Scale-Up)."},
+  {cat:0, t:"Medida FinOps «botón de pánico» si NO se han comprado Diagnostic ni Tuning Pack:",
+   o:["<code>ALTER SYSTEM SET control_management_pack_access='NONE'</code>","<code>ALTER SYSTEM SET statistics_level='BASIC' SCOPE=BOTH</code>","<code>DROP TABLE dba_feature_usage_statistics PURGE</code>","<code>ALTER DATABASE DISABLE AWR SNAPSHOTS SCOPE=BOTH</code>"],
+   e:"Así se desactiva a nivel de núcleo el acceso a los Management Packs y se evita usarlos por error."},
+  {cat:0, t:"Para auditar qué funciones se han usado consultas:",
+   o:["<code>dba_feature_usage_statistics</code>","<code>v$session_longops</code>","<code>v$database_features</code>","<code>dba_registry_history</code>"],
+   e:"dba_feature_usage_statistics (columnas name, currently_used, first_usage_date) es la vista forense que delata si se han usado opciones como Advanced Security o RAC sin pagarlas."},
+  {cat:0, t:"Tecnologías que Oracle reconoce como hard partitioning (particionado duro):",
+   o:["Oracle Linux KVM, Oracle VM o LPAR","VMware vSphere y Microsoft Hyper-V","Docker y Podman con límites de CPU","Kubernetes con cuotas de recursos"],
+   e:"El particionado duro aprobado limita legalmente los procesadores a licenciar; VMware no lo es."},
+  {cat:0, t:"En un diseño Scale-Up orientado a la frecuencia de reloj, ¿qué es más rentable?",
+   o:["8 núcleos a 4,0 GHz","16 núcleos a 2,0 GHz","32 núcleos a 1,0 GHz","Da igual: se paga por socket"],
+   e:"Pocos núcleos rápidos: menos licencias (Core Factor) y más rendimiento por consulta."},
   {cat:0, t:"En producción comercial, el temario recomienda desplegar Oracle en:",
-   o:["Kubernetes","Bare Metal, VMs con particionado duro legal (KVM) o PaaS/DBaaS dedicado (OCI Autonomous, RDS)","Cualquier VM","Swarm"], c:1,
-   e:"Para desarrollo sí se usan contenedores (Docker/Podman) con la versión Free; en producción se evita Kubernetes para el motor."},
-
-  {cat:0, t:"Si llevas tu propia licencia (BYOL) a AWS o Azure, Oracle:",
-   o:["Mantiene el Core Factor favorable 0.5","Elimina el Core Factor favorable (0.5): necesitas el doble de licencias","Lo permite gratis","Prohíbe cualquier uso"], c:1,
-   e:"En AWS/Azure desaparece el Core Factor de 0.5: la misma carga exige el doble de licencias que en OCI."},
-  {cat:0, t:"¿En qué nube pública es posible usar RAC (Zero Downtime)?",
-   o:["AWS","Azure","GCP","OCI (Oracle Cloud Infrastructure)"], c:3,
-   e:"Oracle bloquea técnicamente RAC en AWS, Azure y GCP; la única nube pública que lo soporta es OCI."},
+   o:["Bare metal, KVM con particionado duro o DBaaS","Kubernetes con un operador de Oracle","Cualquier VM de VMware bien dimensionada","Contenedores Docker con la edición Free"],
+   e:"Para desarrollo sí se usan contenedores (Docker/Podman) con Free; en producción se evita Kubernetes para el motor."},
+  {cat:0, t:"Si llevas tu propia licencia (BYOL) a AWS o Azure:",
+   o:["Pierdes el Core Factor de 0,5: el doble de licencias","Se mantiene el Core Factor de 0,5 igual que on-premise","Oracle lo permite sin necesidad de licencia adicional","Oracle lo prohíbe por contrato en todos los casos"],
+   e:"Con la política de nube autorizada, en AWS/Azure la misma carga exige el doble de licencias que en OCI."},
+  {cat:0, t:"Según el temario, ¿en qué nube pública es posible usar RAC?",
+   o:["OCI","AWS","Azure","Google Cloud"],
+   e:"En las VMs de AWS, Azure y GCP, RAC no está soportado. Matiz real: los servicios «Oracle Database@Azure/AWS/Google Cloud» sí ofrecen RAC, pero porque son Exadata operada por Oracle (OCI) dentro de esos centros de datos."},
   {cat:0, t:"Exadata Cloud Service se caracteriza por:",
-   o:["Ofrecer máquinas virtuales genéricas","Fusionar a nivel de hardware el almacenamiento de red y la base de datos, resolviendo analítica pesada en milisegundos","No soportar SQL","Ser solo almacenamiento"], c:1,
-   e:"Es un supercomputador integrado Oracle; AWS/Azure solo ofrecen VMs genéricas."},
-  {cat:0, t:"Con License Included en OCI, el coste se transforma en:",
-   o:["Inversión de capital (CapEx)","Gasto operativo (OpEx): alquilas la BD por horas con la licencia incluida","Licencia perpetua obligatoria","Sin coste"], c:1,
-   e:"Alquilas la base por horas, la apagas cuando no la usas y el riesgo de licenciamiento lo asume el proveedor."},
+   o:["Hardware integrado BD + almacenamiento para analítica muy rápida","Máquinas virtuales genéricas de propósito general","Un servicio de solo almacenamiento de objetos","La versión gratuita de Autonomous Database"],
+   e:"Es un sistema de ingeniería integrado de Oracle; los hiperescalares ofrecen VMs genéricas."},
+  {cat:0, t:"Con License Included en OCI, el coste pasa a ser:",
+   o:["OpEx: pagas por horas con la licencia incluida","CapEx: compras licencias perpetuas por adelantado","Un coste fijo anual por cada socket del servidor","Gratis mientras no superes los límites de Free"],
+   e:"Alquilas por horas, la apagas cuando no la usas y el riesgo de licenciamiento lo asume el proveedor."},
   {cat:0, t:"TNS (Transparent Network Substrate) se entiende como:",
-   o:["El firewall de Oracle","El \"DNS interno\" de Oracle: traduce alias (tnsnames.ora) en IP, puerto y service name","Un lenguaje SQL","Un tipo de backup"], c:1,
-   e:"El alias (ej. PROD_DB) se resuelve en tres datos físicos: Host (IP), Puerto (1521) y Service Name, mediante el archivo tnsnames.ora."},
+   o:["El «DNS» de Oracle: alias → host, puerto y servicio","El firewall que protege el puerto 1521","El protocolo de réplica de Data Guard","El formato interno de los ficheros de redo"],
+   e:"El alias (p. ej. PROD_DB) se resuelve en host (IP), puerto (1521) y service name mediante tnsnames.ora."},
   {cat:0, t:"El Listener de Oracle (tnslsnr):",
-   o:["Ejecuta las consultas SQL","Es un demonio independiente que escucha en el puerto 1521, verifica el servicio y conecta al cliente con un server process","Almacena los datos en disco","Cifra las contraseñas"], c:1,
-   e:"Actúa como recepcionista: tras el handoff se desentiende de la conversación."},
-  {cat:0, t:"Regla de supervivencia SRE sobre el Listener: si el proceso muere o se bloquea...",
-   o:["Todas las conexiones se caen","Las conexiones ya establecidas siguen funcionando, pero ningún usuario nuevo podrá entrar","La BD se corrompe","RAC se desactiva"], c:1,
-   e:"El Listener solo interviene al establecer la conexión; las sesiones activas ya pasaron por él."},
-  {cat:0, t:"En la cadena de conexión (sqlplus admin/...@192.168.1.50:1521/PDB_Ventas), la autenticación se realiza contra:",
-   o:["El Listener","El diccionario de datos de la PDB (SYS.USER$), que devuelve ORA-01017 si el hash no coincide","El sistema operativo","El archivo tnsnames.ora"], c:1,
-   e:"Tras el handoff, el Server Process consulta SYS.USER$ de esa PDB; un fallo de usuario/contraseña produce ORA-01017."},
-  {cat:0, t:"Si un hacker ataca con fuerza bruta miles de contraseñas por segundo, está atacando:",
-   o:["Al Listener","A los Server Processes de la base de datos","Al SO del servidor","Al archivo de redo logs"], c:1,
-   e:"El Listener solo recibe la petición de conexión; la validación de credenciales ocurre en los Server Processes."},
+   o:["Recibe la conexión (1521) y la pasa a un server process","Ejecuta las sentencias SQL que envían los clientes","Escribe los bloques modificados en los datafiles","Valida usuario y contraseña contra SYS.USER$"],
+   e:"Es el recepcionista: tras el hand-off se desentiende de la conversación. La autenticación la hace el server process."},
+  {cat:0, t:"Regla SRE sobre el Listener: si el proceso muere…",
+   o:["Las sesiones abiertas siguen; no entran nuevas","Se cortan inmediatamente todas las sesiones","La base de datos queda corrupta","La instancia se reinicia automáticamente"],
+   e:"El Listener solo interviene al establecer la conexión."},
+  {cat:0, t:"En <code>sqlplus admin/...@192.168.1.50:1521/PDB_Ventas</code>, la autenticación se realiza contra:",
+   o:["SYS.USER$ de la PDB (si falla: ORA-01017)","El Listener, antes de hacer el hand-off","El sistema operativo del servidor","El fichero tnsnames.ora del cliente"],
+   e:"Tras el hand-off, el server process consulta SYS.USER$ de esa PDB; usuario/contraseña incorrectos → ORA-01017."},
+  {cat:0, t:"Si un atacante prueba miles de contraseñas por segundo, ¿qué componente está validando esos intentos?",
+   o:["Los server processes de la base de datos","El Listener","El sistema operativo","El proceso de escritura de redo (LGWR)"],
+   e:"El Listener solo recibe la petición; la validación de credenciales la hacen los server processes."},
 
   {cat:1, t:"La Instance de Oracle es:",
-   o:["Los archivos físicos en disco","El conjunto de estructuras de RAM (SGA/PGA) y procesos en segundo plano; muere al apagar el servidor","Una PDB","El tablespace"], c:1,
-   e:"La instancia vive en la memoria RAM y desaparece al apagar el servidor; se audita con v$instance (status OPEN/MOUNTED)."},
+   o:["Memoria (SGA/PGA) y procesos; muere al apagar","Los ficheros físicos de datos en disco","Una PDB concreta dentro de la CDB","El tablespace SYSTEM con el diccionario"],
+   e:"Vive en memoria; se consulta en v$instance (status OPEN/MOUNTED)."},
   {cat:1, t:"La Database de Oracle es:",
-   o:["La colección de archivos físicos (datafiles, control files, redo logs) escrita en disco; es eterna","La memoria SGA","La sesión del usuario","El listener"], c:0,
-   e:"Vive en el disco duro; se audita con v$database, donde log_mode indica ARCHIVELOG (guardado de historiales para recuperación)."},
-  {cat:1, t:"¿Puede una instancia montar dos bases de datos a la vez? ¿Y una base de datos ser montada por varias instancias?",
-   o:["Sí y no","No a lo primero; sí a lo segundo: eso es la magia de RAC","No y no","Sí y sí"], c:1,
-   e:"Una instancia se enfoca en un solo set de discos; en RAC, varias instancias (servidores) leen y escriben la misma base de datos simultáneamente."},
-  {cat:1, t:"El Service en la conexión Oracle es:",
-   o:["El proceso de memoria del cliente","Una abstracción de red que el Listener usa para saber a qué contenedor (PDB) dirigirte","La contraseña del usuario","El archivo de datos"], c:1,
-   e:"No te conectas directamente al disco sino a un servicio (v$services): el enrutador lógico."},
+   o:["Los ficheros físicos en disco; persisten","La memoria SGA compartida por las sesiones","La sesión abierta de cada usuario","El proceso Listener y su configuración"],
+   e:"Vive en disco; en v$database, log_mode indica si está en ARCHIVELOG."},
+  {cat:1, t:"¿Puede una instancia montar dos bases de datos a la vez? ¿Y una base de datos ser abierta por varias instancias?",
+   o:["No a lo primero; sí a lo segundo (RAC)","Sí a lo primero; no a lo segundo","No en ninguno de los dos casos","Sí en ambos casos (Multitenant)"],
+   e:"Una instancia trabaja con una sola base de datos; en RAC varias instancias leen y escriben la misma base de datos."},
+  {cat:1, t:"El Service en una conexión Oracle es:",
+   o:["El nombre lógico con el que el Listener te enruta a una PDB","El proceso de memoria que atiende a cada cliente","El usuario con el que te autenticas en la base de datos","El datafile donde está almacenada físicamente la tabla"],
+   e:"No te conectas al disco, sino a un servicio (v$services), que actúa de enrutador lógico."},
   {cat:1, t:"La Session es:",
-   o:["La interacción activa entre el cliente y la instancia; tiene inicio, fin y consume RAM (v$session)","El dueño de los objetos","Un tablespace","La copia de seguridad"], c:0,
-   e:"Es el hilo vivo de la conexión: sid, serial#, username y status se ven en v$session."},
-  {cat:1, t:"Regla de oro de Oracle: Schema equivale a:",
-   o:["Tablespace","Database","Usuario: el contenedor lógico propietario de los objetos","Instance"], c:2,
-   e:"Schema = Usuario: el dueño lógico de tablas, vistas y código. No es un disco."},
-  {cat:1, t:"¿Cuál es la diferencia entre Schema y Tablespace?",
-   o:["Son lo mismo","El Schema define quién es el dueño; el Tablespace define en qué disco se guarda físicamente","El Tablespace es el dueño","No se relacionan nunca"], c:1,
-   e:"Un usuario (schema) puede tener tablas repartidas en varios tablespaces; no se contienen el uno al otro."},
-  {cat:1, t:"En arquitectura Multitenant, el CDB es:",
-   o:["La oficina","El edificio: infraestructura principal que gestiona la memoria, la instancia y los procesos","Una sesión","Un datafile"], c:1,
-   e:"CDB (Container Database) es el contenedor raíz; solo hay uno y gestiona la instancia. Se verifica con SELECT cdb FROM v$database (YES)."},
+   o:["La conexión viva cliente-instancia (v$session)","El usuario propietario de los objetos","Un tablespace temporal para ordenaciones","La copia de seguridad de cada usuario"],
+   e:"Es el hilo vivo de la conexión: sid, serial#, username y status en v$session."},
+  {cat:1, t:"Regla de oro de Oracle: un Schema equivale a:",
+   o:["Un usuario","Un tablespace","Una base de datos","Una instancia"],
+   e:"Regla de oro: Schema = usuario, el propietario lógico de tablas, vistas y código. No es un disco (eso sería el tablespace)."},
+  {cat:1, t:"Diferencia entre Schema y Tablespace:",
+   o:["Schema = quién es el dueño; tablespace = dónde se guarda","Son sinónimos en Oracle desde la versión 12c","Tablespace = quién es el dueño; schema = dónde se guarda","Cada schema tiene exactamente un tablespace propio"],
+   e:"Un usuario puede tener tablas repartidas en varios tablespaces; ninguno contiene al otro."},
+  {cat:1, t:"En la arquitectura Multitenant, el CDB es:",
+   o:["El «edificio»: instancia, memoria y procesos","Una «oficina» dedicada a una aplicación","Una sesión de usuario con privilegios SYSDBA","Un datafile especial que contiene las PDBs"],
+   e:"La CDB es el contenedor raíz (solo una por instancia). Se verifica con SELECT cdb FROM v$database (YES)."},
   {cat:1, t:"Una PDB (Pluggable Database) es:",
-   o:["Un bloque de RAM","Una base de datos conectable y lógicamente aislada; para la aplicación es su mundo entero","El file de control","El SQL adicional"], c:1,
-   e:"Las PDBs se \"enchufan\" al CDB; SHOW CON_NAME indica en qué oficina estás y v$pdbs las lista."},
+   o:["Una BD enchufable y aislada dentro de la CDB","Un bloque de memoria reservado en la SGA","El control file de la base de datos contenedora","Una copia de seguridad que se puede enchufar"],
+   e:"Las PDBs se enchufan a la CDB; SHOW CON_NAME dice dónde estás y v$pdbs las lista."},
   {cat:1, t:"Para ver los usuarios de TODAS las PDBs desde CDB$ROOT hay que usar:",
-   o:["DBA_USERS","CDB_USERS, incluyendo siempre la columna CON_ID","USER_USERS","ALL_USERS"], c:1,
-   e:"DBA_USERS dentro de una PDB solo muestra esa oficina; CDB_USERS muestra todas (con CON_ID). Omitir CON_ID confunde usuarios repetidos."},
+   o:["CDB_USERS","DBA_USERS","ALL_USERS","USER_USERS"],
+   e:"CDB_USERS muestra los usuarios de todas las PDBs, pero incluye siempre la columna CON_ID. DBA_USERS dentro de una PDB solo ve esa PDB."},
   {cat:1, t:"Trampa clásica al consultar CDB_USERS:",
-   o:["No saber el tamaño","Si omites CON_ID verás varios usuarios llamados \"ADMIN\" sin saber a qué PDB pertenece cada uno","El rendimiento baja","No necesita permisos"], c:1,
-   e:"La columna CON_ID identifica el contenedor; sin ella los reportes de auditoría se arruinan con usuarios duplicados."},
+   o:["Sin CON_ID, usuarios repetidos sin saber su PDB","No muestra los usuarios comunes (C##)","Solo funciona si estás dentro de una PDB","Exige reiniciar la CDB para verse actualizada"],
+   e:"CON_ID identifica el contenedor; sin él, los informes de auditoría se llenan de duplicados."},
   {cat:1, t:"Regla del modelo Multitenant de 2 niveles:",
-   o:["Un CDB dentro de otro CDB es válido","Una PDB puede contener otras PDBs","Un CDB (padre) aloja PDBs (hijos), pero un CDB no puede estar en otro CDB ni una PDB contener PDBs","Nada de esto es cierto"], c:2,
-   e:"Solo hay un nivel de contenedores en el modelo básico: padre CDB, hijos PDB."},
+   o:["CDB con PDBs; sin anidar CDBs ni PDBs","Una PDB puede contener otras PDBs","Una CDB puede anidarse en otra CDB","Cada PDB necesita su propia instancia"],
+   e:"En el modelo básico solo hay un nivel: padre CDB, hijos PDB."},
   {cat:1, t:"El Application Container (3 niveles, desde 12c R2) resuelve, para empresas SaaS:",
-   o:["Parchar 50 PDBs una a una","El coste de licencias","Heredar la estructura desde un Application Root con una sola actualización para todos los clientes","La seguridad de Oracle"], c:2,
-   e:"El Application Root instala la estructura maestra (ej. tabla Facturas) y los Application PDBs la heredan; un solo parche en el Root actualiza a todas."},
+   o:["Actualizar a todos los clientes desde un Application Root","Reducir el coste de licencias por cada PDB","Cifrar por separado los datos de cada cliente","Replicar automáticamente cada PDB en otra región"],
+   e:"El Application Root instala la estructura maestra (p. ej. tabla Facturas); las Application PDBs la heredan y un parche en el root actualiza a todas."},
   {cat:1, t:"Jerarquía correcta del modelo avanzado de 3 niveles:",
-   o:["PDB → CDB → Application Root","CDB → Application Root → Application PDBs","Application PDBs → CDB → Root","CDB → PDB → Application Root"], c:1,
-   e:"El CDB es la raíz; dentro, un Application Root (PDB especial contenedor); dentro, los Application PDBs de cada cliente."},
+   o:["CDB → Application Root → Application PDBs","PDB → CDB → Application Root","CDB → PDB → Application Root","Application Root → CDB → Application PDBs"],
+   e:"La CDB es la raíz; dentro, un Application Root (PDB especial); dentro, las Application PDBs de cada cliente."},
 
-  {cat:2, t:"Máxima SRE sobre herramientas: \"Las interfaces gráficas son para tiempos de paz; la línea de comandos para...\"",
-   o:["los novatos","tiempos de guerra","el fin de semana","los backups"], c:1,
-   e:"Bajo presión (memoria agotada, red saturada) las GUIs no conectan; el CLI es el único salvavidas y además es reproducible."},
+  {cat:2, t:"Máxima SRE: «Las interfaces gráficas son para tiempos de paz; la línea de comandos, para…»",
+   o:["tiempos de guerra","los principiantes","tareas de desarrollo","informes periódicos"],
+   e:"Bajo presión (memoria agotada, red saturada) las GUI no conectan; el CLI es el salvavidas y además es reproducible."},
   {cat:2, t:"¿Qué es SQL*Plus?",
-   o:["El IDE gráfico de Oracle","El CLI nativo clásico de Oracle: sin autocompletado ni colores, pero la garantía absoluta","La plataforma de gestión de flota","El lenguaje de modelado"], c:1,
-   e:"SQL*Plus llega integrado con el motor desde hace décadas; si todo falla, permite conectar y reiniciar la BD."},
+   o:["El CLI nativo clásico: austero pero siempre disponible","El IDE gráfico gratuito de Oracle hecho en Java","La consola web basada en ORDS (Database Actions)","La plataforma para gestionar flotas de bases de datos"],
+   e:"Viene con el motor desde hace décadas; si todo falla, permite conectar y reiniciar la BD."},
   {cat:2, t:"Oracle SQL Developer es:",
-   o:["Un CLI","El IDE gráfico gratuito en Java para desarrollo PL/SQL, EXPLAIN PLAN, modelado ER e ingeniería inversa","La torre de control empresarial","Un paquete de parches"], c:1,
-   e:"Es el cuartel general del desarrollador: consulta, depuración paso a paso, planes de ejecución y modelos entidad-relación."},
+   o:["El IDE gráfico gratuito para PL/SQL y modelado","La herramienta de línea de comandos nativa","La consola de gestión de cientos de BD","La utilidad oficial de parcheo de binarios"],
+   e:"Consultas, depuración paso a paso, planes de ejecución, modelos entidad-relación e ingeniería inversa."},
   {cat:2, t:"Database Actions (antes SQL Developer Web) se basa en:",
-   o:["Oracle REST Data Services (ORDS)","SQL*Plus","Oracle Net Manager","Enterprise Manager"], c:0,
-   e:"Es la experiencia de cero instalación, basada en el navegador, integrada por defecto en Oracle Cloud y Autonomous Database."},
+   o:["ORDS","SQL*Plus","Oracle Net Manager","Enterprise Manager"],
+   e:"Database Actions se basa en Oracle REST Data Services (ORDS): cero instalación, en el navegador, integrada en Oracle Cloud y Autonomous Database."},
   {cat:2, t:"En Database Actions, el Performance Hub permite:",
-   o:["Crear tablas con clic","Ver métricas en tiempo real, historial ASH, SQL lentas y eventos de espera/CPU/I-O","Diseñar modelos ER","Exportar backups"], c:1,
-   e:"Es el panel de control del administrador para monitoreo y diagnóstico de rendimiento."},
+   o:["Métricas en tiempo real, ASH y SQL lentas","Diseñar modelos entidad-relación","Aplicar parches al motor","Programar y lanzar backups RMAN"],
+   e:"Es el panel de monitorización y diagnóstico de rendimiento."},
   {cat:2, t:"Con AutoREST de Database Actions se puede:",
-   o:["Almacenar vectores","Exponer tablas, vistas o procedimientos como endpoints REST (GET/POST/PUT/DELETE), con seguridad OAuth 2.0","Parchear la BD","Crear listeners"], c:1,
-   e:"Exponer datos como APIs REST con manejadores SQL/PL/SQL en JSON, protegiendo con OAuth 2.0."},
+   o:["Publicar tablas o procedimientos como APIs REST","Almacenar vectores para búsqueda semántica","Crear y configurar listeners de red","Convertir tablas en colecciones de documentos JSON"],
+   e:"Publica datos como APIs REST (GET/POST/PUT/DELETE) en JSON, con OAuth 2.0."},
   {cat:2, t:"SODA (JSON Studio) en Database Actions permite:",
-   o:["Usar la BD relacional como almacén de documentos flexible tipo MongoDB con búsqueda Query by Example (QBE)","Ejecutar RAC","Aplicar parches de seguridad","Hacer flashback"], c:0,
-   e:"SODA convierte la BD en un almacén de documentos JSON indexable, consultable por QBE."},
-  {cat:2, t:"Oracle Enterprise Manager (Cloud Control) es correcto describirla como:",
-   o:["Una herramienta 1 a 1 para desarrollo","La plataforma de gestión 1 a N (torre de control) de cientos de bases de datos, con OMS, repositorio y agentes","Un CLI de parcheo","Un sinónimo de DB Actions"], c:1,
-   e:"OEM gobierna toda una flota: estado de salud, parches, AWR, capacity planning y compliance desde un único panel."},
-  {cat:2, t:"Tareas que SOLO se pueden hacer con OEM (no con SQL Developer/DB Actions):",
-   o:["Ejecutar un SELECT","Fleet Patching (RU/RUR) masivo, AWR/ADDM global, Capacity Planning y Compliance Framework (CIS, PCI DSS, STIG)","Conectarse a una PDB","Diseñar un diagrama ER"], c:1,
-   e:"OEM cruza BD, SO, red y almacenamiento para orquestar la infraestructura completa; las demás herramientas son de enfoque local."},
+   o:["Usar la BD como almacén de documentos JSON (QBE)","Publicar procedimientos como servicios REST","Ver planes de ejecución de forma gráfica","Gestionar los wallets de cifrado TDE"],
+   e:"SODA convierte la BD en un almacén de documentos JSON indexable, consultable con QBE."},
+  {cat:2, t:"Oracle Enterprise Manager (Cloud Control) es:",
+   o:["La plataforma de gestión 1 a N de flotas de BD","Un IDE 1 a 1 para desarrollar PL/SQL","La utilidad de línea de comandos para parchear","Otro nombre de Database Actions en la nube"],
+   e:"OEM gobierna la flota: salud, parches, AWR, capacity planning y compliance desde un panel."},
+  {cat:2, t:"Tareas que SOLO se hacen con OEM (no con SQL Developer ni Database Actions):",
+   o:["Fleet Patching, AWR/ADDM global y Compliance","Ejecutar un SELECT sobre una PDB concreta","Diseñar un diagrama entidad-relación","Exponer una tabla como API REST"],
+   e:"OEM cruza BD, SO, red y almacenamiento; el resto son herramientas de enfoque local."},
   {cat:2, t:"OPatch es la utilidad encargada de:",
-   o:["Hacer snapshots AWR","Inyectar los Release Updates (RUs) en los binarios de Oracle para cerrar vulnerabilidades (CVEs)","Crear las PDBs","Gestionar wallets"], c:1,
-   e:"Parchear es supervivencia: OPatch aplica las correcciones con el mínimo downtime (p. ej. parcheo rodante en RAC)."},
+   o:["Aplicar Release Updates a los binarios de Oracle","Tomar snapshots de AWR bajo demanda","Crear y clonar PDBs a partir de una semilla","Gestionar los wallets de cifrado TDE"],
+   e:"Parchear es supervivencia: OPatch aplica correcciones con el mínimo downtime (p. ej. parcheo rodante en RAC)."},
   {cat:2, t:"AWR (Automatic Workload Repository) es:",
-   o:["La caja negra del motor: fotografías (snapshots) horarias del estado de memoria, CPU y eventos de espera","Un proceso del SO","Un índice","Una licencia Enterprise"], c:1,
-   e:"AWR es el registrador de vuelo: guarda de forma persistente snapshots periódicas que alimentan toda la cultura de rendimiento basada en evidencia."},
+   o:["La «caja negra»: snapshots periódicos del rendimiento","Un proceso del SO que vigila el espacio en disco","Un tipo de índice para consultas analíticas","El registro de accesos y logins de los usuarios"],
+   e:"Guarda instantáneas persistentes que alimentan el análisis de rendimiento basado en evidencia. Requiere Diagnostic Pack (Enterprise Edition)."},
 
-  {cat:3, t:"¿Qué porcentaje del funcionamiento de una BD relacional se ha convertido en un commodity universal?",
-   o:["El 20%","El 80%","El 100%","El 50%"], c:1,
-   e:"El 80% es estándar común a todas las BDs; las empresas pagan Oracle por el 20% restante diferenciador."},
-  {cat:3, t:"Conocimiento incluido en el \"conocimiento transferible\" de Oracle (commodity):",
-   o:["Árboles B y física de la búsqueda, ACID, CBO/estadísticas, separación lógico-física, diccionario de datos, aislamiento y bloqueos","Últimas versiones exclusivas","Exclusivamente el RAC","Solo el Multitenant"], c:0,
-   e:"Estos principios universales permiten traducir Oracle a cualquier otro SGBD (Piedra Rosetta)."},
-  {cat:3, t:"Diferenciadores absolutos (estrictamente propietarios) de la arquitectura Oracle:",
-   o:["Undo Tablespace + Flashback, Redo Logs físicos (base de RAC y Active Data Guard), PL/SQL cercano al dato, Multitenant y consistencia de lectura por sentencia","El SELECT estándar","El CSV","El lenguaje C"], c:0,
-   e:"Son tecnologías que Oracle desarrolló durante décadas; intentar replicarlas igual en otros motores es un error de diseño."},
-  {cat:3, t:"Equivalencia aproximada del Redo Log de Oracle en PostgreSQL:",
-   o:["Autovacuum","WAL (Write-Ahead Log)","El tablespace","El rol de usuario"], c:1,
-   e:"Redo Log ↔ WAL (PostgreSQL) ↔ Transaction Log (SQL Server) ↔ Redo Log InnoDB (MySQL)."},
-  {cat:3, t:"En SQL Server, la MVCC guarda las versiones viejas en:",
-   o:["La misma tabla","El Version Store (dentro de TempDB)","Un archivo .mdf","El datafile"], c:1,
-   e:"Oracle usa el Undo Tablespace; PostgreSQL las guarda en la misma tabla (MVCC interno); SQL Server usa el Version Store en TempDB."},
-  {cat:3, t:"Equivalencia del concepto \"Schema (Propietario)\" de Oracle en PostgreSQL:",
-   o:["WAL","Role / User y Database↔Schema","El buffer pool","El datafile"], c:1,
-   e:"En PostgreSQL, user/role es el propietario y el concepto Database/Schema agrupa objetos; en MySQL Database es sinónimo de Schema."},
-  {cat:3, t:"\"Las empresas no compran Oracle por SELECTs más bonitos\": pagan la licencia por:",
-   o:["El rendimiento de una consulta simple","RAC, Control de Concurrencia vía Undo, Flashback, Duality Views & AI Vector y Database Vault","El color de la GUI","El tamaño de la documentación"], c:1,
-   e:"Por los diferenciadores de alta disponibilidad activo-activo, concurrencia sin \"basura\", la \"máquina del tiempo\" (Flashback), convergencia y gobernanza paranoica."},
+  {cat:3, t:"¿Qué porcentaje del funcionamiento de una BD relacional se considera commodity universal?",
+   o:["El 80 %","El 20 %","El 50 %","El 100 %"],
+   e:"El 80 % es común a todos los SGBD; las empresas pagan Oracle por el 20 % diferenciador."},
+  {cat:3, t:"¿Qué forma parte del conocimiento transferible (commodity) de Oracle?",
+   o:["Árboles B, ACID, CBO, aislamiento y bloqueos","Undo Tablespace y Flashback Query","RAC y Active Data Guard","Multitenant y Application Containers"],
+   e:"Son principios universales que permiten traducir Oracle a cualquier SGBD (Piedra Rosetta). Las otras opciones son diferenciadores propietarios."},
+  {cat:3, t:"Diferenciadores propietarios de la arquitectura Oracle:",
+   o:["Undo + Flashback, Redo (RAC/ADG), PL/SQL, Multitenant","Árboles B y el optimizador basado en costes","El estándar SQL y las transacciones ACID","Índices, vistas y claves foráneas"],
+   e:"Tecnologías desarrolladas durante décadas; intentar replicarlas igual en otro motor es un error de diseño."},
+  {cat:3, t:"Equivalente aproximado del Redo Log de Oracle en PostgreSQL:",
+   o:["WAL (Write-Ahead Log)","Autovacuum","El tablespace pg_default","El role de usuario"],
+   e:"Redo Log ↔ WAL (PostgreSQL) ↔ Transaction Log (SQL Server) ↔ redo log de InnoDB (MySQL)."},
+  {cat:3, t:"En SQL Server, las versiones antiguas de filas (MVCC) se guardan en:",
+   o:["El Version Store, dentro de TempDB","El Undo Tablespace","La propia tabla, junto a la fila nueva","El Transaction Log"],
+   e:"Oracle: Undo Tablespace. PostgreSQL: en la propia tabla. SQL Server: Version Store en TempDB (desde SQL Server 2019, con ADR, puede usar un version store persistente en la propia BD)."},
+  {cat:3, t:"Equivalencia en PostgreSQL del concepto «Schema (propietario)» de Oracle:",
+   o:["El role como propietario; schema/database agrupan objetos","El WAL, que registra los cambios de cada usuario","El shared buffer pool asignado a cada usuario","El datafile donde se guardan los objetos del usuario"],
+   e:"En PostgreSQL el propietario es el role y el esquema agrupa objetos; en MySQL «database» es sinónimo de «schema»."},
+  {cat:3, t:"«Las empresas no compran Oracle por SELECT más bonitos»: pagan por…",
+   o:["Sus diferenciadores: RAC, Undo, Flashback, Vault…","El rendimiento de las consultas simples","La sintaxis SQL estándar y portable","Sus herramientas gráficas gratuitas"],
+   e:"Alta disponibilidad activo-activo, concurrencia sin bloqueos, «máquina del tiempo», convergencia y gobernanza."},
 
-  {cat:4, t:"Un portafolio SRE de élite debería incluir:",
-   o:["Solo apuntes de clase","Runbooks (Bash/SQLcl), análisis forense de AWR reales, simulaciones de desastres con RMAN y casos de uso de AI Vector Search","Capturas de pantalla de la GUI","Memes de programación"], c:1,
-   e:"Un repositorio (GitHub) con prácticas estructuradas vale más formativamente que prácticas sueltas."},
-  {cat:4, t:"Nivel 1 (Logro Inmediato) del mapa de certificación:",
-   o:["Oracle AI Database Administration Professional","Oracle Academy Certificate: Database Foundations, $0, obtenido al aprobar la asignatura","Oracle AI Autonomous Database Professional","Cualquier certificación Pearson VUE"], c:1,
-   e:"El punto de partida es el certificado de Oracle Academy, sin coste, vinculado a la asignatura."},
-  {cat:4, t:"El \"Filtro Técnico\" (Nivel 3) de la ruta es la certificación:",
-   o:["Oracle AI Database Administration Associate, examinada por Pearson VUE (precio neto alumno ~122,50 USD)","Database Foundations","AI Autonomous Database Professional","Site Reliability Engineer"], c:0,
-   e:"Nivel 3: Oracle AI Database Administration Associate (Pearson VUE). Nivel 4 sería la Professional."},
-  {cat:4, t:"Una Golden Image (Estado Cero) demuestra:",
-   o:["Desplegar una base de datos operativa en segundos","El diseño de la interfaz","Un backup corrupto","El tamaño del datafile"], c:0,
-   e:"la capacidad de reconstruir un entorno completo al instante; es evidencia operativa para el portafolio."},
-  {cat:4, t:"El 4º pilar estratégico de la ruta SRE es:",
-   o:["Memorizar sintaxis del CREATE","Entrenar el triaje forense (estudiar leyendo diccionario DBA_/V$ y entender por qué responde el motor), no la memoria","Copiar soluciones de internet","Usar solo la GUI"], c:1,
-   e:"La certificación presenta servidores colapsados y errores; debes elegir la solución arquitectónicamente viable, no recordar comandos."}
-];
-
-const N = QS.length;
-document.getElementById("total").textContent = N;
-document.getElementById("totalText").textContent = N;
-const answers = new Array(N).fill(-1);
-const LETRAS = ["a","b","c","d"];
-
-function render() {
-  const container = document.getElementById("container");
-  let html = "";
-  for (let c = 0; c < CATS.length; c++) {
-    html += '<section class="cat"><div class="cat-title">' + CATS[c][0] + "</div>";
-    QS.forEach((q, i) => {
-      if (q.cat !== c) return;
-      html += '<div class="q" id="q' + i + '">';
-      html += '<div class="num">Pregunta ' + (i+1) + "/" + N + "</div>";
-      html += '<div class="text">' + q.t + "</div>";
-      html += '<div class="opts">';
-      q.o.forEach((opt, j) => {
-        html += '<label class="opt" data-q="' + i + '" data-opt="' + j + '">';
-        html += '<input type="radio" name="q' + i + '" value="' + j + '">';
-        html += '<span><b class="letter">' + LETRAS[j] + ")</b> " + opt + "</span></label>";
-      });
-      html += "</div>";
-      html += '<div class="explain" id="exp' + i + '"></div>';
-      html += "</div>";
-    });
-    html += "</section>";
-  }
-  container.innerHTML = html;
-  container.querySelectorAll("input[type=radio]").forEach(inp => {
-    inp.addEventListener("change", () => {
-      const q = +inp.getAttribute("name").slice(1);
-      if (answers[q] !== -1) return;
-      answers[q] = +inp.value;
-      gradeQuestion(q);
-      updateProgress();
-    });
-  });
-  updateProgress();
-}
-
-function gradeQuestion(i) {
-  const q = QS[i];
-  const card = document.getElementById("q" + i);
-  const chosen = answers[i];
-  const ok = chosen === q.c;
-
-  card.classList.add(ok ? "correct" : "wrong");
-  card.querySelectorAll("label.opt").forEach(lbl => {
-    const o = +lbl.getAttribute("data-opt");
-    if (o === chosen && o === q.c) lbl.classList.add("selected-ok");
-    else if (o === chosen) lbl.classList.add("selected-ko");
-    else if (o === q.c) lbl.classList.add("show-ok");
-    lbl.classList.add("locked");
-  });
-  card.querySelectorAll("input").forEach(inp => inp.disabled = true);
-
-  const exp = document.getElementById("exp" + i);
-  exp.classList.add("show", ok ? "correct" : "wrong");
-  const head = ok
-    ? '\u2714 Correcto.'
-    : '\u2718 Incorrecto. La respuesta correcta es <b>' + LETRAS[q.c] + ")</b>.";
-  exp.innerHTML = '<div class="head">' + head + '</div><span>' + q.e + "</span>";
-}
-
-function updateProgress() {
-  const done = answers.filter(a => a !== -1).length;
-  const ok = answers.filter((a, i) => a === QS[i].c).length;
-  document.getElementById("answered").textContent = done;
-  document.getElementById("correct").textContent = ok;
-  document.getElementById("barFill").style.width = (done / N * 100) + "%";
-
-  if (done === N) showResult(ok);
-}
-
-function showResult(ok) {
-  const pct = Math.round(ok / N * 100);
-  const res = document.getElementById("resultado");
-  res.style.display = "block";
-  if (pct >= 90) { res.className = "bien"; res.innerHTML = "Excelente: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Dominas el tema. Repasa solo lo fallado.</div>"; }
-  else if (pct >= 70) { res.className = "aceptable"; res.innerHTML = "Bien: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Buen nivel, pero repasa las secciones con fallos.</div>"; }
-  else { res.className = "mal"; res.innerHTML = "A estudiar: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Reinicia y repite con calma.</div>"; }
-  window.scrollTo({top: 0, behavior: "smooth"});
-}
-
-document.getElementById("btnReiniciar").addEventListener("click", () => {
-  if (!confirm("¿Reiniciar el test? Se perderán las respuestas.")) return;
-  answers.fill(-1);
-  document.getElementById("resultado").style.display = "none";
-  render();
-});
-
-render();
+  {cat:4, t:"Un portafolio SRE sólido debería incluir:",
+   o:["Runbooks, forense de AWR, simulacros RMAN y casos de IA","Apuntes de clase y resúmenes de la teoría del curso","Capturas de pantalla de las herramientas gráficas","Una lista de certificaciones pendientes de obtener"],
+   e:"Un repositorio (p. ej. GitHub) con prácticas estructuradas demuestra capacidad real."},
+  {cat:4, t:"Nivel 1 (logro inmediato) del mapa de certificación:",
+   o:["Oracle Academy Database Foundations (gratis)","Oracle AI Database Administration Associate","Oracle AI Database Administration Professional","Oracle Autonomous Database Professional"],
+   e:"El punto de partida es el certificado de Oracle Academy, sin coste."},
+  {cat:4, t:"El «filtro técnico» (nivel 3) de la ruta es la certificación:",
+   o:["Oracle AI Database Administration Associate (Pearson VUE)","Database Foundations de Oracle Academy","Oracle AI Database Administration Professional","Oracle Cloud Infrastructure Foundations"],
+   e:"Nivel 3: Associate (en los apuntes, ~122,50 $ con descuento de estudiante; comprueba el precio vigente). El nivel 4 es la Professional."},
+  {cat:4, t:"Una Golden Image («estado cero») demuestra:",
+   o:["Que puedes desplegar una base de datos operativa en segundos","Que la base de datos tiene un backup verificado","Que el esquema está normalizado","Que las licencias están en regla"],
+   e:"Reconstruir un entorno completo al instante es evidencia operativa para el portafolio."},
+  {cat:4, t:"El 4.º pilar estratégico de la ruta SRE es:",
+   o:["Entrenar el triaje forense con DBA_/V$, no la memoria","Memorizar la sintaxis completa de CREATE y ALTER","Dominar todas las herramientas gráficas de Oracle","Acumular el máximo número de certificaciones posible"],
+   e:"El examen plantea servidores colapsados y errores: hay que elegir la solución viable, no recordar comandos."}
+  ]
+};
 </script>
+<script src="assets/test.js"></script>
 </body>
 </html>

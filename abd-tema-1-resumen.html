@@ -3,114 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resumen Tema 1 - ABD</title>
-<style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --border: #334155;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --ok: #22c55e;
-    --ko: #ef4444;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.55;
-    padding: 24px 16px 80px;
-  }
-  header {
-    max-width: 860px;
-    margin: 0 auto 24px;
-    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
-    border-radius: var(--radius);
-    padding: 28px;
-    text-align: center;
-  }
-  header h1 { font-size: 1.7rem; letter-spacing: 0.3px; }
-  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
-  header a.back { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 0.85rem; text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; }
-  header a.back:hover { background: rgba(255,255,255,0.35); }
-  .toc {
-    max-width: 860px; margin: 0 auto 26px;
-    display: flex; flex-wrap: wrap; gap: 8px;
-    position: sticky; top: 10px; z-index: 10;
-    background: rgba(15,23,42,0.92);
-    backdrop-filter: blur(6px);
-    padding: 8px 0;
-  }
-  .toc a {
-    padding: 6px 12px;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    color: var(--muted);
-    font-size: 0.82rem;
-    text-decoration: none;
-    background: var(--card);
-  }
-  .toc a:hover { border-color: var(--accent); color: var(--accent); }
-  section.cat { max-width: 860px; margin: 0 auto 44px; }
-  .cat-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    padding: 10px 16px;
-    background: rgba(56,189,248,0.12);
-    border-left: 4px solid var(--accent);
-    border-radius: 6px;
-    color: var(--accent);
-  }
-  .bloque {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    margin-bottom: 14px;
-  }
-  .bloque h4 { color: var(--accent); font-size: 1rem; margin-bottom: 8px; }
-  .bloque p { margin: 6px 0; font-size: 0.95rem; }
-  .bloque ul, .bloque ol { margin: 6px 0 6px 20px; font-size: 0.95rem; }
-  .bloque li { margin: 4px 0; }
-  .bloque b { color: #fff; }
-  .key {
-    border-left: 4px solid var(--accent);
-    background: rgba(56,189,248,0.1);
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin: 10px 0;
-    font-size: 0.9rem;
-  }
-  .key b { color: var(--accent); }
-  .warn {
-    border-left: 4px solid var(--ko);
-    background: rgba(239,68,68,0.1);
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin: 10px 0;
-    font-size: 0.9rem;
-  }
-  .warn b { color: var(--ko); }
-  table.tbl { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.88rem; }
-  table.tbl th { background: #24344d; color: var(--accent); text-align: left; padding: 8px 10px; border: 1px solid var(--border); }
-  table.tbl td { padding: 8px 10px; border: 1px solid var(--border); color: var(--text); vertical-align: top; }
-  table.tbl tr:nth-child(even) td { background: rgba(30,41,59,0.5); }
-  code { background: #0b1220; border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; font-size: 0.88em; color: #7dd3fc; }
-  pre { background: #0b1220; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; color: #7dd3fc; margin: 8px 0; }
-  footer { max-width: 860px; margin: 30px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
-</style>
+<title>Resumen ABD Tema 1 · Fundamentos de Administración de BD</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
 </head>
-<body>
+<body data-crumb="ABD · Tema 1 · Resumen">
 
-<header>
-  <h1>Resumen Tema 1 - Administración de Bases de Datos</h1>
-  <p><a class="back" href="index.html">← Volver al índice</a></p>
-  <p>Fundamentos de SGBD: resumen de estudio por secciones (1.1–1.6).</p>
-</header>
+<main class="wrap">
+<div class="page-head">
+  <span class="eyebrow">Administración de Bases de Datos · Tema 1</span>
+  <h1>Resumen: Fundamentos de Administración de Bases de Datos</h1>
+  <p class="lead">Resumen de estudio por secciones (1.1–1.6): sistemas de información, SGBD, rol del DBA, panorama de tecnologías e ingeniería profesional.</p>
+  <div class="actions-row"><a class="btn primary" href="abd-tema-1.html">Hacer el test (66 preguntas)</a></div>
+</div>
 
 <nav class="toc" id="toc">
   <a href="#sec0">1.1 Sistemas de Información</a>
@@ -122,7 +27,7 @@
 </nav>
 
 <section class="cat" id="sec0">
-  <div class="cat-title">Sección 1.1 - Sistemas de Información</div>
+  <h2 class="cat-title">Sección 1.1 - Sistemas de Información</h2>
 
   <div class="bloque">
     <h4>El Sistema de Información (SI)</h4>
@@ -169,13 +74,13 @@
 
   <div class="bloque">
     <h4>Componentes humanos: el DBA en el epicentro</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Rol</th><th>Prioriza</th></tr>
       <tr><td><b>Desarrollador</b></td><td>Agilidad, nuevas funciones, experiencia de uso.</td></tr>
       <tr><td><b>SysAdmin</b></td><td>Estabilidad del hardware y ahorro de recursos.</td></tr>
       <tr><td><b>Usuario</b></td><td>Disponibilidad, coherencia y respuesta instantánea.</td></tr>
       <tr><td><b>DBA</b></td><td>Negocia, rechaza código ineficiente y protege el motor.</td></tr>
-    </table>
+    </table></div>
     <p>El DBA opera en un <b>entramado socio-técnico</b>: necesita profundidad técnica y capacidad de interlocución para diagnosticar incidentes y comunicarse con los demás perfiles.</p>
   </div>
 
@@ -189,11 +94,11 @@
       <li>Ingreso de <b>datos inconsistentes</b> (mal diseño)</li>
     </ul>
     <div class="warn">La mala gestión deja de ser un problema técnico y se convierte en <b>crisis corporativa</b>: el downtime tiene coste financiero y daño reputacional.</div>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Métrica</th><th>Definición</th></tr>
       <tr><td><b>RTO</b> (Recovery Time Objective)</td><td>Tiempo máximo que el sistema puede estar caído antes de que el daño sea inaceptable.</td></tr>
       <tr><td><b>RPO</b> (Recovery Point Objective)</td><td>Pérdida de datos máxima tolerable tras un incidente (minutos / horas / días).</td></tr>
-    </table>
+    </table></div>
     <p>Si un negocio exige <b>RTO ≈ RPO ≈ 0</b> (banca, UCI, procesadores de pago) se traduce en <b>Maximum Availability Architecture (MAA)</b>.</p>
     <ul>
       <li><b>Maximum Protection</b>: RPO ≈ 0, prioriza los datos sobre la disponibilidad.</li>
@@ -203,15 +108,15 @@
 </section>
 
 <section class="cat" id="sec1">
-  <div class="cat-title">Sección 1.2 - Pensamiento de Sistemas</div>
+  <h2 class="cat-title">Sección 1.2 - Pensamiento de Sistemas</h2>
 
   <div class="bloque">
     <h4>Independencia de datos</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Tipo</th><th>Qué permite</th><th>Cómo se logra</th></tr>
       <tr><td><b>Independencia física</b></td><td>Modificar la estructura física de almacenamiento (mover archivos a discos más rápidos) sin reescribir las aplicaciones.</td><td>No altera la visión lógica.</td></tr>
       <tr><td><b>Independencia lógica</b></td><td>Alterar el esquema conceptual (tablas, columnas, relaciones) sin romper las aplicaciones.</td><td>Vistas, APIs, procedimientos o capas de acceso.</td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="bloque">
@@ -252,7 +157,7 @@
 </section>
 
 <section class="cat" id="sec2">
-  <div class="cat-title">Sección 1.3 - Bases de Datos y SGBD</div>
+  <h2 class="cat-title">Sección 1.3 - Bases de Datos y SGBD</h2>
 
   <div class="bloque">
     <h4>Qué es una base de datos</h4>
@@ -316,13 +221,13 @@
 
   <div class="bloque">
     <h4>Almacenamiento simple vs gestión transaccional</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Característica</th><th>Simple (CSV, JSON, XLSX)</th><th>Transaccional (SGBD)</th></tr>
       <tr><td><b>Integridad</b></td><td>Acepta cualquier dato (texto en campo de fecha, negativos…).</td><td>El motor rechaza operaciones que violen las reglas.</td></tr>
       <tr><td><b>Concurrencia</b></td><td>El archivo se bloquea completo para un solo usuario.</td><td>Múltiples usuarios leen y escriben sin colisionar.</td></tr>
       <tr><td><b>Recuperación</b></td><td>Si falla al guardar, el archivo suele corromperse.</td><td>Las transacciones a medias se deshacen manteniendo coherencia.</td></tr>
       <tr><td><b>Metadatos</b></td><td>La estructura está en la cabeza de quien la creó.</td><td>El sistema describe su estructura de forma centralizada.</td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="bloque">
@@ -337,7 +242,7 @@
 </section>
 
 <section class="cat" id="sec3">
-  <div class="cat-title">Sección 1.4 - Evolución del Rol del DBA</div>
+  <h2 class="cat-title">Sección 1.4 - Evolución del Rol del DBA</h2>
 
   <div class="bloque">
     <h4>Resiliencia y evolución a gran escala</h4>
@@ -350,7 +255,7 @@
 
   <div class="bloque">
     <h4>Responsabilidades operativas y de continuidad</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Área</th><th>Qué implica</th></tr>
       <tr><td><b>1. Operaciones</b></td><td>Despliegue de entornos, parcheo, migraciones, monitoreo.</td></tr>
       <tr><td><b>2. Capacity Planning predictivo</b></td><td>Modelar el crecimiento transaccional para provisionar CPU, memoria e IOPS antes de que el motor sufra.</td></tr>
@@ -358,8 +263,8 @@
       <tr><td><b>4. Auditoría y gobierno</b></td><td>Monitoreo en tiempo real, cifrado en reposo y en tránsito, trazabilidad (GDPR, ISO 27001, PCI-DSS).</td></tr>
       <tr><td><b>5. Tuning</b></td><td>RAM/caché/hilos, query profiling, Lock Management (deadlocks), planes de ejecución, índices y particiones.</td></tr>
       <tr><td><b>6-7. Continuidad y recuperabilidad</b></td><td>Backups automatizados con regla 3-2-1, simulacros de DR midiendo RPO y RTO.</td></tr>
-    </table>
-    <div class="warn"><b>IOPS</b> = operaciones de entrada/salida por segundo (ancho de banda del disco). Si no hay suficiente RAM aumentan las IOPS, la CPU espera al disco, se acumulan consultas en cola y la latencia se dispara.</div>
+    </table></div>
+    <div class="warn"><b>IOPS</b> = operaciones de entrada/salida por segundo (no es lo mismo que el ancho de banda, que se mide en MB/s). Si no hay suficiente RAM aumentan las IOPS, la CPU espera al disco, se acumulan consultas en cola y la latencia se dispara.</div>
   </div>
 
   <div class="bloque">
@@ -384,29 +289,29 @@
 </section>
 
 <section class="cat" id="sec4">
-  <div class="cat-title">Sección 1.5 - Panorama de Tecnologías de BD</div>
+  <h2 class="cat-title">Sección 1.5 - Panorama de Tecnologías de BD</h2>
 
   <div class="bloque">
     <h4>Familias de motores</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Familia</th><th>Paradigma</th><th>Carga óptima</th></tr>
       <tr><td><b>Relacional (RDBMS)</b></td><td>Tabular, fuertemente tipada, álgebra relacional, <b>ACID</b>.</td><td>Transacciones críticas (core bancario, ERPs).</td></tr>
       <tr><td><b>Documental</b></td><td>Esquemas flexibles (schema-on-read), JSON/BSON jerárquico.</td><td>Catálogos e-commerce, CMS, perfiles de usuario.</td></tr>
       <tr><td><b>Clave-Valor</b></td><td>Acceso <b>O(1)</b> por identificador.</td><td>Cachés, sesiones web, carritos temporales.</td></tr>
       <tr><td><b>Columna</b></td><td>Agrupa columnas físicamente (compresión, lectura parcial).</td><td>Analítica masiva (OLAP), series temporales, telemetría IoT.</td></tr>
       <tr><td><b>Grafos</b></td><td>Nodos, aristas y propiedades; evita JOINs costosos.</td><td>Fraudes en tiempo real, recomendaciones, redes sociales.</td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="bloque">
     <h4>OLTP vs OLAP</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Dimensión</th><th>OLTP</th><th>OLAP</th></tr>
       <tr><td><b>Carga</b></td><td>Micro-transacciones de alta frecuencia y baja latencia (insert/update/delete rápidos).</td><td>Consultas masivas de lectura que escanean millones de filas.</td></tr>
       <tr><td><b>Métrica</b></td><td>IOPS y latencia por transacción.</td><td>Throughput de lectura y tiempo total de la consulta.</td></tr>
       <tr><td><b>Modelado</b></td><td>Alta normalización (3NF).</td><td>Desnormalización intencional (esquemas estrella/copo de nieve).</td></tr>
       <tr><td><b>Almacenamiento</b></td><td>Orientado a filas.</td><td>Orientado a columnas.</td></tr>
-    </table>
+    </table></div>
     <div class="key"><b>HTAP</b> (Hybrid Transactional/Analytical Processing): elimina los ETL nocturnos con <b>motores de almacenamiento duales</b> (filas para OLTP + columnar para OLAP en RAM) y <b>aislamiento de recursos</b> (la analítica no roba CPU a las inserciones).</div>
   </div>
 
@@ -417,11 +322,11 @@
       <li><b>Cloud</b>: agilidad y elasticidad; transforma CapEx en OpEx; exige FinOps.</li>
       <li><b>Geo-distribuidos</b>: coordinación entre nodos, split-brain y latencia de la luz.</li>
     </ul>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Modelo</th><th>Proveedor</th><th>DBA</th></tr>
       <tr><td><b>IaaS</b></td><td>Red física, almacenamiento en bloque, hipervisor.</td><td>SO, parcheo, instalación del motor, HA.</td></tr>
       <tr><td><b>PaaS / DBaaS</b></td><td>Hardware, SO, parcheo del motor, a veces backups.</td><td>Modelado lógico, índices, tuning, accesos, capacity.</td></tr>
-    </table>
+    </table></div>
     <div class="key">En DBaaS no se elimina al administrador: <b>la responsabilidad sobre el dato siempre es del cliente</b>.</div>
   </div>
 
@@ -445,7 +350,7 @@
 </section>
 
 <section class="cat" id="sec5">
-  <div class="cat-title">Sección 1.6 - Ingeniería Profesional</div>
+  <h2 class="cat-title">Sección 1.6 - Ingeniería Profesional</h2>
 
   <div class="bloque">
     <h4>Cultura de la evidencia y línea base</h4>
@@ -478,13 +383,13 @@ $ top -b -n 1 | head -n 15 &gt;&gt; 01_baseline_recursos.txt</pre>
   <div class="bloque">
     <h4>Gobierno ético y fideicomiso del dato</h4>
     <p>El tratamiento de la <b>PII</b> (datos clínicos, financieros, biométricos) se rige por:</p>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Principio</th><th>Implementación técnica</th></tr>
       <tr><td><b>Zero Trust / PoLP</b></td><td>Acceso Just-In-Time: nadie consulta datos sensibles sin justificación temporal y criptográficamente auditada.</td></tr>
       <tr><td><b>Data Masking</b></td><td>Los entornos dev/QA jamás contienen PII real: se ofusca preservando integridad referencial y formato.</td></tr>
       <tr><td><b>Auditoría inmutable</b></td><td>Alertas automáticas al SOC ante lecturas masivas anómalas.</td></tr>
       <tr><td><b>Cumplimiento como código</b></td><td>GDPR, PCI-DSS, HIPAA → TDE, Row-Level Security, purgado por caducidad legal.</td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="bloque">
@@ -505,7 +410,11 @@ $ top -b -n 1 | head -n 15 &gt;&gt; 01_baseline_recursos.txt</pre>
   </div>
 </section>
 
-<footer>Resumen basado en "ABD - Tema 1 - Fundamentos de Administración de Bases de Datos". Complementa el <a href="abd-tema-1.html" style="color:var(--accent)">Test del Tema 1</a>.</footer>
+<footer class="page-foot">
+  <div class="next"><a class="btn primary" href="abd-tema-1.html">Hacer el test (66 preguntas)</a><a class="btn" href="index.html">Volver al inicio</a></div>
+  Resumen basado en «ABD – Tema 1 – Fundamentos de Administración de Bases de Datos».
+</footer>
+</main>
 
 </body>
 </html>

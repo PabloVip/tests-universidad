@@ -3,114 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resumen Tema 2 - ABD</title>
-<style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --border: #334155;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --ok: #22c55e;
-    --ko: #ef4444;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.55;
-    padding: 24px 16px 80px;
-  }
-  header {
-    max-width: 860px;
-    margin: 0 auto 24px;
-    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
-    border-radius: var(--radius);
-    padding: 28px;
-    text-align: center;
-  }
-  header h1 { font-size: 1.7rem; letter-spacing: 0.3px; }
-  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
-  header a.back { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 0.85rem; text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; }
-  header a.back:hover { background: rgba(255,255,255,0.35); }
-  .toc {
-    max-width: 860px; margin: 0 auto 26px;
-    display: flex; flex-wrap: wrap; gap: 8px;
-    position: sticky; top: 10px; z-index: 10;
-    background: rgba(15,23,42,0.92);
-    backdrop-filter: blur(6px);
-    padding: 8px 0;
-  }
-  .toc a {
-    padding: 6px 12px;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    color: var(--muted);
-    font-size: 0.82rem;
-    text-decoration: none;
-    background: var(--card);
-  }
-  .toc a:hover { border-color: var(--accent); color: var(--accent); }
-  section.cat { max-width: 860px; margin: 0 auto 44px; }
-  .cat-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    padding: 10px 16px;
-    background: rgba(56,189,248,0.12);
-    border-left: 4px solid var(--accent);
-    border-radius: 6px;
-    color: var(--accent);
-  }
-  .bloque {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    margin-bottom: 14px;
-  }
-  .bloque h4 { color: var(--accent); font-size: 1rem; margin-bottom: 8px; }
-  .bloque p { margin: 6px 0; font-size: 0.95rem; }
-  .bloque ul, .bloque ol { margin: 6px 0 6px 20px; font-size: 0.95rem; }
-  .bloque li { margin: 4px 0; }
-  .bloque b { color: #fff; }
-  .key {
-    border-left: 4px solid var(--accent);
-    background: rgba(56,189,248,0.1);
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin: 10px 0;
-    font-size: 0.9rem;
-  }
-  .key b { color: var(--accent); }
-  .warn {
-    border-left: 4px solid var(--ko);
-    background: rgba(239,68,68,0.1);
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin: 10px 0;
-    font-size: 0.9rem;
-  }
-  .warn b { color: var(--ko); }
-  table.tbl { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.88rem; }
-  table.tbl th { background: #24344d; color: var(--accent); text-align: left; padding: 8px 10px; border: 1px solid var(--border); }
-  table.tbl td { padding: 8px 10px; border: 1px solid var(--border); color: var(--text); vertical-align: top; }
-  table.tbl tr:nth-child(even) td { background: rgba(30,41,59,0.5); }
-  code { background: #0b1220; border: 1px solid var(--border); border-radius: 5px; padding: 2px 6px; font-size: 0.88em; color: #7dd3fc; }
-  pre { background: #0b1220; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; color: #7dd3fc; margin: 8px 0; }
-  footer { max-width: 860px; margin: 30px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
-</style>
+<title>Resumen ABD Tema 2 · Oracle y el ecosistema de datos</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
 </head>
-<body>
+<body data-crumb="ABD · Tema 2 · Resumen">
 
-<header>
-  <h1>Resumen Tema 2 - Introducción a Oracle</h1>
-  <p><a class="back" href="index.html">← Volver al índice</a></p>
-  <p>Oracle como plataforma: historia, ecosistema, herramientas, Piedra Rosetta y certificación.</p>
-</header>
+<main class="wrap">
+<div class="page-head">
+  <span class="eyebrow">Administración de Bases de Datos · Tema 2</span>
+  <h1>Resumen: Introducción a Oracle y al ecosistema actual de datos</h1>
+  <p class="lead">Oracle como plataforma: historia, ediciones y licencias, arquitectura, herramientas, Piedra Rosetta y ruta de certificación.</p>
+  <div class="actions-row"><a class="btn primary" href="abd-tema-2.html">Hacer el test (80 preguntas)</a></div>
+</div>
 
 <nav class="toc" id="toc">
   <a href="#sec0">2.1 Plataforma Empresarial</a>
@@ -121,7 +26,7 @@
 </nav>
 
 <section class="cat" id="sec0">
-  <div class="cat-title">Sección 2.1 - Oracle como Plataforma Empresarial</div>
+  <h2 class="cat-title">Sección 2.1 - Oracle como Plataforma Empresarial</h2>
 
   <div class="bloque">
     <h4>Oracle Corporation vs Oracle Database</h4>
@@ -130,7 +35,7 @@
 
   <div class="bloque">
     <h4>Principales hitos históricos</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Versión</th><th>Año</th><th>Clave</th></tr>
       <tr><td>V1 / V2</td><td>1977-79</td><td>V2 = primera BD relacional <b>comercial</b>; implementó SQL por primera vez, adelantándose a IBM.</td></tr>
       <tr><td>V3</td><td>1983</td><td>Reescritura en <b>C</b> → portabilidad (mainframes, minis, PC) e introdujo la <b>atomicidad ACID</b>.</td></tr>
@@ -143,23 +48,23 @@
       <tr><td>10g</td><td>2003</td><td>"g" de Grid: <b>ASM, Clusterware y Recycle Bin</b>.</td></tr>
       <tr><td>11g</td><td>2007</td><td><b>Active Data Guard</b> (lee la standby), compresión y Database Vault.</td></tr>
       <tr><td>12c</td><td>2013</td><td>"c" de Cloud: <b>arquitectura Multitenant (CDB/PDB)</b> e In-Memory.</td></tr>
-      <tr><td>18c / 19c</td><td>2018-19</td><td>18c: capacidades autónomas. 19c: versión <b>LTS</b> de la familia 12c (Automatic Indexing).</td></tr>
+      <tr><td>18c / 19c</td><td>2018-19</td><td>18c: capacidades autónomas (Autonomous Database). 19c: versión <b>LTS</b> (release final de la familia 12.2) con Automatic Indexing.</td></tr>
       <tr><td>21c</td><td>2021</td><td>Innovation Release: tablas Blockchain, JSON nativo (OSON), ML (OML4SQL/Py/R).</td></tr>
       <tr><td>23ai</td><td>2023-24</td><td><b>AI Vector Search</b>, <b>JSON Relational Duality</b> y True Cache.</td></tr>
-      <tr><td>26ai</td><td>2026</td><td><b>AI-Native</b>: ejecuta LLMs dentro de la BD, vectores, seguridad inteligente.</td></tr>
-    </table>
+      <tr><td>26ai</td><td>2025-26</td><td><b>AI-Native</b>: ejecuta LLMs dentro de la BD, vectores, seguridad inteligente.</td></tr>
+    </table></div>
   </div>
 
   <div class="bloque">
     <h4>Casos de uso 2026</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Caso</th><th>Problema / Ventaja Oracle</th></tr>
       <tr><td><b>1. Core transaccional</b> (Neo-banco)</td><td><b>MVCC vía Undo Tablespace</b>: los lectores jamás bloquean a los escritores. <b>RAC</b> redirige la transacción si un servidor explota.</td></tr>
       <tr><td><b>2. JSON Relational Duality</b> (SuperApp)</td><td>La app ve <b>JSON</b>, pero Oracle lo guarda en <b>tablas relacionales normalizadas</b>: cero duplicación y total ACID.</td></tr>
       <tr><td><b>3. Seguridad</b> (Ministerio de Salud)</td><td><b>Database Vault</b>: el DBA gestiona el rendimiento pero no ve los datos. <b>Tablas Blockchain</b>: inmutables (append-only) frente a ransomware.</td></tr>
       <tr><td><b>4. Analítica real-time</b> (Logística)</td><td><b>In-Memory Dual Format</b>: filas en disco (OLTP) + columnas en RAM (OLAP) sin mover el dato.</td></tr>
       <tr><td><b>5. AI-Native 26ai</b> (Bufete)</td><td>Lleva <b>la IA hacia los datos</b> (vectores + LLM en el núcleo); los datos confidenciales nunca salen del perímetro.</td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="bloque">
@@ -212,7 +117,7 @@ WHERE currently_used = 'TRUE';</pre>
     <h4>OCI vs otras nubes (AWS, Azure, GCP)</h4>
     <ul>
       <li><b>BYOL a AWS/Azure</b>: Oracle elimina el Core Factor 0,5 → necesitas el doble de licencias.</li>
-      <li><b>RAC</b>: solo funciona en OCI; Oracle lo <b>bloquea técnicamente</b> en AWS, Azure y GCP.</li>
+      <li><b>RAC</b>: en nube pública solo funciona en OCI; en las VMs de AWS, Azure y GCP no está soportado. <i>Matiz real:</i> los servicios Oracle Database@Azure/AWS/Google Cloud sí permiten RAC porque son Exadata operada por Oracle dentro de esos centros de datos. Para el examen, quédate con lo de los apuntes.</li>
       <li><b>Exadata Cloud Service</b>: fusiona almacenamiento de red + BD a nivel hardware (analítica pesada en milisegundos).</li>
       <li><b>License Included en OCI</b>: gasto operativo (OpEx) por horas; el riesgo de licencia lo asume el proveedor.</li>
     </ul>
@@ -239,15 +144,15 @@ WHERE currently_used = 'TRUE';</pre>
 </section>
 
 <section class="cat" id="sec1">
-  <div class="cat-title">Sección 2.2 - Navegación por el Ecosistema Oracle</div>
+  <h2 class="cat-title">Sección 2.2 - Navegación por el Ecosistema Oracle</h2>
 
   <div class="bloque">
     <h4>Plano físico vs plano lógico: Instance y Database</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Concepto</th><th>Dónde vive</th><th>Auditar</th><th>Qué observar</th></tr>
       <tr><td><b>Instance</b></td><td>RAM (SGA/PGA + procesos). <b>Muere al apagar el servidor.</b></td><td><code>SELECT * FROM v$instance;</code></td><td>status OPEN/MOUNTED.</td></tr>
       <tr><td><b>Database</b></td><td>Disco (datafiles, control files, redo logs). <b>Es eterna.</b></td><td><code>SELECT * FROM v$database;</code></td><td>log_mode (ARCHIVELOG).</td></tr>
-    </table>
+    </table></div>
     <ul>
       <li>Una instancia <b>NO</b> monta dos bases de datos a la vez.</li>
       <li>Una base de datos <b>SÍ</b> puede ser montada por varias instancias: eso es <b>RAC</b>.</li>
@@ -287,7 +192,7 @@ WHERE currently_used = 'TRUE';</pre>
 </section>
 
 <section class="cat" id="sec2">
-  <div class="cat-title">Sección 2.3 - Herramientas de Oracle</div>
+  <h2 class="cat-title">Sección 2.3 - Herramientas de Oracle</h2>
 
   <div class="bloque">
     <h4>Tres familias de herramientas</h4>
@@ -341,7 +246,7 @@ WHERE currently_used = 'TRUE';</pre>
 </section>
 
 <section class="cat" id="sec3">
-  <div class="cat-title">Sección 2.4 - Oracle como "Piedra de Rosetta"</div>
+  <h2 class="cat-title">Sección 2.4 - Oracle como "Piedra de Rosetta"</h2>
 
   <div class="bloque">
     <h4>80% commodity + 20% diferenciador</h4>
@@ -367,7 +272,7 @@ WHERE currently_used = 'TRUE';</pre>
 
   <div class="bloque">
     <h4>Equivalencias aproximadas entre motores</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Concepto (el "qué")</th><th>Oracle</th><th>PostgreSQL</th><th>SQL Server</th><th>MySQL (InnoDB)</th></tr>
       <tr><td>Motor en ejecución</td><td>Instance</td><td>Cluster / Server Process</td><td>Instance</td><td>Proceso mysqld</td></tr>
       <tr><td>Capa física (disco)</td><td>Database</td><td>PGDATA</td><td>.mdf/.ndf</td><td>datadir</td></tr>
@@ -377,7 +282,7 @@ WHERE currently_used = 'TRUE';</pre>
       <tr><td>MVCC (datos viejos)</td><td>Undo Tablespace</td><td>MVCC interno (en la tabla)</td><td>Version Store (TempDB)</td><td>Undo Tablespaces</td></tr>
       <tr><td>Limpieza de "basura"</td><td>Automático (Undo)</td><td>Autovacuum</td><td>Automático</td><td>Purge threads</td></tr>
       <tr><td>Lenguaje procedural</td><td>PL/SQL</td><td>PL/pgSQL</td><td>T-SQL</td><td>SQL/PSM</td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="bloque">
@@ -394,7 +299,7 @@ WHERE currently_used = 'TRUE';</pre>
 </section>
 
 <section class="cat" id="sec4">
-  <div class="cat-title">Sección 2.5 - Ruta Formativa y Certificación 26ai</div>
+  <h2 class="cat-title">Sección 2.5 - Ruta Formativa y Certificación 26ai</h2>
 
   <div class="bloque">
     <h4>Portafolio SRE de élite</h4>
@@ -408,13 +313,13 @@ WHERE currently_used = 'TRUE';</pre>
 
   <div class="bloque">
     <h4>Mapa de certificación 23ai / 26ai</h4>
-    <table class="tbl">
+    <div class="tbl-wrap"><table class="tbl">
       <tr><th>Nivel</th><th>Certificación</th><th>Entidad</th><th>Precio neto alumno</th></tr>
       <tr><td><b>1. Logro inmediato</b></td><td>Oracle Academy Certificate: Database Foundations</td><td>Oracle Academy</td><td>$0 (al aprobar la asignatura)</td></tr>
       <tr><td><b>2. Nube e IA</b></td><td>Oracle AI Autonomous Database Professional</td><td>Oracle University</td><td>$0 (vía campañas Academy)</td></tr>
       <tr><td><b>3. Filtro técnico</b></td><td>Oracle AI Database Administration <b>Associate</b></td><td>Pearson VUE / Oracle</td><td>$122.50 (~115 €)</td></tr>
       <tr><td><b>4. Élite corporativa</b></td><td>Oracle AI Database Administration <b>Professional</b></td><td>Pearson VUE / Oracle</td><td>$122.50 (~115 €)</td></tr>
-    </table>
+    </table></div>
   </div>
 
   <div class="bloque">
@@ -429,7 +334,11 @@ WHERE currently_used = 'TRUE';</pre>
   </div>
 </section>
 
-<footer>Resumen basado en "ABD - Tema 2 - Introducción a Oracle y al Ecosistema Actual de Datos". Complementa el <a href="abd-tema-2.html" style="color:var(--accent)">Test del Tema 2</a>.</footer>
+<footer class="page-foot">
+  <div class="next"><a class="btn primary" href="abd-tema-2.html">Hacer el test (80 preguntas)</a><a class="btn" href="index.html">Volver al inicio</a></div>
+  Resumen basado en «ABD – Tema 2 – Introducción a Oracle y al Ecosistema Actual de Datos».
+</footer>
+</main>
 
 </body>
 </html>

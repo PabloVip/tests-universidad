@@ -3,195 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tests de Universidad</title>
-<style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --border: #334155;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --ok: #22c55e;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    padding: 24px 16px 80px;
-  }
-  header {
-    max-width: 860px;
-    margin: 0 auto 28px;
-    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
-    border-radius: var(--radius);
-    padding: 30px;
-    text-align: center;
-  }
-  header h1 { font-size: 1.8rem; letter-spacing: 0.3px; }
-  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
-  .hint { max-width: 860px; margin: 0 auto 24px; text-align: center; color: var(--muted); font-size: 0.9rem; }
-  .subject {
-    max-width: 860px;
-    margin: 0 auto 20px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: border-color .15s;
-  }
-  .subject.open { border-color: var(--accent); }
-  .subject-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 20px 22px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .subject-head:hover { background: #24344d; }
-  .subject .icon {
-    width: 44px; height: 44px; flex-shrink: 0;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.3rem; font-weight: 700; color: #0f172a;
-    background: linear-gradient(135deg, #22d3ee, #3b82f6);
-  }
-  .subject .info { flex: 1; }
-  .subject .info .name { font-size: 1.15rem; font-weight: 700; }
-  .subject .info .meta { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
-  .subject .chevron { color: var(--muted); transition: transform .2s; font-size: 1.1rem; }
-  .subject.open .chevron { transform: rotate(180deg); }
-  .subject-body { display: none; padding: 4px 22px 22px; }
-  .subject.open .subject-body { display: block; }
-  .subject-body .subtitle { color: var(--muted); font-size: 0.85rem; margin: 14px 0 10px; }
-  .tema {
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    background: #0f172a;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    transition: border-color .15s;
-  }
-  .tema:hover { border-color: var(--accent); }
-  .tema-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    margin-bottom: 10px;
-  }
-  .tema .t-name { font-weight: 600; }
-  .tema .t-meta { color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
-  .tema-links { display: flex; gap: 8px; flex-wrap: wrap; }
-  .tema-links a {
-    flex: 1;
-    min-width: 150px;
-    text-align: center;
-    padding: 10px 14px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: transform .1s, border-color .15s;
-  }
-  .tema-links a:active { transform: scale(0.98); }
-  a.link-temario { background: rgba(56,189,248,0.12); color: var(--accent); border: 1px solid var(--accent); }
-  a.link-temario:hover { background: rgba(56,189,248,0.22); }
-  a.link-test { background: rgba(34,197,94,0.12); color: var(--ok); border: 1px solid var(--ok); }
-  a.link-test:hover { background: rgba(34,197,94,0.22); }
-  span.link-test-disabled {
-    flex: 1;
-    min-width: 150px;
-    text-align: center;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    background: rgba(148,163,184,0.1); color: var(--muted); border: 1px dashed var(--border);
-  }
-  footer { max-width: 860px; margin: 30px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
-</style>
+<title>Mis Tests de Universidad</title>
+<meta name="description" content="Resúmenes y tests de autoevaluación de las asignaturas del Grado en Ingeniería Informática.">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
 </head>
 <body>
 
-<header>
-  <h1>Mis Tests de Universidad</h1>
-  <p>Selecciona una asignatura: estudia con el temario resumido y luego practica con el test.</p>
-</header>
+<main class="wrap">
+  <div class="page-head">
+    <span class="eyebrow">Grado en Ingeniería Informática</span>
+    <h1>Mis tests de universidad</h1>
+    <p class="lead">Elige una asignatura: estudia con el resumen del tema y después practica con el test. Tu progreso en cada test se guarda en este navegador.</p>
+  </div>
 
-<div class="hint">Haz clic en una asignatura para ver su temario (resumen) y sus tests.</div>
+  <div class="subjects" id="list"></div>
 
-<div id="list"></div>
-
-<footer>Resúmenes y tests basados en los apuntes de las asignaturas.</footer>
+  <footer class="page-foot">Resúmenes y tests basados en los apuntes de cada asignatura. Si detectas un error, revisa la explicación de la pregunta y contrástala con los apuntes oficiales.</footer>
+</main>
 
 <script>
-const SUBJECTS = [
+var SUBJECTS = [
   {
-    name: "Administración de Bases de Datos (ABD)",
-    initial: "ABD",
-    meta: "Bloque 1 - Fundamentos de sistemas de bases de datos y ecosistema Oracle",
+    id: "abd", initial: "ABD",
+    name: "Administración de Bases de Datos",
+    meta: "Fundamentos de sistemas de bases de datos y ecosistema Oracle",
     temas: [
-      { name: "Tema 1 - Fundamentos de Administración de Bases de Datos", meta: "66 preguntas · Secciones 1.1–1.6", resumen: "abd-tema-1-resumen.html", test: "abd-tema-1.html" },
-      { name: "Tema 2 - Introducción a Oracle y al Ecosistema Actual de Datos", meta: "80 preguntas · Secciones 2.1–2.5", resumen: "abd-tema-2-resumen.html", test: "abd-tema-2.html" }
+      { name: "Tema 1 · Fundamentos de Administración de Bases de Datos", meta: "Secciones 1.1–1.6",
+        links: [ { href: "abd-tema-1-resumen.html", label: "Resumen" }, { href: "abd-tema-1.html", label: "Test · 66 preguntas", test: "abd-tema-1", primary: true } ] },
+      { name: "Tema 2 · Introducción a Oracle y al ecosistema actual de datos", meta: "Secciones 2.1–2.5",
+        links: [ { href: "abd-tema-2-resumen.html", label: "Resumen" }, { href: "abd-tema-2.html", label: "Test · 80 preguntas", test: "abd-tema-2", primary: true } ] }
     ]
   },
   {
-    name: "Aplicaciones para Dispositivos Móviles (ADM)",
-    initial: "ADM",
+    id: "adm", initial: "ADM",
+    name: "Aplicaciones para Dispositivos Móviles",
     meta: "Kotlin desde cero: lenguaje, colecciones, funciones y POO",
     temas: [
-      { name: "Tema 2 - Introducción a Kotlin", meta: "Resumen + 14 ejercicios resueltos · var/val, colecciones, control, funciones, POO", resumen: "adm-tema-2-resumen.html", test: "adm-tema-2-ejercicios.html", testLabel: "Ver ejercicios resueltos" }
+      { name: "Tema 2 · Introducción a Kotlin", meta: "Resumen, test y 16 ejercicios resueltos",
+        links: [ { href: "adm-tema-2-resumen.html", label: "Resumen" }, { href: "adm-tema-2.html", label: "Test · 35 preguntas", test: "adm-tema-2", primary: true }, { href: "adm-tema-2-ejercicios.html", label: "Ejercicios resueltos" } ] }
     ]
   },
   {
-    name: "Calidad de Software (CS)",
-    initial: "CS",
-    meta: "Tema 1 - Concepto de calidad: modelos, normas ISO y gestión",
+    id: "cs", initial: "CS",
+    name: "Calidad de Software",
+    meta: "Modelos de calidad, ISO/IEC 25010:2023, dilemas y costes",
     temas: [
-      { name: "Tema 1 - Concepto de Calidad del Software", meta: "74 preguntas · Secciones 1.1–1.9", resumen: "cs-tema-1-resumen.html", test: "cs-tema-1.html" }
+      { name: "Tema 1 · Concepto de calidad del software", meta: "Secciones 1.1–1.9",
+        links: [ { href: "cs-tema-1-resumen.html", label: "Resumen" }, { href: "cs-tema-1.html", label: "Test · 93 preguntas", test: "cs-tema-1", primary: true } ] }
     ]
   }
 ];
 
-const list = document.getElementById("list");
-let html = "";
-SUBJECTS.forEach((s, si) => {
-  html += '<div class="subject" id="subj' + si + '">';
-  html += '<div class="subject-head" onclick="toggleSubject(' + si + ')">';
-  html += '<div class="icon">' + s.initial + "</div>";
-  html += '<div class="info"><div class="name">' + s.name + '</div><div class="meta">' + s.meta + "</div></div>";
-  html += '<div class="chevron">\u25bc</div>';
-  html += "</div>";
-  html += '<div class="subject-body">';
-  html += '<div class="subtitle">Temario y tests disponibles (' + s.temas.length + '):</div>';
-  s.temas.forEach(t => {
-    html += '<div class="tema">';
-    html += '<div class="tema-head"><div><div class="t-name">' + t.name + '</div><div class="t-meta">' + t.meta + "</div></div></div>";
-    html += '<div class="tema-links">';
-    html += '<a class="link-temario" href="' + t.resumen + '">Temario (resumen)</a>';
-    if (t.test) {
-      html += '<a class="link-test" href="' + t.test + '">' + (t.testLabel || 'Hacer el test') + '</a>';
-    } else {
-      html += '<span class="link-test-disabled">Test próximamente</span>';
-    }
-    html += "</div></div>";
+(function () {
+  var OPEN_KEY = "tu-open";
+  var store = window.TUStore;
+  var openSet = store.get(OPEN_KEY);
+  if (!Array.isArray(openSet)) openSet = SUBJECTS.map(function (s) { return s.id; });
+
+  var CHEV = '<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+  function progress(testId) {
+    var s = store.get("tu-sum:" + testId);
+    if (!s || !s.done) return "";
+    var pct = Math.round(s.done / s.total * 100);
+    return '<div class="progress-pill"><span class="mini"><i style="width:' + pct + '%"></i></span>' +
+      s.done + "/" + s.total + " respondidas · " + s.ok + " aciertos</div>";
+  }
+
+  var html = "";
+  SUBJECTS.forEach(function (s) {
+    var isOpen = openSet.indexOf(s.id) !== -1;
+    html += '<section class="subject' + (isOpen ? " open" : "") + '" id="subj-' + s.id + '">';
+    html += '<button class="subject-head" type="button" aria-expanded="' + isOpen + '" aria-controls="body-' + s.id + '" data-id="' + s.id + '">';
+    html += '<span class="badge">' + s.initial + "</span>";
+    html += '<span class="info"><span class="name">' + s.name + '</span><br><span class="meta">' + s.meta + "</span></span>" + CHEV + "</button>";
+    html += '<div class="subject-body" id="body-' + s.id + '">';
+    s.temas.forEach(function (t) {
+      html += '<div class="tema"><div class="t-name">' + t.name + '</div><div class="t-meta">' + t.meta + "</div>";
+      var prog = "";
+      html += '<div class="links">';
+      t.links.forEach(function (l) {
+        html += '<a class="btn' + (l.primary ? " primary" : "") + '" href="' + l.href + '">' + l.label + "</a>";
+        if (l.test) prog += progress(l.test);
+      });
+      html += "</div>" + prog + "</div>";
+    });
+    html += "</div></section>";
   });
-  html += "</div></div>";
-});
-list.innerHTML = html;
+  document.getElementById("list").innerHTML = html;
 
-function toggleSubject(si) {
-  document.getElementById("subj" + si).classList.toggle("open");
-}
-
-if (SUBJECTS.length === 1) toggleSubject(0);
-else toggleSubject(1);
+  document.querySelectorAll(".subject-head").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var id = btn.getAttribute("data-id");
+      var sec = document.getElementById("subj-" + id);
+      var open = sec.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open);
+      var i = openSet.indexOf(id);
+      if (open && i === -1) openSet.push(id);
+      if (!open && i !== -1) openSet.splice(i, 1);
+      store.set(OPEN_KEY, openSet);
+    });
+  });
+})();
 </script>
 </body>
 </html>
