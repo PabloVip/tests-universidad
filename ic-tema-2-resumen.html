@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen IC Tema 2 · Inteligencia Artificial</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
+</head>
+<body data-crumb="IC · Tema 2 · Resumen">
+
+<main class="wrap">
+<div class="page-head">
+  <span class="eyebrow">Ingeniería del Conocimiento · Tema 2</span>
+  <h1>Resumen: Inteligencia Artificial</h1>
+  <p class="lead">Historia de la IA, neurona y red neuronal, ramas (ML y DL), tipos de aprendizaje, feed forward, backpropagation y descenso de gradiente, problemas típicos (underfitting, overfitting, convergencia, desvanecimiento de gradiente) y fases de un proyecto de IA.</p>
+  <div class="actions-row"><a class="btn primary" href="ic-tema-2.html">Hacer el test (89 preguntas)</a><a class="btn" href="ic-tema-1-resumen.html">Tema 1</a></div>
+</div>
+
+<nav class="toc" aria-label="Secciones">
+  <a href="#sec1">1. Introducción</a>
+  <a href="#sec2">2. La IA: historia y neuronas</a>
+  <a href="#sec3">3. Ramas de la IA</a>
+  <a href="#sec4">4. Tipos de aprendizaje</a>
+  <a href="#sec5">5. Funcionamiento interno</a>
+  <a href="#sec6">6. Problemas comunes</a>
+  <a href="#sec7">7. Proyectos de IA</a>
+</nav>
+
+<section class="cat" id="sec1">
+  <h2 class="cat-title">1. Introducción</h2>
+  <div class="bloque">
+    <h4>¿Qué es la IA?</h4>
+    <ul>
+      <li>La <b>ciencia y la ingeniería de hacer máquinas inteligentes</b>, especialmente programas de ordenador inteligentes.</li>
+      <li>Se relaciona con usar ordenadores para comprender la inteligencia humana, pero <b>no tiene que limitarse a métodos biológicamente observables</b>.</li>
+      <li>Teoría y desarrollo de sistemas que hacen tareas que normalmente requieren inteligencia humana: percepción visual, reconocimiento del habla, toma de decisiones, traducción… Intenta <b>imitar el funcionamiento del cerebro</b> para predecir o decidir como lo haría un humano.</li>
+    </ul>
+  </div>
+  <div class="bloque">
+    <h4>Dos enfoques</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th></th><th>Pensar</th><th>Actuar</th></tr>
+      <tr><td><b>Enfoque humano</b></td><td>Sistemas que <b>piensan como humanos</b></td><td>Sistemas que <b>actúan como humanos</b></td></tr>
+      <tr><td><b>Enfoque ideal (racional)</b></td><td>Sistemas que <b>piensan racionalmente</b></td><td>Sistemas que <b>actúan racionalmente</b></td></tr>
+    </table></div>
+  </div>
+  <div class="bloque">
+    <h4>Mapa del tema</h4>
+    <ul>
+      <li><b>Ramas:</b> Machine Learning y Deep Learning.</li>
+      <li><b>5 tipos principales de aprendizaje:</b> supervisado, semi-supervisado, no supervisado, por refuerzo y por transferencia.</li>
+      <li><b>Funcionamiento interno</b> (los modelos no son cajas negras): feed forward, backpropagation y descenso de gradiente.</li>
+      <li><b>Problemas comunes:</b> datos (mala calidad, poca cantidad), entrenamiento (underfitting, overfitting, convergencia lenta o inexistente, desvanecimiento de gradiente), métricas no representativas y necesidad de grandes recursos (HPC, Edge Computing).</li>
+      <li><b>Proyectos de IA:</b> mucho más que entrenar un modelo; 6 etapas.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cat" id="sec2">
+  <h2 class="cat-title">2. La IA: historia, neurona y red neuronal</h2>
+  <div class="bloque">
+    <h4>Historia de la IA (hitos de los apuntes)</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Año</th><th>Hito</th></tr>
+      <tr><td>1854</td><td><b>George Boole</b>: el razonamiento lógico puede sistematizarse como un sistema de ecuaciones.</td></tr>
+      <tr><td>1921</td><td><b>Karel Čapek</b> acuña «robot» en la obra <i>R.U.R.</i> (de <i>robota</i>, «trabajo duro»).</td></tr>
+      <tr><td>1936</td><td><b>Alan Turing</b>, artículo sobre los números computables: concepto de <b>algoritmo</b>.</td></tr>
+      <tr><td>1941</td><td><b>Z3</b> de Konrad Zuse: primera computadora programable y totalmente automática.</td></tr>
+      <tr><td>1941*</td><td><b>Leyes de la robótica</b> de Isaac Asimov (cuento «Círculo vicioso»).</td></tr>
+      <tr><td>1950</td><td>Turing, <i>Computing Machinery and Intelligence</i>: <b>Test de Turing</b>.</td></tr>
+      <tr><td>1956</td><td><b>John McCarthy</b> acuña «Inteligencia Artificial» en la <b>conferencia de Dartmouth</b>.</td></tr>
+      <tr><td>1957</td><td><b>Frank Rosenblatt</b> diseña la primera red neuronal artificial (el perceptrón).</td></tr>
+      <tr><td>1966</td><td><b>ELIZA</b> (Joseph Weizenbaum, MIT): quizá el primer chatbot; primer programa con procesamiento del lenguaje natural.</td></tr>
+      <tr><td>1969</td><td><b>Marvin Minsky</b> publica <i>Perceptrons</i> (con Papert): análisis fundamental de las redes neuronales.</td></tr>
+      <tr><td>1979</td><td><b>Stanford Cart</b>: de los primeros vehículos autónomos; cruza un espacio con obstáculos.</td></tr>
+      <tr><td>1996*</td><td><b>Deep Blue</b> (IBM) frente a Garry Kasparov.</td></tr>
+      <tr><td>2002</td><td><b>Roomba</b> (iRobot): primer robot doméstico autónomo (Robot Hall of Fame en 2010).</td></tr>
+      <tr><td>2005</td><td><b>Ray Kurzweil</b>: IA de nivel humano en 2029 y superación en 2045 (Ley de Moore).</td></tr>
+      <tr><td>2011</td><td><b>Siri</b> (Apple). Después Google Now (2012), Cortana y Alexa (2014). <b>Watson</b> (IBM) gana <i>Jeopardy!</i></td></tr>
+      <tr><td>2012</td><td>Google entrena un sistema que aprende a reconocer <b>gatos</b> en YouTube: el poder del Deep Learning.</td></tr>
+      <tr><td>2014</td><td><b>Eugene Goostman</b> «supera» el test de Turing haciéndose pasar por un niño ucraniano de 13 años.</td></tr>
+      <tr><td>2015</td><td><b>AlphaGo</b>: primera máquina que gana a un profesional de Go sin hándicap en tablero 19×19.</td></tr>
+      <tr><td>2020</td><td><b>AlphaFold 2</b> (DeepMind) resuelve la estructura 3D de las proteínas: problema de medio siglo.</td></tr>
+      <tr><td>2022</td><td><b>ChatGPT</b> (OpenAI). También GAN (creación artística) y deepfakes.</td></tr>
+    </table></div>
+    <div class="note"><b>Matices sobre los apuntes</b> (para el examen, usa las fechas de los apuntes):
+      <ul>
+        <li>El autor de <i>R.U.R.</i> es <b>Karel Čapek</b> (en los apuntes aparece como «Karek Apek»).</li>
+        <li>«Círculo vicioso» (<i>Runaround</i>) se publicó en <b>1942</b>.</li>
+        <li>En <b>1996</b> Deep Blue ganó una partida, pero perdió el match; ganó el match a Kasparov en <b>1997</b>.</li>
+        <li>Goostman convenció al <b>33 % de los 30 jueces</b> según las crónicas de la prueba (los apuntes dicen «30 de 150»).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bloque">
+    <h4>Neurona artificial</h4>
+    <p>Función matemática que modela una neurona biológica; es la <b>unidad elemental</b> de una red neuronal. Recibe entradas (como las dendritas), las <b>pondera</b>, las <b>suma</b> y pasa el resultado por una <b>función de activación</b> no lineal que produce la salida (como el potencial de acción por el axón).</p>
+    <div class="figure">
+      <svg viewBox="0 0 640 230" role="img" aria-labelledby="neuT">
+        <title id="neuT">Neurona artificial: entradas x1, x2, x3 multiplicadas por pesos w1, w2, w3 más el bias b entran en el sumatorio y la función de activación produce la salida</title>
+        <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrow-head"/></marker></defs>
+        <rect class="box" x="20" y="20" width="70" height="36" rx="8"/><text x="55" y="43" text-anchor="middle">x₁</text>
+        <rect class="box" x="20" y="80" width="70" height="36" rx="8"/><text x="55" y="103" text-anchor="middle">x₂</text>
+        <rect class="box" x="20" y="140" width="70" height="36" rx="8"/><text x="55" y="163" text-anchor="middle">x₃</text>
+        <text x="55" y="210" text-anchor="middle" class="small">Inputs</text>
+        <path class="arrow" d="M92 38 L262 104" marker-end="url(#ah3)"/>
+        <path class="arrow" d="M92 98 H258" marker-end="url(#ah3)"/>
+        <path class="arrow" d="M92 158 L262 112" marker-end="url(#ah3)"/>
+        <text x="170" y="62" text-anchor="middle" class="small">w₁</text>
+        <text x="170" y="92" text-anchor="middle" class="small">w₂</text>
+        <text x="170" y="150" text-anchor="middle" class="small">w₃</text>
+        <text x="170" y="195" text-anchor="middle" class="small">Weights</text>
+        <rect class="box" x="235" y="12" width="70" height="30" rx="8"/><text x="270" y="32" text-anchor="middle">b</text>
+        <text x="330" y="31" class="small">Bias</text>
+        <path class="arrow" d="M270 44 V76" marker-end="url(#ah3)"/>
+        <circle class="box-accent" cx="290" cy="108" r="30"/><text x="290" y="114" text-anchor="middle" style="font-size:20px">Σ</text>
+        <text x="290" y="160" text-anchor="middle" class="small">Summation</text>
+        <path class="arrow" d="M322 108 H388" marker-end="url(#ah3)"/>
+        <rect class="box-accent" x="392" y="82" width="110" height="52" rx="10"/><text x="447" y="113" text-anchor="middle">f(·)</text>
+        <text x="447" y="160" text-anchor="middle" class="small">Activation</text>
+        <path class="arrow" d="M504 108 H570" marker-end="url(#ah3)"/>
+        <text x="600" y="113" text-anchor="middle">y</text>
+        <text x="600" y="160" text-anchor="middle" class="small">Output</text>
+      </svg>
+      <div class="figcaption">y = f( w₁·x₁ + w₂·x₂ + w₃·x₃ + b )</div>
+    </div>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Componente</th><th>Qué es</th></tr>
+      <tr><td><b>Inputs</b></td><td>Valores de entrada (características o atributos del conjunto de datos).</td></tr>
+      <tr><td><b>Weights</b> (pesos)</td><td>Valores reales asignados a cada entrada: indican su <b>importancia</b> en la predicción.</td></tr>
+      <tr><td><b>Bias</b> (sesgo)</td><td>Desplaza la función de activación a izquierda o derecha (como la ordenada en el origen de una recta). No tiene conexiones entrantes, pero sí salientes con sus propios pesos.</td></tr>
+      <tr><td><b>Summation function</b></td><td>Regla de propagación: suma ponderada de entradas por pesos.</td></tr>
+      <tr><td><b>Activation function</b></td><td>Salida y estado de activación de la neurona; introduce <b>no linealidad</b>.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="bloque">
+    <h4>Funcionamiento de una neurona (perceptrón) en 5 pasos</h4>
+    <ol>
+      <li><b>Señales de entrada</b> (a menudo booleanas) más el bias.</li>
+      <li><b>Pesos sinápticos</b>, generados aleatoriamente en el rango <b>[-1, 1]</b>.</li>
+      <li><b>Unión sumatoria:</b> suma ponderada de entradas y pesos.</li>
+      <li><b>Función de activación:</b> si la suma supera un umbral se envía la salida; si no, se vuelve al paso 2 y se ajustan los pesos.</li>
+      <li><b>Salida</b> hacia la siguiente neurona.</li>
+    </ol>
+  </div>
+
+  <div class="bloque">
+    <h4>Neurona → capa → red → sistema neuronal</h4>
+    <ul>
+      <li><b>Neurona:</b> unidad elemental (Σ + f).</li>
+      <li><b>Capa:</b> conjunto de neuronas al mismo nivel.</li>
+      <li><b>Red neuronal artificial:</b> sistema de aprendizaje automático inspirado en el sistema nervioso, formado por neuronas interconectadas mediante <b>conexiones ponderadas</b>, organizadas en capas.</li>
+      <li><b>Sistema neuronal:</b> la red más una parte algorítmica que gestiona entradas y salidas.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cat" id="sec3">
+  <h2 class="cat-title">3. Ramas de la IA: Machine Learning y Deep Learning</h2>
+  <div class="bloque">
+    <div class="two-col">
+      <div>
+        <h4>Machine Learning (ML)</h4>
+        <ul>
+          <li>Subconjunto de la IA que usa <b>métodos estadísticos/algorítmicos</b> para que las máquinas <b>mejoren con la experiencia</b> sin ser programadas explícitamente.</li>
+          <li>Observa los datos para identificar patrones y decidir mejor según los ejemplos.</li>
+          <li>Objetivo: que el sistema aprenda por sí mismo, sin intervención humana.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Deep Learning (DL)</h4>
+        <ul>
+          <li>Subconjunto del ML que usa <b>redes neuronales multicapa</b> (métodos <b>estocásticos</b>) para imitar el comportamiento del cerebro.</li>
+          <li>Tiene <b>muchas más capas</b> que el ML clásico.</li>
+          <li>Trabaja con <b>conjuntos de datos más grandes</b>; el mecanismo de predicción lo autogestiona la máquina.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bloque">
+    <h4>IA vs ML vs DL</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th></th><th>Inteligencia Artificial</th><th>Machine Learning</th><th>Deep Learning</th></tr>
+      <tr><td><b>Concepto</b></td><td>Campo general</td><td>Rama de la IA</td><td>Rama del ML</td></tr>
+      <tr><td><b>Técnica principal</b></td><td>Reglas, búsqueda, ML…</td><td>Algoritmos estadísticos</td><td>Redes neuronales profundas</td></tr>
+      <tr><td><b>Datos necesarios</b></td><td>Variables</td><td>Moderados</td><td>Gran cantidad</td></tr>
+      <tr><td><b>Ejemplo</b></td><td>Sistema experto</td><td>SVM, regresión, KNN…</td><td>CNN, LSTM, autoencoder…</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section class="cat" id="sec4">
+  <h2 class="cat-title">4. Tipos de aprendizaje</h2>
+  <div class="bloque">
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Tipo</th><th>Datos de entrada</th><th>Input / Función / Output</th><th>Subtipos y usos</th></tr>
+      <tr><td><b>Supervisado</b></td><td>Etiquetados: features (X) + labels (y)</td><td>conocido / desconocida / conocido</td><td><b>Clasificación</b> (clase: detección de objetos, recomendación) y <b>regresión</b> (valor numérico: series temporales, precios).</td></tr>
+      <tr><td><b>No supervisado</b></td><td>No etiquetados: solo features (X)</td><td>conocido / desconocida / desconocido</td><td><b>Clustering</b> (agrupar por similitud), <b>reducción de dimensionalidad</b> (menos features) y <b>modelos generativos</b> (datos sintéticos, imágenes nuevas).</td></tr>
+      <tr><td><b>Semi-supervisado</b></td><td>Algunos etiquetados + muchos sin etiquetar</td><td>conocido / desconocida / conocido + desconocido</td><td>Puede hacer tareas supervisadas o no supervisadas (clasificación de textos, detección de carriles en GPS).</td></tr>
+      <tr><td><b>Por refuerzo</b></td><td>Sin datos históricos: el agente empieza de cero</td><td>—</td><td>Aprende con <b>recompensas y penalizaciones</b> (psicología conductista). Navegación, conducción autónoma, decisiones en tiempo real, juegos.</td></tr>
+      <tr><td><b>Por transferencia</b></td><td>Un modelo ya entrenado</td><td>—</td><td>Se reentrena en otro contexto conservando lo aprendido (AlexNet, VGG16, ResNet50, BERT, GPT). Reduce mucho el tiempo de entrenamiento.</td></tr>
+    </table></div>
+    <div class="key"><b>Transferencia, dos técnicas:</b> <b>feature transfer</b> (se congelan las primeras capas y solo se ajustan los pesos de la última) y <b>fine tuning</b> (se actualizan los pesos de todas las capas).</div>
+    <div class="note">En los apuntes, el clustering se describe como «identificar su clase (target)». Matiz: en clustering no hay etiquetas; el modelo forma grupos por similitud y esos grupos se interpretan después.</div>
+  </div>
+  <div class="bloque">
+    <h4>Comparativa (tabla de los apuntes)</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th></th><th>Supervisado</th><th>No supervisado</th><th>Semi-supervisado</th></tr>
+      <tr><td><b>Dato de entrada</b></td><td>Etiquetado</td><td>No etiquetado</td><td>Parcialmente etiquetado</td></tr>
+      <tr><td><b>Complejidad computacional</b></td><td>Simple</td><td>Compleja</td><td>Depende del uso</td></tr>
+      <tr><td><b>Precisión</b></td><td>Alta</td><td>Baja</td><td>Baja</td></tr>
+    </table></div>
+    <p>Resumen de los apuntes: en el <b>supervisado</b> hace falta intervención humana para etiquetar; en el <b>no supervisado</b> desaparece y la IA asocia datos por patrones; en el de <b>refuerzo</b> el comportamiento se corrige para ajustar lo que la IA ha asimilado mal.</p>
+  </div>
+</section>
+
+<section class="cat" id="sec5">
+  <h2 class="cat-title">5. Funcionamiento interno de los modelos de IA</h2>
+  <div class="bloque">
+    <h4>Tres conceptos</h4>
+    <ul>
+      <li><b>Feed forward:</b> relacionado con los datos y su entrada al modelo.</li>
+      <li><b>Backpropagation</b> y <b>descenso de gradiente:</b> relacionados con el aprendizaje interno para reducir el error durante el entrenamiento.</li>
+    </ul>
+  </div>
+  <div class="bloque">
+    <h4>Feed forward y función de coste</h4>
+    <ul>
+      <li>Red con <b>capa de entrada</b>, <b>una o más capas ocultas</b> y <b>capa de salida</b>. La información avanza de la entrada a la salida.</li>
+      <li>Cada entrada tiene un <b>peso</b>: cuanto mayor, más influye en la salida.</li>
+      <li>Al empezar, los pesos se asignan <b>aleatoriamente</b>, así que las primeras predicciones suelen ser incorrectas.</li>
+      <li>El <b>error</b> es la diferencia entre la salida real y la prevista; lo mide la <b>función de coste (J)</b>. El objetivo es <b>minimizar J</b> ajustando los pesos.</li>
+    </ul>
+  </div>
+  <div class="bloque">
+    <h4>Backpropagation</h4>
+    <ul>
+      <li>Algoritmo que entrena redes feed forward: <b>calcula los gradientes de la función de coste respecto a cada peso</b>.</li>
+      <li>Propaga el error <b>hacia atrás</b>, de la capa de salida a la de entrada.</li>
+      <li>Usa la <b>regla de la cadena</b>: derivadas parciales de cada peso tratando los demás como constantes.</li>
+      <li>Busca el <b>gradiente negativo</b>, que indica cómo cambiar los pesos para reducir J.</li>
+    </ul>
+  </div>
+  <div class="bloque">
+    <h4>Descenso de gradiente</h4>
+    <ul>
+      <li>Algoritmo de <b>optimización</b> que busca los pesos del <b>punto mínimo</b> de la función de coste.</li>
+      <li>Necesita dos cosas: la <b>dirección</b> (el gradiente, calculado con backpropagation) y el <b>tamaño del paso</b> (la <b>tasa de aprendizaje α</b>).</li>
+    </ul>
+    <pre><code>w_nuevo = w_viejo − α · dJ/dw</code></pre>
+    <ol>
+      <li>Inicializar un peso aleatorio.</li>
+      <li>Dar un paso cuesta abajo usando gradiente y tasa de aprendizaje.</li>
+      <li>Calcular el nuevo peso con la fórmula.</li>
+      <li>Repetir hasta llegar al mínimo.</li>
+      <li>En el mínimo se obtienen los pesos óptimos.</li>
+    </ol>
+    <div class="warn"><b>Tasa de aprendizaje α:</b> demasiado <b>grande</b> → puedes saltarte el mínimo (resultados inexactos). Demasiado <b>pequeña</b> → la optimización tarda muchísimo (desperdicio de cómputo). Si el gradiente es <b>0</b>, el modelo deja de aprender.</div>
+    <div class="key"><b>Conclusión clave:</b> backpropagation <b>calcula</b> los gradientes (regla de la cadena); el descenso de gradiente los <b>usa</b> para ajustar los pesos y minimizar J. Juntos mejoran la precisión de la red. Gráficamente: 1) feed forward, 2) propagación del gradiente hacia atrás, 3) actualización (estocástica) de los pesos.</div>
+  </div>
+</section>
+
+<section class="cat" id="sec6">
+  <h2 class="cat-title">6. Problemas más comunes de los modelos de IA</h2>
+  <div class="bloque">
+    <h4>Underfitting y overfitting</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th></th><th>Underfitting (infraajuste)</th><th>Overfitting (sobreajuste)</th></tr>
+      <tr><td><b>Qué es</b></td><td>Modelo demasiado simple: <b>sesgo (bias) alto</b>; no capta los patrones.</td><td>Modelo demasiado complejo: capta hasta el <b>ruido (varianza)</b>; no generaliza.</td></tr>
+      <tr><td><b>Síntoma</b></td><td>Error alto en entrenamiento y en validación.</td><td>Error muy bajo en entrenamiento, pero alto en validación y test.</td></tr>
+      <tr><td><b>Solución</b></td><td>Más complejidad (parámetros), más épocas, quitar o reducir Dropout.</td><td>Menos épocas, usar Dropout, regularización.</td></tr>
+    </table></div>
+    <div class="note">Los apuntes dicen que en overfitting «se observaría un error de <b>prueba</b> muy bajo». Lo correcto es error de <b>entrenamiento</b> muy bajo; el de validación y test es alto (lo dice la frase siguiente de los propios apuntes).</div>
+  </div>
+  <div class="bloque">
+    <h4>Regularización (contra el overfitting)</h4>
+    <p>Añade una <b>penalización</b> a la función de coste para obtener modelos más simples que generalizan mejor: <code>J = MSE + α · C</code>, donde <b>C</b> mide la complejidad y <b>α</b> cuánto nos importa que el modelo sea simple frente a su rendimiento.</p>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Tipo</th><th>Complejidad C</th><th>Cuándo usarla</th></tr>
+      <tr><td><b>Lasso (L1)</b></td><td>Media del <b>valor absoluto</b> de los coeficientes: (1/N)·Σ|wᵢ|</td><td>Cuando sospechas que <b>varias features son irrelevantes</b>: fuerza coeficientes a <b>0</b> (solución poco densa). Mejor si las features <b>no</b> están muy correlacionadas.</td></tr>
+      <tr><td><b>Ridge (L2)</b></td><td>Media del <b>cuadrado</b> de los coeficientes: (1/2N)·Σwᵢ²</td><td>Cuando las features están <b>correlacionadas</b>: hace los coeficientes más pequeños. Mejor si la mayoría de features son <b>relevantes</b>.</td></tr>
+      <tr><td><b>ElasticNet (L1 + L2)</b></td><td>r·Lasso + (1−r)·Ridge</td><td>Con <b>muchas features</b>, unas irrelevantes y otras correlacionadas. <b>r</b> reparte la importancia entre L1 y L2.</td></tr>
+    </table></div>
+  </div>
+  <div class="bloque">
+    <h4>Bias, varianza y su compensación</h4>
+    <ul>
+      <li><b>Bias:</b> diferencia entre la predicción media del modelo y el valor real.</li>
+      <li><b>Varianza:</b> cuánto cambia la predicción según los datos de entrenamiento.</li>
+      <li><b>Tradeoff:</b> bajar la varianza sube el bias y viceversa. Un modelo <b>robusto</b> tiene poco bias y poca varianza.</li>
+    </ul>
+    <pre><code>Error total = Bias² + Varianza + Error irreducible</code></pre>
+    <p>El punto óptimo de complejidad es el que <b>minimiza el error total</b>. A la izquierda hay underfitting; a la derecha, overfitting (el error de test vuelve a subir mientras el de entrenamiento sigue bajando).</p>
+  </div>
+  <div class="bloque">
+    <h4>Convergencia</h4>
+    <ul>
+      <li><b>Convergencia:</b> punto del entrenamiento a partir del cual el error apenas baja y el coste de seguir entrenando supera el beneficio.</li>
+      <li><b>Convergencia lenta</b> (sobre todo en DL): depende de <i>epoch</i>, <i>learning rate</i> y <i>momentum</i>. Solución: <b>aumentar el learning rate</b> (¡ojo! puede provocar que no converja).</li>
+      <li><b>Convergencia inexistente</b>, causas: pocos datos o datos corruptos, función de activación inadecuada para la complejidad, mala inicialización de pesos, learning rate no moderado.</li>
+      <li><b>Soluciones:</b> establecer <b>momentum</b>, <b>reinicializar los pesos</b>, subir un poco el learning rate si está atascado en mínimos locales, <b>cambiar la función de activación</b>, y que learning rate y número de épocas sean proporcionales (evitar valores muy altos).</li>
+    </ul>
+  </div>
+  <div class="bloque">
+    <h4>Desvanecimiento de gradiente (vanishing gradient)</h4>
+    <ul>
+      <li>Error causado por la <b>derivada parcial de la función de activación</b>.</li>
+      <li>Cada peso se actualiza en proporción a la derivada de J respecto a él; si el gradiente se hace <b>muy pequeño</b>, los pesos dejan de cambiar y, en el peor caso, la red <b>deja de entrenar</b>.</li>
+      <li><b>Soluciones:</b> cambiar la función de activación e inicializar manualmente los pesos.</li>
+    </ul>
+    <div class="note">Fuera de los apuntes: es típico con sigmoide o tanh en redes profundas; por eso se usa <b>ReLU</b> y una inicialización tipo He o Xavier.</div>
+  </div>
+  <div class="bloque">
+    <h4>Otros problemas</h4>
+    <ul>
+      <li><b>Datos:</b> mala calidad y poca cantidad.</li>
+      <li><b>Métricas no representativas:</b> usar métricas inadecuadas.</li>
+      <li><b>Grandes recursos computacionales:</b> disciplinas como <b>HPC</b> (High Performance Computing) o <b>Edge Computing</b>.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cat" id="sec7">
+  <h2 class="cat-title">7. Proyectos de IA</h2>
+  <div class="bloque">
+    <p>Iniciativas de software que usan ML, DL, NLP, visión por ordenador… para crear programas inteligentes con <b>mínima intervención humana</b>. Implican a desarrolladores, científicos de datos, ingenieros de ML y expertos en la materia. Como en Ingeniería del Software, son mucho más que programar el modelo.</p>
+    <div class="key"><b>6 etapas:</b> 1. Definir el problema → 2. Recopilar los datos → 3. Preparar y preprocesar los datos → 4. Construir el modelo → 5. Evaluar la calidad → 6. Desplegar.</div>
+  </div>
+  <div class="bloque">
+    <h4>1–3. Problema, datos y preparación</h4>
+    <ul>
+      <li><b>Definir el problema:</b> objetivos organizacionales (¿qué problema?, ¿cómo mediremos el éxito?) → objetivos de minería de datos (qué datos, entradas y salidas, metodología, objetivos alcanzables).</li>
+      <li><b>Recopilar los datos:</b> su calidad y cantidad determinan lo bueno que puede ser el modelo. Identificar fuentes, entender metadatos, analizar la calidad, estadística y visualización, y hablar con los expertos.</li>
+      <li><b>Preparar los datos:</b> integración, limpieza, transformación de formato, atributos derivados… Se puede usar <b>ETL</b> (extracción, transformación y carga hacia un almacén de datos central).</li>
+    </ul>
+  </div>
+  <div class="bloque">
+    <h4>4. Construir el modelo (7 pasos)</h4>
+    <ol>
+      <li><b>Preprocesado:</b> estado del arte, feature engineering/extraction, adaptar datos (variables dummy, discretización, eliminar ruido, cambios de escala, valores ausentes).</li>
+      <li><b>Selección de variables:</b> filtros, wrappers, reducción de dimensionalidad.</li>
+      <li><b>Conjuntos de training, validation y test</b> para medir la generalización y detectar overfitting.</li>
+      <li><b>Técnica de muestreo:</b> hold-out, cross-validation, bootstrap (con estratificación y repetición).</li>
+      <li><b>Elegir y aplicar técnicas de IA:</b> estado del arte, ¿hace falta interpretabilidad?, entender los parámetros.</li>
+      <li><b>Búsqueda de hiperparámetros.</b></li>
+      <li><b>Entrenamiento:</b> reproducibilidad y paralelización (alto nivel: experimentos; bajo nivel: técnicas).</li>
+    </ol>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Conjunto</th><th>Para qué</th></tr>
+      <tr><td><b>Training</b></td><td>Ajustar los <b>pesos y el bias</b> (los apuntes incluyen también los hiperparámetros).</td></tr>
+      <tr><td><b>Validation</b></td><td>Optimizar el modelo <b>ajustando los hiperparámetros</b> (¿qué modelo es el mejor?).</td></tr>
+      <tr><td><b>Test</b></td><td>Evaluar la <b>calidad final</b> (¿cómo de bueno es realmente?).</td></tr>
+    </table></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Elección del modelo</th><th>Ejemplos</th></tr>
+      <tr><td>Supervisado · Machine Learning</td><td>SVM, KNN, regresión, Random Forest</td></tr>
+      <tr><td>Supervisado · Deep Learning</td><td>CNN, RNN</td></tr>
+      <tr><td>No supervisado · Clustering</td><td>Jerárquico, K-means</td></tr>
+      <tr><td>No supervisado · Reducción de dimensionalidad</td><td>PCA, t-SNE, NMF</td></tr>
+    </table></div>
+  </div>
+  <div class="bloque">
+    <h4>5–6. Evaluar y desplegar</h4>
+    <ul>
+      <li><b>Evaluar, 1.ª fase</b> (solo expertos en minería de datos): criterios de evaluación y medidas de rendimiento, elegir el mejor modelo, detectar overfitting; puede obligar a volver atrás.</li>
+      <li><b>Evaluar, 2.ª fase</b> (contexto organizacional): ¿cumple los objetivos de la organización?</li>
+      <li><b>Desplegar:</b> integrar en la infraestructura (planificado con antelación), analizar el rendimiento y <b>mantener</b>: decidir cuándo reentrenar según los indicadores de la primera fase y los datos nuevos.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="page-foot">
+  <div class="next"><a class="btn primary" href="ic-tema-2.html">Hacer el test (89 preguntas)</a><a class="btn" href="index.html">Volver al inicio</a></div>
+  Resumen basado en «Tema 2 – Inteligencia Artificial» (Ingeniería del Conocimiento).
+</footer>
+</main>
+</body>
+</html>
