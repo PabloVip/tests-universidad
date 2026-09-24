@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicios Tema 2 - Kotlin</title>
+<style>
+  :root {
+    --bg: #0f172a; --card: #1e293b; --border: #334155;
+    --text: #e2e8f0; --muted: #94a3b8;
+    --accent: #38bdf8; --ok: #22c55e; --ko: #ef4444; --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.55; padding: 24px 16px 80px; }
+  header { max-width: 860px; margin: 0 auto 24px; background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+    border-radius: var(--radius); padding: 28px; text-align: center; }
+  header h1 { font-size: 1.7rem; }
+  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+  header a.back { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 0.85rem;
+    text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; }
+  header a.back:hover { background: rgba(255,255,255,0.35); }
+  .toolbar { max-width: 860px; margin: 0 auto 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .toolbar button { background: var(--card); color: var(--text); border: 1px solid var(--border);
+    border-radius: 20px; padding: 8px 14px; font-size: 0.85rem; cursor: pointer; }
+  .toolbar button:hover { border-color: var(--accent); color: var(--accent); }
+  section.cat { max-width: 860px; margin: 0 auto 28px; }
+  .cat-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 14px; padding: 10px 16px;
+    background: rgba(56,189,248,0.12); border-left: 4px solid var(--accent);
+    border-radius: 6px; color: var(--accent); }
+  .ex { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 18px 20px; margin-bottom: 14px; }
+  .ex .num { color: var(--muted); font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .ex h3 { margin: 4px 0 8px; font-size: 1.02rem; }
+  .ex p, .ex ul, .ex ol { font-size: 0.94rem; margin: 6px 0; }
+  .ex ul, .ex ol { margin-left: 20px; }
+  .tag { display: inline-block; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px;
+    border: 1px solid var(--border); color: var(--muted); margin-left: 8px; vertical-align: middle; }
+  .tag.facil { color: var(--ok); border-color: var(--ok); }
+  .tag.media { color: var(--accent); border-color: var(--accent); }
+  .sol { display: none; margin-top: 12px; }
+  .sol.show { display: block; }
+  pre { background: #0b1220; border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; color: #7dd3fc; margin: 8px 0; }
+  code { background: #0b1220; border: 1px solid var(--border); border-radius: 5px;
+    padding: 2px 6px; font-size: 0.88em; color: #7dd3fc; }
+  .btnrow { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .btn { border: 1px solid var(--accent); background: rgba(56,189,248,0.12); color: var(--accent);
+    border-radius: 8px; padding: 8px 14px; font-size: 0.88rem; font-weight: 600; cursor: pointer; }
+  .btn:hover { background: rgba(56,189,248,0.22); }
+  .btn.ghost { border-color: var(--border); background: transparent; color: var(--muted); }
+  .btn.ghost:hover { color: var(--text); border-color: var(--text); }
+  .key { border-left: 4px solid var(--accent); background: rgba(56,189,248,0.1);
+    padding: 10px 12px; border-radius: 8px; margin: 10px 0; font-size: 0.89rem; }
+  footer { max-width: 860px; margin: 30px auto 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ejercicios resueltos Tema 2 - Kotlin</h1>
+  <p><a class="back" href="index.html">← Volver al índice</a></p>
+  <p>13 ejercicios de programar (no tipo test): var/val, colecciones, control, funciones y POO. Pulsa “Ver solución”.</p>
+</header>
+
+<div class="toolbar">
+  <button onclick="toggleAll(true)">Mostrar todas</button>
+  <button onclick="toggleAll(false)">Ocultar todas</button>
+  <button onclick="location.href='adm-tema-2-resumen.html'">Ir al resumen</button>
+  <button onclick="location.href='https://play.kotlinlang.org/'">Abrir Play Kotlin</button>
+</div>
+
+<section class="cat">
+<div class="cat-title">Bloque 1 - Base: variables y tipos</div>
+
+<div class="ex"><div class="num">Ejercicio 1</div><h3>Hola mundo <span class="tag facil">fácil</span></h3>
+<p>Imprime <code>Hola mundo</code>. Prueba en <code>https://play.kotlinlang.org/</code>.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(1)">Ver solución</button><button class="btn ghost" onclick="copyCode(1)">Copiar</button></div>
+<div class="sol" id="sol1"><pre id="code1">fun main() {
+    println("Hola mundo")
+}</pre><div class="key"><b>Clave:</b> todo Kotlin ejecutable empieza en <code>fun main()</code>.</div></div></div>
+
+<div class="ex"><div class="num">Ejercicio 2</div><h3>var / val e interpolación <span class="tag facil">fácil</span></h3>
+<p>Con <code>val nombre="Primoz Roglic", val numero=1, var posicion=100</code>, muestra “El corredor Primoz Roglic (numero: 1) ocupa la posicion 100.”, cambia <code>posicion</code> a 2 y vuelve a mostrar. Intenta reasignar <code>numero</code> y observa el error.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(2)">Ver solución</button><button class="btn ghost" onclick="copyCode(2)">Copiar</button></div>
+<div class="sol" id="sol2"><pre id="code2">fun main() {
+    val nombre = "Primoz Roglic"
+    val numero = 1
+    var posicion = 100
+
+    println("El corredor $nombre (numero: $numero) ocupa la posicion $posicion.")
+    posicion = 2
+    println("El corredor $nombre (numero: $numero) ocupa la posicion $posicion.")
+    // numero = 11 // ERROR: Val cannot be reassigned
+}</pre><div class="key"><b>Clave:</b> <code>var</code> cambia, <code>val</code> no. <code>$var</code> y <code>${expr}</code> interpolan.</div></div></div>
+
+<div class="ex"><div class="num">Ejercicio 3</div><h3>Ejercicio de apuntes: ficha corredor <span class="tag facil">fácil</span></h3>
+<p>Crea variables nombre, equipo, número y posición y muestra: “El corredor Carlos Rodriguez (numero:11) del equipo Ineos ocupa la posición 5.”</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(3)">Ver solución</button><button class="btn ghost" onclick="copyCode(3)">Copiar</button></div>
+<div class="sol" id="sol3"><pre id="code3">fun main() {
+    val nombre = "Carlos Rodriguez"
+    val equipo = "Ineos"
+    val numero = 11
+    var posicion = 5
+    println("El corredor $nombre (numero:$numero) del equipo $equipo ocupa la posición $posicion.")
+}</pre></div></div>
+
+<div class="ex"><div class="num">Ejercicio 4</div><h3>Tipos explícitos y Float <span class="tag facil">fácil</span></h3>
+<p>Declara <code>nombre:String, posicion:Int, numero:Int, v_sprint:Float=69.5f</code> e imprime todo en una frase.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(4)">Ver solución</button><button class="btn ghost" onclick="copyCode(4)">Copiar</button></div>
+<div class="sol" id="sol4"><pre id="code4">fun main() {
+    val nombre: String = "Primoz Roglic"
+    var posicion: Int = 100
+    val numero: Int = 1
+    val v_sprint: Float = 69.5f
+
+    println("El corredor $nombre (numero: $numero) ocupa la posicion $posicion." +
+        " Tiene un valor de sprint de $v_sprint")
+}</pre><div class="key"><b>Clave:</b> <code>Float</code> lleva <code>f</code>. Sin sufijo es <code>Double</code>. Enteros: Byte, Short, Int, Long. Sin signo: UByte, UShort, UInt, ULong.</div></div></div>
+</section>
+
+<section class="cat">
+<div class="cat-title">Bloque 2 - Colecciones</div>
+
+<div class="ex"><div class="num">Ejercicio 5</div><h3>Listas read-only vs mutable <span class="tag media">medio</span></h3>
+<p>Crea <code>List</code> con Roglic, Rodriguez, Mas y <code>MutableList</code> con Ayuso, Verona, Van Aert. Añade un 4º a la mutable e imprímelas.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(5)">Ver solución</button><button class="btn ghost" onclick="copyCode(5)">Copiar</button></div>
+<div class="sol" id="sol5"><pre id="code5">fun main() {
+    println("===LISTAS===")
+    val soloLectura: List&lt;String&gt; = listOf("Primoz Roglic", "Carlos Rodriguez", "Enric Mas")
+    println(soloLectura)
+    // soloLectura.add("Otro") // ERROR: no existe add
+
+    val ciclistas: MutableList&lt;String&gt; = mutableListOf("Juan Ayuso", "Carlos Verona", "Wout van Aert")
+    ciclistas.add("Enric Mas")
+    println(ciclistas)
+}</pre><div class="key"><b>Clave:</b> <code>listOf</code> no se modifica, <code>mutableListOf</code> sí (<code>add/remove</code>).</div></div></div>
+
+<div class="ex"><div class="num">Ejercicio 6</div><h3>Sets: únicos <span class="tag media">medio</span></h3>
+<p>Crea un <code>setOf</code> con “Carlos Rodriguez” duplicado. Comprueba qué se imprime.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(6)">Ver solución</button><button class="btn ghost" onclick="copyCode(6)">Copiar</button></div>
+<div class="sol" id="sol6"><pre id="code6">fun main() {
+    println("===SETS===")
+    val s: Set&lt;String&gt; = setOf("Carlos Rodriguez", "Primoz Roglic", "Carlos Rodriguez", "Enric Mas")
+    println(s) // [Carlos Rodriguez, Primoz Roglic, Enric Mas] - duplicado eliminado
+    println("Tamaño: ${s.size}") // 3, no 4
+
+    val ms: MutableSet&lt;String&gt; = mutableSetOf("Juan Ayuso", "Carlos Verona", "Wout van Aert")
+    ms.add("Juan Ayuso") // no duplica
+    println(ms)
+}</pre></div></div>
+
+<div class="ex"><div class="num">Ejercicio 7</div><h3>Maps equipo y edad <span class="tag media">medio</span></h3>
+<p>Crea <code>mapOf("Carlos Rodriguez" to "Ineos", ...)</code> y otro de edades. Accede <b>por clave</b> (no por índice).</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(7)">Ver solución</button><button class="btn ghost" onclick="copyCode(7)">Copiar</button></div>
+<div class="sol" id="sol7"><pre id="code7">fun main() {
+    println("===MAPS===")
+    val equipos: Map&lt;String, String&gt; = mapOf(
+        "Carlos Rodriguez" to "Ineos",
+        "Primoz Roglic" to "Jumbo-Visma",
+        "Enric Mas" to "Movistar"
+    )
+    println(equipos)
+
+    val edades: Map&lt;String, Int&gt; = mapOf(
+        "Carlos Rodriguez" to 22,
+        "Primoz Roglic" to 33,
+        "Enric Mas" to 28
+    )
+    // CORRECTO: por clave
+    println("La edad de Carlos Rodriguez es: ${edades["Carlos Rodriguez"]}")
+    // ERROR apuntes: edades[1] -&gt; null, los Maps no van por índice
+}</pre><div class="key"><b>Examen:</b> <code>map[key]</code>, no <code>map[0]</code>. Si la clave no existe devuelve <code>null</code>.</div></div></div>
+</section>
+
+<section class="cat">
+<div class="cat-title">Bloque 3 - Control de flujo</div>
+
+<div class="ex"><div class="num">Ejercicio 8</div><h3>if / else como expresión <span class="tag facil">fácil</span></h3>
+<p>Con <code>edad=18</code> imprime mayor/menor y guarda <code>"Adulto"/"Menor"</code> en una variable con <code>if</code> expresión.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(8)">Ver solución</button><button class="btn ghost" onclick="copyCode(8)">Copiar</button></div>
+<div class="sol" id="sol8"><pre id="code8">fun main() {
+    val edad = 18
+    if (edad &gt;= 18) {
+        println("Eres mayor de edad")
+    } else {
+        println("Eres menor de edad")
+    }
+    val mensaje = if (edad &gt;= 18) "Adulto" else "Menor"
+    println(mensaje)
+}</pre></div></div>
+
+<div class="ex"><div class="num">Ejercicio 9</div><h3>when por día <span class="tag facil">fácil</span></h3>
+<p>Con <code>dia=3</code>: 1 Lunes, 2 Martes, 3 Miércoles, 4..5 Jueves o Viernes, else Fin de semana.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(9)">Ver solución</button><button class="btn ghost" onclick="copyCode(9)">Copiar</button></div>
+<div class="sol" id="sol9"><pre id="code9">fun main() {
+    val dia = 3
+    when (dia) {
+        1 -&gt; println("Lunes")
+        2 -&gt; println("Martes")
+        3 -&gt; println("Miércoles")
+        in 4..5 -&gt; println("Jueves o Viernes")
+        else -&gt; println("Fin de semana")
+    }
+}</pre></div></div>
+
+<div class="ex"><div class="num">Ejercicio 10</div><h3>for + rangos + líder <span class="tag media">medio</span></h3>
+<p>Recorre <code>1..5</code>, <code>10 downTo 1</code>, <code>0 until 10 step 2</code>. Luego recorre <code>mapOf(Carlos-&gt;1, Roglic-&gt;3, Mas-&gt;6)</code> e indica quién es líder (value==1).</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(10)">Ver solución</button><button class="btn ghost" onclick="copyCode(10)">Copiar</button></div>
+<div class="sol" id="sol10"><pre id="code10">fun main() {
+    for (i in 1..5) println(i) // 1..5 incluido
+    for (i in 10 downTo 1) println(i) // regresiva
+    for (i in 0 until 10 step 2) println(i) // 0,2,4,6,8
+
+    val clasificacion: Map&lt;String, Int&gt; = mapOf(
+        "Carlos Rodriguez" to 1,
+        "Primoz Roglic" to 3,
+        "Enric Mas" to 6
+    )
+    for (ciclista in clasificacion) {
+        if (ciclista.value == 1) {
+            println("El ciclista ${ciclista.key} es el lider")
+        } else {
+            println("El ciclista ${ciclista.key} ocupa la posición ${ciclista.value}")
+        }
+    }
+}</pre><div class="key"><b>Rangos:</b> <code>..</code> incluye fin, <code>until</code> excluye, <code>downTo</code> baja, <code>step</code> salta.</div></div></div>
+
+<div class="ex"><div class="num">Ejercicio 11</div><h3>forEach <span class="tag facil">fácil</span></h3>
+<p>Imprime frutas con <code>forEach</code> y números con <code>forEachIndexed</code>.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(11)">Ver solución</button><button class="btn ghost" onclick="copyCode(11)">Copiar</button></div>
+<div class="sol" id="sol11"><pre id="code11">fun main() {
+    val frutas = listOf("Manzana", "Banana", "Pera")
+    frutas.forEach { fruta -&gt;
+        println(fruta)
+    }
+    val numeros = listOf(10, 20, 30)
+    numeros.forEachIndexed { index, valor -&gt;
+        println("Índice $index tiene valor $valor")
+    }
+}</pre></div></div>
+</section>
+
+<section class="cat">
+<div class="cat-title">Bloque 4 - Funciones y POO</div>
+
+<div class="ex"><div class="num">Ejercicio 12</div><h3>Funciones: normal, inline, Unit y lambda <span class="tag media">medio</span></h3>
+<p>Crea <code>correrCarrera():Int</code> con Random, versión inline <code>asignarNumero()</code>, <code>saludar():Unit</code> y <code>operar()</code> con lambda.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(12)">Ver solución</button><button class="btn ghost" onclick="copyCode(12)">Copiar</button></div>
+<div class="sol" id="sol12"><pre id="code12">import kotlin.random.Random
+
+fun correrCarrera(): Int {
+    val posicion = Random.nextInt(0, 190)
+    return posicion
+}
+
+// Inline: una sola instrucción
+fun asignarNumero(): Int = Random.nextInt(0, 190)
+
+// Unit: sin retorno (como void)
+fun saludar(nombre: String): Unit {
+    println("Hola, $nombre")
+}
+
+// Lambda como valor y como argumento
+val cuadrado = { x: Int -&gt; x * x }
+
+fun operar(a: Int, b: Int, operacion: (Int, Int) -&gt; Int): Int {
+    return operacion(a, b)
+}
+
+fun main() {
+    println(correrCarrera())
+    println(asignarNumero())
+    saludar("Dani")
+    println(cuadrado(4)) // 16
+    val suma = operar(5, 3, { x, y -&gt; x + y })
+    println(suma) // 8
+}</pre></div></div>
+
+<div class="ex"><div class="num">Ejercicio 13</div><h3>Clases, herencia y data class <span class="tag media">medio</span></h3>
+<p>Crea <code>Persona</code>, <code>Ciclista:Persona</code> con <code>open/override</code>, y <code>data class CiclistaData</code> con <code>copy</code> y desestructuración.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(13)">Ver solución</button><button class="btn ghost" onclick="copyCode(13)">Copiar</button></div>
+<div class="sol" id="sol13"><pre id="code13">open class Persona(val nombre: String, var edad: Int) {
+    open fun saludar() {
+        println("Hola, soy $nombre y tengo $edad años.")
+    }
+}
+
+class Ciclista(nombre: String, edad: Int) : Persona(nombre, edad) {
+    override fun saludar() = println("Soy el ciclista $nombre")
+}
+
+data class CiclistaData(val nombre: String, val age: Int, val sprint: Int, val equipo: String)
+
+fun main() {
+    val ciclista = Ciclista("Dani", 45)
+    val persona = Persona("Antonio Jesus", 65)
+    ciclista.saludar()
+    persona.saludar()
+
+    val c1 = CiclistaData("Dani", 33, 66, "UCAM")
+    println(c1.toString())
+    val c2 = CiclistaData("Claudio Chiapucci", 56, 66, "Carrera")
+    println(c1.equals(c2)) // false
+    val c3 = c1.copy()
+    println(c1.equals(c3)) // true
+    val (nombre, _, sprint) = c1
+    println(nombre)
+    println(sprint)
+}</pre><div class="key"><b>Clave:</b> sin <code>open</code> no hay herencia (final por defecto). <code>data class</code> da toString/equals/copy/componentN gratis.</div></div></div>
+
+<div class="ex"><div class="num">Ejercicio 14</div><h3>Ejercicio final apuntes: Estudiante <span class="tag media">medio</span></h3>
+<p>Clase <code>Estudiante(nombre, nota)</code> + función <code>mostrarEstudiantes(lista)</code> que muestre “aprobado” si ≥5 y “suspenso” si no. Pruébala con 3 alumnos.</p>
+<div class="btnrow"><button class="btn" onclick="toggleSol(14)">Ver solución</button><button class="btn ghost" onclick="copyCode(14)">Copiar</button></div>
+<div class="sol" id="sol14"><pre id="code14">class Estudiante(val nombre: String, val nota: Double)
+
+fun mostrarEstudiantes(lista: List&lt;Estudiante&gt;) {
+    for (e in lista) {
+        val estado = if (e.nota &gt;= 5) "aprobado" else "suspenso"
+        println("${e.nombre}: ${e.nota} - $estado")
+    }
+}
+
+fun main() {
+    val clase = listOf(
+        Estudiante("Lucía", 7.5),
+        Estudiante("Mario", 4.9),
+        Estudiante("Dani", 5.0)
+    )
+    mostrarEstudiantes(clase)
+}</pre></div></div>
+</section>
+
+<footer>Basado en "Tema 2 - Introducción a Kotlin". Practica pegando cada solución en <a href="https://play.kotlinlang.org/" style="color:var(--accent)">Play Kotlin</a>. · <a href="adm-tema-2-resumen.html" style="color:var(--accent)">Volver al resumen</a></footer>
+
+<script>
+function toggleSol(n){ document.getElementById('sol'+n).classList.toggle('show'); }
+function toggleAll(show){
+  document.querySelectorAll('.sol').forEach(d=>{ d.classList.toggle('show', show); });
+}
+function copyCode(n){
+  const t = document.getElementById('code'+n).innerText;
+  navigator.clipboard.writeText(t).then(()=>alert('Código copiado'));
+}
+</script>
+</body>
+</html>
