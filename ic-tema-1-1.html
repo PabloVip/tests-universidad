@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test IC Tema 1.1 · Preparación del entorno</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
+</head>
+<body data-crumb="IC · Tema 1.1 · Test">
+
+<main class="wrap">
+  <div class="page-head">
+    <span class="eyebrow">Ingeniería del Conocimiento · Tema 1.1</span>
+    <h1>Test: Preparación del entorno</h1>
+    <p class="lead">25 preguntas sobre frameworks de Deep Learning y entornos de desarrollo. Las opciones se barajan y tu progreso se guarda en este navegador.</p>
+    <div class="actions-row"><a class="btn" href="ic-tema-1-1-resumen.html">Ver el resumen del tema</a></div>
+  </div>
+  <div id="app"></div>
+  <footer class="page-foot">Basado en los apuntes «Tema 1.1 – Preparación del entorno» (Ingeniería del Conocimiento).</footer>
+</main>
+
+<script>
+/* La opción correcta es SIEMPRE la primera de cada lista; el motor las baraja al mostrarlas. */
+window.TEST = {
+  id: "ic-tema-1-1",
+  cats: [
+    "Frameworks y librerías de Deep Learning",
+    "Entornos de desarrollo"
+  ],
+  qs: [
+  {cat:0, t:"¿Qué empresa está detrás de TensorFlow?",
+   o:["Google","Facebook (Meta)","Microsoft","NVIDIA"],
+   e:"TensorFlow es gratuito y de código abierto, bajo el paraguas de Google."},
+  {cat:0, t:"¿Qué característica de TensorFlow lo hace ideal para la backpropagation?",
+   o:["Calcula los gradientes de cualquier función","Incluye datasets etiquetados de serie","Solo funciona en GPU","Genera automáticamente la arquitectura de la red"],
+   e:"Calcular derivadas (gradientes) de cualquier función es la base del entrenamiento por backpropagation."},
+  {cat:0, t:"¿En qué hardware puede ejecutarse TensorFlow?",
+   o:["CPU, GPU y TPU","Solo en GPU NVIDIA","Solo en TPU de Google","Solo en CPU multinúcleo"],
+   e:"Funciona en CPU y, sobre todo, en hardware paralelo masivo: GPU y TPU."},
+  {cat:0, t:"¿Qué permite TF Lite?",
+   o:["Ejecutar modelos en móviles y dispositivos embebidos","Entrenar modelos sin GPU","Programar redes en JavaScript desde cero","Distribuir el entrenamiento en varias máquinas"],
+   e:"Los programas de TensorFlow se pueden exportar a C++, JavaScript o TF Lite."},
+  {cat:0, t:"¿Qué sistema famoso está implementado con TensorFlow según los apuntes?",
+   o:["AlphaZero (ajedrez y Go)","Deep Blue (ajedrez)","Watson (preguntas y respuestas)","Siri (asistente de voz)"],
+   e:"AlphaZero, de DeepMind (Google)."},
+  {cat:0, t:"¿Quién es el principal autor de Keras?",
+   o:["François Chollet","Aurélien Géron","Yann LeCun","Andrew Ng"],
+   e:"Ingeniero de Google y autor de «Deep Learning with Python» (y su versión para R)."},
+  {cat:0, t:"El principio de diseño central de Keras es:",
+   o:["Reducir la carga cognitiva del usuario","Maximizar la velocidad en CPU","Ofrecer el máximo control de bajo nivel","Evitar dependencias externas"],
+   e:"API coherentes, pocas acciones para casos comunes, errores claros y adaptable del nivel más alto al más bajo."},
+  {cat:0, t:"¿Cuál NO es una práctica de Keras para reducir la carga cognitiva?",
+   o:["Exigir configurar todos los detalles de bajo nivel","Ofrecer API coherentes y sencillas","Dar mensajes de error claros y accionables","Minimizar las acciones en los casos comunes"],
+   e:"Keras permite ir de muy alto a muy bajo nivel, pero no obliga a configurarlo todo."},
+  {cat:0, t:"¿En qué año pasó Keras a ser la API oficial de TensorFlow, según la línea temporal de los apuntes?",
+   o:["2018","2015","2016","2019"],
+   e:"2015: Keras con backend Theano y luego TensorFlow; 2018: API oficial de TF; 2019: TensorFlow 2.0."},
+  {cat:0, t:"¿En qué año salió TensorFlow 2.0?",
+   o:["2019","2015","2017","2021"],
+   e:"TensorFlow se lanzó en 2015 y la versión 2.0 en 2019."},
+  {cat:0, t:"PyTorch fue lanzado por:",
+   o:["Facebook, en 2016","Google, en 2015","Microsoft, en 2016","Amazon, en 2017"],
+   e:"Es el framework preferido en la investigación universitaria (academia)."},
+  {cat:0, t:"¿Qué framework es el preferido por los investigadores universitarios según los apuntes?",
+   o:["PyTorch","TensorFlow","CNTK","Caffe"],
+   e:"TensorFlow tenía más presencia en la industria; PyTorch domina en la academia."},
+  {cat:0, t:"CNTK (Cognitive Toolkit) es un framework de:",
+   o:["Microsoft","Google","Facebook","Apache"],
+   e:"Apareció en 2016 en la línea temporal de los apuntes."},
+  {cat:0, t:"¿Cuál es la librería más antigua de la línea temporal de los apuntes?",
+   o:["Torch (2002)","Theano (2007)","Caffe (2013)","TensorFlow (2015)"],
+   e:"En la diapositiva aparece escrito «Toch»."},
+  {cat:0, t:"En el mapa de frameworks, ¿sobre qué se apoyan casi todos para ejecutarse en GPU?",
+   o:["cuDNN sobre CUDA C/C++","Apache Spark","KNIME","OpenMP sobre CPU"],
+   e:"cuDNN es la librería de NVIDIA de primitivas para redes neuronales, construida sobre CUDA."},
+  {cat:0, t:"¿Quién escribió «Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow»?",
+   o:["Aurélien Géron","François Chollet","Ian Goodfellow","Sebastian Raschka"],
+   e:"2.ª edición de 2019 (O'Reilly). Chollet escribió «Deep Learning with Python» (2017)."},
+
+  {cat:1, t:"¿Qué versión de Python piden los apuntes para el entorno local?",
+   o:["Python ≥ 3.10","Python 2.7","Python ≥ 3.6","Python 3.8 exactamente"],
+   e:"Junto con Anaconda, CUDA y cuDNN."},
+  {cat:1, t:"Al montar el entorno local, lo más importante es que:",
+   o:["Las versiones de Python, TensorFlow, CUDA y cuDNN sean compatibles entre sí","Se instale siempre la última versión de cada componente","CUDA se instale después de entrenar el primer modelo","Se use la misma versión de Python que el sistema operativo"],
+   e:"Si las versiones no son compatibles, TensorFlow no detecta la GPU. Hay una tabla oficial de combinaciones probadas."},
+  {cat:1, t:"¿Para qué sirven CUDA y cuDNN?",
+   o:["Ejecutar Deep Learning en GPUs NVIDIA","Gestionar entornos virtuales de Python","Visualizar datos y resultados","Ejecutar notebooks en la nube"],
+   e:"CUDA es la plataforma de cómputo en GPU de NVIDIA y cuDNN su librería para redes neuronales."},
+  {cat:1, t:"Según los apuntes, ¿qué GPU gratuita ofrece Google Colab?",
+   o:["NVIDIA T4, hasta 12 horas","NVIDIA Tesla P100, hasta 36 h/semana","NVIDIA A100, sin límite","No ofrece GPU gratuita"],
+   e:"Kaggle es la que ofrece la Tesla P100 hasta 36 h/semana."},
+  {cat:1, t:"Según los apuntes, ¿qué GPU gratuita ofrece Kaggle?",
+   o:["NVIDIA Tesla P100, hasta 36 h/semana","NVIDIA T4, hasta 12 horas","NVIDIA V100, hasta 24 h/día","Solo TPU, sin GPU"],
+   e:"Los límites reales cambian con el tiempo; para el examen, los de los apuntes."},
+  {cat:1, t:"¿Qué lenguajes admite cada plataforma según los apuntes?",
+   o:["Colab: Python; Kaggle: Python y R","Colab: Python y R; Kaggle: Python","Ambas únicamente Python","Ambas Python, R y Julia"],
+   e:"Colab solo Python (aunque hay un «backdoor» para R); Kaggle admite Python y R."},
+  {cat:1, t:"¿Cuánto más rápida es una GPU de NVIDIA que una CPU multinúcleo para Deep Learning?",
+   o:["Entre 10 y 100 veces","Entre 2 y 3 veces","Unas 1.000 veces","Igual de rápida"],
+   e:"Por eso se usan GPUs (en local o en Colab/Kaggle)."},
+  {cat:1, t:"¿Qué librería se usa para trabajar con tablas de datos (DataFrames)?",
+   o:["Pandas","NumPy","Matplotlib","Keras"],
+   e:"NumPy: arrays; Matplotlib: gráficas; Keras: redes neuronales."},
+  {cat:1, t:"¿Qué librería de la lista está orientada al Machine Learning clásico (modelos, preprocesado, métricas)?",
+   o:["Scikit-Learn","Matplotlib","Pandas","cuDNN"],
+   e:"Las librerías de la asignatura: NumPy, Pandas, Scikit-Learn, Matplotlib, TensorFlow y Keras."}
+  ]
+};
+</script>
+<script src="assets/test.js"></script>
+</body>
+</html>

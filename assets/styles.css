@@ -310,3 +310,17 @@ section.cat[hidden] { display: none; }
   .bloque, .q, .ex { box-shadow: none; break-inside: avoid; }
   .sol { display: block !important; }
 }
+
+/* ---------- Diagramas SVG en resúmenes ---------- */
+.figure { margin: 14px 0 4px; }
+.figure svg { display: block; width: 100%; height: auto; max-width: 640px; margin: 0 auto; }
+.figure .box { fill: var(--surface-2); stroke: var(--border); stroke-width: 1.5; }
+.figure .box-accent { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+.figure .frame { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 5 4; }
+.figure text { fill: var(--text); font-family: var(--font); font-size: 14px; }
+.figure text.small { fill: var(--muted); font-size: 12px; }
+.figure .arrow { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.figure .arrow-head { fill: var(--muted); }
+.figcaption { text-align: center; color: var(--muted); font-size: .85rem; margin-top: 6px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen IC Tema 1.1 · Preparación del entorno</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
+</head>
+<body data-crumb="IC · Tema 1.1 · Resumen">
+
+<main class="wrap">
+<div class="page-head">
+  <span class="eyebrow">Ingeniería del Conocimiento · Tema 1.1</span>
+  <h1>Resumen: Preparación del entorno</h1>
+  <p class="lead">Frameworks y librerías de Deep Learning (TensorFlow, Keras, PyTorch…) y entornos de desarrollo: local, Google Colab y Kaggle.</p>
+  <div class="actions-row"><a class="btn primary" href="ic-tema-1-1.html">Hacer el test (25 preguntas)</a><a class="btn" href="ic-tema-1-resumen.html">Volver al Tema 1</a></div>
+</div>
+
+<nav class="toc" aria-label="Secciones">
+  <a href="#sec0">Objetivos</a>
+  <a href="#sec1">1. Frameworks y librerías</a>
+  <a href="#sec2">2. Entornos de desarrollo</a>
+</nav>
+
+<section class="cat" id="sec0">
+  <h2 class="cat-title">Objetivos</h2>
+  <div class="bloque">
+    <ul>
+      <li>Conocer los <b>frameworks y librerías</b> más utilizados en Deep Learning.</li>
+      <li>Conocer los <b>entornos de desarrollo</b> más utilizados en Deep Learning.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cat" id="sec1">
+  <h2 class="cat-title">1. Frameworks y librerías de Deep Learning</h2>
+  <div class="bloque">
+    <h4>Mapa de frameworks (niveles de abstracción)</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Nivel</th><th>Ejemplos</th></tr>
+      <tr><td><b>Alto nivel / interfaces</b></td><td>KNIME, Keras, Gluon, H2O, TensorLayer</td></tr>
+      <tr><td><b>Frameworks</b></td><td>Chainer, PyTorch, Theano, TensorFlow, CNTK (Microsoft), MXNet, DL4J, Caffe2 · Apache Spark para cómputo distribuido</td></tr>
+      <tr><td><b>Base en GPU (NVIDIA)</b></td><td><b>cuDNN</b> (librería de primitivas para redes neuronales) sobre <b>CUDA C/C++</b></td></tr>
+    </table></div>
+    <div class="key"><b>Idea clave:</b> los frameworks se apilan en capas. Keras es una capa de alto nivel; TensorFlow, PyTorch, etc. son el motor; y casi todos usan CUDA + cuDNN para ejecutar en GPU NVIDIA.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>Evolución de las librerías (línea temporal de los apuntes)</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Año</th><th>Hito</th></tr>
+      <tr><td>2002</td><td>Torch (en la diapositiva aparece como «Toch»)</td></tr>
+      <tr><td>2007</td><td>Theano</td></tr>
+      <tr><td>2013</td><td>Caffe</td></tr>
+      <tr><td>2015</td><td>Keras (con Theano como backend) · <b>TensorFlow</b> · Keras con backend TensorFlow · MXNet</td></tr>
+      <tr><td>2016</td><td>CNTK (Cognitive Toolkit, Microsoft) · <b>PyTorch</b></td></tr>
+      <tr><td>2017</td><td>Keras con backends CNTK y MXNet</td></tr>
+      <tr><td>2018</td><td>FastAI · <b>Keras como API oficial de TensorFlow</b></td></tr>
+      <tr><td>2019</td><td><b>TensorFlow 2.0</b></td></tr>
+    </table></div>
+    <div class="note">Fuera de los apuntes: desde 2023, <b>Keras 3</b> vuelve a ser multi-backend (TensorFlow, JAX y PyTorch).</div>
+  </div>
+
+  <div class="bloque">
+    <h4>TensorFlow v2</h4>
+    <ul>
+      <li><b>Gratuito y de código abierto</b>, bajo el paraguas de <b>Google</b>.</li>
+      <li>Pensado para científicos, ingenieros e investigadores, <b>no solo informáticos</b>.</li>
+      <li>Calcula las <b>derivadas (gradientes) de cualquier función</b> → ideal para la <b>backpropagation</b>.</li>
+      <li>Funciona en <b>CPU</b> y, sobre todo, en hardware paralelo masivo: <b>GPU y TPU</b>.</li>
+      <li><b>Distribución automática</b> cuando hay varias máquinas disponibles.</li>
+      <li>Los programas se pueden <b>exportar</b> a otros entornos: C++, JavaScript o <b>TF Lite</b> (móvil y embebido).</li>
+      <li><b>AlphaZero</b> (ajedrez y Go) está implementado con TensorFlow.</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Keras</h4>
+    <ul>
+      <li><b>Código abierto</b>; su principal autor es <b>François Chollet</b> (ingeniero de Google), que ha escrito libros para Python y para R.</li>
+      <li>Diseñado para <b>reducir la carga cognitiva</b>:
+        <ul>
+          <li>API coherentes y sencillas.</li>
+          <li>Mínimo número de acciones para los casos de uso comunes.</li>
+          <li>Mensajes de error claros y accionables.</li>
+          <li>Sirve para perfiles de nivel muy alto y muy bajo: equilibrio entre facilidad y flexibilidad.</li>
+          <li>Muchas herramientas: es mucho más que una librería.</li>
+        </ul>
+      </li>
+      <li>Lo usan Google, Netflix, Uber, CERN, NASA…</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Alternativa: PyTorch</h4>
+    <ul>
+      <li>Lanzado en <b>2016 por Facebook</b> (hoy Meta).</li>
+      <li>Framework preferido por los <b>investigadores universitarios</b> (academia).</li>
+      <li>El gráfico de Google Trends de los apuntes muestra cómo el interés por PyTorch fue creciendo hasta alcanzar a TensorFlow hacia 2020.</li>
+    </ul>
+  </div>
+
+  <div class="bloque">
+    <h4>Libros de referencia</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Libro</th><th>Autor y año</th></tr>
+      <tr><td><i>Deep Learning with Python</i> (también existe versión en R)</td><td>François Chollet, 2017 (Manning)</td></tr>
+      <tr><td><i>Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow</i></td><td>Aurélien Géron, 2019, 2.ª ed. (O'Reilly)</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section class="cat" id="sec2">
+  <h2 class="cat-title">2. Entornos de desarrollo</h2>
+  <div class="bloque">
+    <h4>Entorno local</h4>
+    <ul>
+      <li><b>Python ≥ 3.10</b></li>
+      <li><b>Anaconda</b> (distribución y gestor de entornos y paquetes)</li>
+      <li><b>CUDA</b> (plataforma de cómputo en GPU de NVIDIA)</li>
+      <li><b>cuDNN</b> (librería de NVIDIA para redes neuronales profundas sobre CUDA)</li>
+    </ul>
+    <div class="warn"><b>Importante:</b> las versiones de <b>Python + TensorFlow + CUDA + cuDNN</b> tienen que ser <b>compatibles entre sí</b>. Consulta la tabla oficial de combinaciones probadas en la documentación de instalación de TensorFlow antes de instalar.</div>
+    <div class="note">Fuera de los apuntes: a partir de TensorFlow 2.11 ya no hay soporte de GPU en Windows nativo; en Windows se usa <b>WSL2</b>. En Linux, <code>pip install tensorflow[and-cuda]</code> instala también las librerías de CUDA.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>Entornos en la nube: Google Colab y Kaggle</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th></th><th>Google Colaboratory</th><th>Kaggle</th></tr>
+      <tr><td><b>GPU gratuita (según los apuntes)</b></td><td>NVIDIA <b>T4</b>, hasta <b>12 horas</b> por sesión</td><td>NVIDIA <b>Tesla P100</b>, hasta <b>36 h/semana</b></td></tr>
+      <tr><td><b>Lenguajes</b></td><td>Solo <b>Python</b> (hay un «backdoor» para R)</td><td><b>Python y R</b></td></tr>
+      <tr><td><b>Librerías</b></td><td colspan="2">Vienen preinstaladas las habituales (NumPy, Pandas, TensorFlow, Keras…)</td></tr>
+    </table></div>
+    <div class="note">Los límites de GPU gratuita cambian con el tiempo: comprueba los actuales en cada plataforma. Para el examen, quédate con los datos de los apuntes.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>Hardware</h4>
+    <div class="key">Una <b>GPU de NVIDIA</b> es entre <b>10 y 100 veces más rápida</b> que una CPU multinúcleo para Deep Learning.</div>
+  </div>
+
+  <div class="bloque">
+    <h4>Librerías de la asignatura</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Librería</th><th>Para qué</th></tr>
+      <tr><td><b>NumPy</b></td><td>Arrays y cálculo numérico.</td></tr>
+      <tr><td><b>Pandas</b></td><td>Tablas de datos (DataFrames): carga, limpieza y análisis.</td></tr>
+      <tr><td><b>Scikit-Learn</b></td><td>Machine Learning clásico: modelos, preprocesado y métricas.</td></tr>
+      <tr><td><b>Matplotlib</b></td><td>Gráficas y visualización.</td></tr>
+      <tr><td><b>TensorFlow</b></td><td>Motor de Deep Learning.</td></tr>
+      <tr><td><b>Keras</b></td><td>API de alto nivel para construir redes neuronales.</td></tr>
+    </table></div>
+<pre><code># Comprobar el entorno (Colab, Kaggle o local)
+import sys, numpy as np, pandas as pd, sklearn, matplotlib
+import tensorflow as tf
+print(sys.version)
+print("TensorFlow", tf.__version__)
+print("GPU:", tf.config.list_physical_devices("GPU"))</code></pre>
+  </div>
+</section>
+
+<footer class="page-foot">
+  <div class="next"><a class="btn primary" href="ic-tema-1-1.html">Hacer el test (25 preguntas)</a><a class="btn" href="ic-tema-1-resumen.html">Tema 1</a><a class="btn" href="index.html">Volver al inicio</a></div>
+  Resumen basado en «Tema 1.1 – Preparación del entorno» (Ingeniería del Conocimiento).
+</footer>
+</main>
+</body>
+</html>
