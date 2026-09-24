@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Tema 1 - Calidad de Software</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --border: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --ok: #22c55e;
+    --ko: #ef4444;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 24px 16px 80px;
+  }
+  header {
+    max-width: 860px;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+    border-radius: var(--radius);
+    padding: 28px;
+    text-align: center;
+  }
+  header h1 { font-size: 1.7rem; letter-spacing: 0.3px; }
+  header p { margin-top: 6px; color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+  header a.back { display: inline-block; margin-bottom: 10px; color: #fff; font-size: 0.85rem; text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; }
+  header a.back:hover { background: rgba(255,255,255,0.35); }
+  .progress-bar {
+    max-width: 860px;
+    margin: 0 auto 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+    backdrop-filter: blur(6px);
+  }
+  .progress-bar .stats { font-size: 0.9rem; color: var(--muted); white-space: nowrap; }
+  .progress-bar .stats b { color: var(--text); }
+  .bar-track { flex: 1; height: 10px; background: var(--border); border-radius: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22d3ee, #3b82f6); transition: width .3s; }
+  section.cat { max-width: 860px; margin: 0 auto 32px; }
+  .cat-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding: 10px 16px;
+    background: rgba(56,189,248,0.12);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    color: var(--accent);
+  }
+  .q {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .q .num { color: var(--muted); font-size: 0.85rem; font-weight: 600; }
+  .q .text { margin: 6px 0 14px; font-weight: 500; }
+  .opts { display: grid; gap: 8px; }
+  label.opt {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    font-size: 0.95rem;
+  }
+  label.opt:hover { background: #24344d; }
+  label.opt.locked { cursor: default; }
+  label.opt.locked:hover { background: transparent; }
+  input[type="radio"] { margin-top: 3px; accent-color: var(--accent); flex-shrink: 0; }
+  .q.correct { border-color: var(--ok); }
+  .q.correct .num::after { content: "  ✔ Correcto"; color: var(--ok); font-weight: 600; }
+  .q.wrong { border-color: var(--ko); }
+  .q.wrong .num::after { content: "  ✘ Incorrecto"; color: var(--ko); font-weight: 600; }
+  label.opt.selected-ok { background: rgba(34,197,94,0.15); border-color: var(--ok); }
+  label.opt.selected-ko { background: rgba(239,68,68,0.15); border-color: var(--ko); }
+  label.opt.show-ok { border-color: var(--ok); }
+  label.opt.show-ok .letter { color: var(--ok); font-weight: 700; }
+  .explain {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: none;
+    border: 1px solid;
+  }
+  .explain.show { display: block; }
+  .explain.correct { background: rgba(34,197,94,0.1); border-color: var(--ok); }
+  .explain.wrong { background: rgba(239,68,68,0.12); border-color: var(--ko); }
+  .explain .head { font-weight: 700; margin-bottom: 4px; }
+  .explain.correct .head { color: var(--ok); }
+  .explain.wrong .head { color: var(--ko); }
+  .actions {
+    max-width: 860px;
+    margin: 8px auto 40px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  button {
+    border: none;
+    border-radius: 10px;
+    padding: 14px 26px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .1s, opacity .15s;
+  }
+  button:active { transform: scale(0.98); }
+  #btnReiniciar { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+  #resultado {
+    max-width: 860px;
+    margin: 0 auto 30px;
+    padding: 24px;
+    border-radius: var(--radius);
+    text-align: center;
+    display: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  #resultado.bien { background: rgba(34,197,94,0.15); border: 1px solid var(--ok); }
+  #resultado.aceptable { background: rgba(250,204,21,0.12); border: 1px solid #eab308; }
+  #resultado.mal { background: rgba(239,68,68,0.15); border: 1px solid var(--ko); }
+  #resultado .sub { font-size: 0.95rem; font-weight: 400; color: var(--muted); margin-top: 6px; }
+  footer { max-width: 860px; margin: 0 auto; text-align: center; color: var(--muted); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Test Tema 1 - Calidad de Software</h1>
+  <p><a class="back" href="index.html">← Volver al índice</a></p>
+  <p>74 preguntas tipo test. Elige una opción y la pregunta se corrige al instante, con explicación incluida.</p>
+</header>
+
+<div class="progress-bar">
+  <div class="stats"><b id="answered">0</b>/74 respondidas</div>
+  <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+  <div class="stats">Aciertos <b id="correct">0</b></div>
+</div>
+
+<div id="container"></div>
+
+<div class="actions">
+  <button id="btnReiniciar">Reiniciar test</button>
+</div>
+
+<div id="resultado"></div>
+
+<footer>Basado en "Calidad de Software - Tema 1 - Concepto de Calidad del Software". Sin nombres propios. Complementa el <a href="cs-tema-1-resumen.html" style="color:var(--accent)">Resumen del Tema 1</a>.</footer>
+
+<script>
+const CATS = [
+  ["Sección 1.1 - Definición de Calidad"],
+  ["Sección 1.2 - Garvin (8 dimensiones)"],
+  ["Sección 1.3 - McCall (11 factores)"],
+  ["Sección 1.4 - Modelo de Boehm"],
+  ["Sección 1.5 - ISO/IEC 9126"],
+  ["Sección 1.6 - ISO/IEC 25010:2023"],
+  ["Sección 1.7 - Dilemas de calidad"],
+  ["Sección 1.8 - Costos y ciclo de vida"],
+  ["Sección 1.9 - Orquestación QC/QA"]
+];
+
+const QS = [
+  {cat:0, t:"La calidad de software se define como:",
+   o:["Solo que el programa compile sin errores","El grado en que sistema, componente o proceso satisface requisitos y expectativas razonables","La cantidad de funcionalidades entregadas","La velocidad de entrega del equipo"], c:1,
+   e:"Es el grado de satisfacción de requisitos y expectativas razonables de interesados, considerando múltiples atributos a la vez."},
+  {cat:0, t:"La calidad de software es:",
+   o:["Una métrica única aislada","Un constructo multidimensional con propiedades relacionadas","Solo funcionalidad","Solo rendimiento"], c:1,
+   e:"Es multidimensional: incluye muchas propiedades relacionadas, algunas en conflicto (trade-off)."},
+  {cat:0, t:"Dos sistemas pueden funcionar igual y tener calidad distinta porque:",
+   o:["La calidad no depende del funcionamiento observable","Además del funcionar importan atributos no funcionales y contexto","Es imposible medir la calidad","La funcionalidad no importa"], c:1,
+   e:"Dos sistemas funcionalmente correctos pueden diferir radicalmente en rendimiento, seguridad, mantenibilidad, etc."},
+  {cat:0, t:"Q = f(funcionalidad, rendimiento, confiabilidad, ...) expresa que:",
+   o:["La calidad es una suma simple","La calidad depende de múltiples atributos simultáneos","Solo importan 3 atributos","La fórmula da un número exacto"], c:1,
+   e:"La Q es función de muchos atributos funcionales y no funcionales a la vez."},
+  {cat:0, t:"¿Qué modelo es de 1987 y pregunta desde qué dimensiones se percibe la calidad?",
+   o:["McCall","Boehm","Garvin","ISO 9126"], c:2,
+   e:"Garvin (1987): 8 dimensiones de percepción de calidad."},
+  {cat:0, t:"¿Qué modelo es de 1977 y pregunta qué factores afectan a operación, revisión y transición?",
+   o:["McCall","Garvin","Boehm","25010"], c:0,
+   e:"McCall (1977): 11 factores en 3 categorías del ciclo de vida."},
+  {cat:0, t:"¿Qué modelo es de 1978 y pregunta cómo se relacionan jerárquica y causalmente las propiedades?",
+   o:["Garvin","McCall","Boehm","9126"], c:2,
+   e:"Boehm (1978): ontología jerárquica y relacional."},
+
+  {cat:1, t:"Las 8 dimensiones de Garvin fueron adaptadas al software por:",
+   o:["Pressman entre 2001-2005","Boehm en 1978","McCall en 1977","ISO en 2023"], c:0,
+   e:"No nacieron para software, pero Pressman las adaptó en 2001-2005."},
+  {cat:1, t:"Performance en software se traduce en:",
+   o:["Solo estética","Tiempo de respuesta, latencia, throughput, capacidad, precisión y consumo","Solo número de features","Solo marca"], c:1,
+   e:"Desempeño = magnitudes cuantificables de comportamiento operativo."},
+  {cat:1, t:"Throughput y capacidad se diferencian en que:",
+   o:["Son lo mismo","Throughput es volumen real por tiempo y capacidad es límite teórico potencial","Capacidad es velocidad de CPU","Throughput es memoria"], c:1,
+   e:"Throughput = real procesado; capacidad = techo potencial."},
+  {cat:1, t:"Sistema A responde saldo en 150 ms y B en 8 s, ambos exactos. Conclusión:",
+   o:["Son equivalentes","Ambos correctos funcionalmente pero no equivalentes en desempeño","B es mejor","La funcionalidad no importa"], c:1,
+   e:"No confundir desempeño con funcionalidad: igual corrección, distinto desempeño."},
+  {cat:1, t:"¿Cuál NO es especificación de ingeniería?",
+   o:["p95 menor de 300 ms medido en prod","La aplicación es rápida","Throughput mayor de 1000 ops con método JMeter","Error menor de 1% en 30 días"], c:1,
+   e:"Debe tener umbral, métrica y método de medición. Rápida es subjetivo."},
+  {cat:1, t:"Falacia de Features:",
+   o:["Más funcionalidades siempre es más calidad","Cada feature añade complejidad, deuda, ataque, consumo y carga cognitiva","Las features no cuestan","Hay que maximizar features"], c:1,
+   e:"Hay que maximizar valor frente a complejidad añadida, no número de features."},
+  {cat:1, t:"MTBF y MTTF se usan para:",
+   o:["Estética","Partes reparables y no reparables respectivamente","Portabilidad","Percepción"], c:1,
+   e:"MTBF = entre fallos (reparables); MTTF = hasta el fallo (no reparables)."},
+  {cat:1, t:"Confiabilidad y disponibilidad:",
+   o:["Son lo mismo","Confiabilidad es frecuencia de fallos y disponibilidad es proporción de tiempo operativo","Disponibilidad es estética","No se miden"], c:1,
+   e:"A falla mucho pero recupera en segundos: alta disponibilidad y baja confiabilidad."},
+  {cat:1, t:"La conformidad es:",
+   o:["Opcional","Condición de aceptación previa: funcionales + calidad + legales + seguridad + políticas","Solo estética","Solo rendimiento"], c:1,
+   e:"Un sistema brillante que incumple regulación no es éxito organizativo."},
+  {cat:1, t:"La durabilidad en software significa:",
+   o:["Resistencia física","Viabilidad a largo plazo: comprensible y modificable sin degradarse","Que no se usa","Solo backups"], c:1,
+   e:"Envejece por acoplamiento, obsolescencia, deuda, rigidez, sin tests ni docs."},
+  {cat:1, t:"Serviceability conecta con:",
+   o:["Marketing","Observabilidad (logs, métricas, trazas) y SRE/DevOps","Solo diseño gráfico","Nada"], c:1,
+   e:"Mismo defecto a las 03:00: con dashboards y rollback se resuelve en minutos."},
+  {cat:1, t:"Sobre estética es correcto:",
+   o:["Compensa fallos de seguridad","No compensa problemas graves técnicos; como mucho retrasa percibirlos","Es lo único importante","Sustituye a la arquitectura"], c:1,
+   e:"Se necesita belleza visual Y integridad estructural."},
+  {cat:1, t:"Calidad percibida:",
+   o:["Es idéntica a la técnica","Es subjetiva con información incompleta y no sustituye a la técnica","No hay que gestionarla","Siempre es correcta"], c:1,
+   e:"Hay que gestionar técnica y percibida sin confundirlas."},
+
+  {cat:2, t:"McCall organiza sus factores en:",
+   o:["2 categorías","3 categorías por etapa: operación, revisión y transición","9 características","6 características"], c:1,
+   e:"Operación (¿funciona en uso?), revisión (¿fácil de modificar?) y transición (¿se adapta?)."},
+  {cat:2, t:"Factores de operación del producto:",
+   o:["Portabilidad y reusabilidad","Corrección, confiabilidad, eficiencia, integridad y usabilidad","Solo testabilidad","Solo flexibilidad"], c:1,
+   e:"Operación evalúa el software en ejecución desde el usuario y producción."},
+  {cat:2, t:"Funciona sin caerse pero calcula mal salarios a tiempo parcial. Es problema de:",
+   o:["Eficiencia","Corrección funcional de negocio","Portabilidad","Estética"], c:1,
+   e:"Funciona técnicamente pero no es correcto para el negocio. Sin especificación no hay corrección objetiva."},
+  {cat:2, t:"La confiabilidad en McCall se cuantifica típicamente con:",
+   o:["MTTR","MTTF","Número de pantallas","Likes"], c:1,
+   e:"Tiempo medio hasta el fallo, incluyendo precisión sostenida, no solo no caerse."},
+  {cat:2, t:"500 ms con 20 GB frente a 600 ms con 300 MB. Desde eficiencia:",
+   o:["Siempre gana el más rápido","No son equivalentes: hay que preguntar también recursos y contexto","Los recursos no importan","Gana el que más consume"], c:1,
+   e:"Eficiencia = temporal + espacial y contexto de infraestructura y coste."},
+  {cat:2, t:"La integridad incluye:",
+   o:["Solo backups","Autenticación, autorización, confidencialidad, integridad de datos, trazabilidad y protección","Solo estética","Solo throughput"], c:1,
+   e:"Controla acceso accidental y deliberado a datos y funciones."},
+  {cat:2, t:"La mantenibilidad se mide convencionalmente con:",
+   o:["MTTF","MTTR (tiempo medio de reparación)","Número de features","Throughput"], c:1,
+   e:"Depende de legibilidad, cohesión, acoplamiento y documentación interna."},
+  {cat:2, t:"La flexibilidad aplica el principio:",
+   o:["Abierto/Cerrado (OCP): nuevas lógicas sin alterar base","Singleton obligatorio","Sin principios","Copiar y pegar"], c:0,
+   e:"Debe responder a nuevos requisitos, entornos, usuarios y reglas."},
+  {cat:2, t:"Baja testabilidad suele indicar:",
+   o:["Buen diseño","Problemas arquitectónicos: acoplamiento, dependencias ocultas y efectos laterales","Falta de marketing","Exceso de docs"], c:1,
+   e:"Es propiedad arquitectónica: buen diseño facilita pruebas naturalmente."},
+  {cat:2, t:"La reusabilidad real exige:",
+   o:["Copiar código","Interfaces claras, responsabilidad única, dependencias explícitas, estabilidad y docs","Código acoplado","Sin documentación"], c:1,
+   e:"No es copiar de un sitio a otro, es diseño para reutilizar."},
+  {cat:2, t:"La interoperabilidad es crítica porque:",
+   o:["Todo vive aislado","Ninguna app empresarial vive aislada y cada frontera es punto de fallo","No hay APIs","No hay versiones"], c:1,
+   e:"Front, API, negocio, BD, externo y legado: formato, versiones o caídas degradan todo."},
+
+  {cat:3, t:"El salto de Boehm fue pasar de:",
+   o:["Jerarquía a lista plana","Lista plana a ontología jerárquica y relacional","Tests a nada","Código a marketing"], c:1,
+   e:"La calidad deja de ser monolítica y medible directa: es sistema de dependencias."},
+  {cat:3, t:"Nivel de alto nivel en Boehm (negocio):",
+   o:["Métricas de código","As-is Utility, Maintainability y Portability","Solo throughput","Solo estética"], c:1,
+   e:"¿Qué tan bien lo uso hoy? ¿Fácil de modificar? ¿Fácil de cambiar de entorno?"},
+  {cat:3, t:"Nivel primitivo o base en Boehm:",
+   o:["Expectativas del cliente","Métricas cuantificables y estáticas del código","Atributos intermedios","Nada"], c:1,
+   e:"Lo alto depende de intermedios, que se miden con primitivas del fuente."},
+  {cat:3, t:"Ejemplo de sinergia en Boehm:",
+   o:["Más capas siempre","Alta cohesión y bajo acoplamiento reducen complejidad, suben testabilidad y bajan MTTR","Añadir deuda","Evitar tests"], c:1,
+   e:"El esfuerzo en una primitiva propaga beneficio en cascada a alto nivel."},
+  {cat:3, t:"Ejemplo de trade-off en Boehm:",
+   o:["No existen conflictos","Máxima flexibilidad con abstracciones penaliza simplicidad y eficiencia","Todo mejora a la vez","La arquitectura no importa"], c:1,
+   e:"Generalizar con interfaces e inyección añade indirección y latencia (ATAM)."},
+  {cat:3, t:"Corolario de Boehm para el arquitecto:",
+   o:["Perseguir calidad absoluta","Optimizar bajo restricciones priorizando por dominio y documentando trade-offs","Maximizar todo","No decidir"], c:1,
+   e:"Ej.: biomédico prioriza confiabilidad sobre eficiencia; videojuegos al revés."},
+
+  {cat:4, t:"ISO/IEC 9126 aportó:",
+   o:["Nada","Pasar de academia a estándar internacional consistente","Solo tests","Solo marketing"], c:1,
+   e:"Modelo de transición hacia SQuaRE."},
+  {cat:4, t:"Las 6 características de 9126 son:",
+   o:["9 de 25010","Funcionalidad, confiabilidad, usabilidad, eficiencia, mantenibilidad y portabilidad","Solo seguridad","Solo safety"], c:1,
+   e:"Clásico previo a SQuaRE y 25010."},
+  {cat:4, t:"9126 fue reemplazada por:",
+   o:["Garvin","Familia SQuaRE y en producto por 25010 (2011 retirada, vigente 2023)","McCall","Nada"], c:1,
+   e:"Línea evolutiva hasta 25010:2023."},
+
+  {cat:5, t:"25010:2023 es:",
+   o:["Retirada","El marco vigente SQuaRE con 9 características para especificar, medir y evaluar","Una lista informal","Solo para hardware"], c:1,
+   e:"Referencia sistemática del curso, no lista descriptiva."},
+  {cat:5, t:"¿Cuál NO es característica 2023?",
+   o:["Functional suitability","Performance efficiency","Compatibility","Throughput aislado"], c:3,
+   e:"Las 9 son suitability, performance, compatibility, interaction, reliability, security, maintainability, flexibility y safety."},
+  {cat:5, t:"Cambio 2023 en usabilidad:",
+   o:["Desaparece sin más","Evoluciona a interaction capability con engagement e inclusividad","Se fusiona con safety","No cambia"], c:1,
+   e:"Visión amplia persona-producto: qué hacer, cómo, qué pasó, qué falló y cómo recuperarse."},
+  {cat:5, t:"Cambio 2023 en portabilidad:",
+   o:["Se elimina","Evoluciona a flexibility con escalabilidad cloud","Pasa a security","No existe"], c:1,
+   e:"Adaptability, scalability, installability y replaceability."},
+  {cat:5, t:"Safety en 2023 es:",
+   o:["Lo mismo que Security","Característica propia que protege personas y entorno de errores del sistema","Opcional","Solo antivirus"], c:1,
+   e:"Security protege al software; safety protege del software al mundo físico."},
+  {cat:5, t:"Nóminas con todos los módulos y cálculos perfectos pero con suma manual de tarjetas. Falla:",
+   o:["Completeness","Correctness","Appropriateness (no es la función adecuada al objetivo)","Capacity"], c:2,
+   e:"Código bien ejecutado pero herramienta equivocada: principio clave."},
+  {cat:5, t:"Co-existence frente a interoperability:",
+   o:["Son iguales","Coexistir es compartir entorno sin interferir y interoperar es intercambiar datos útiles con estándares","No importan","Solo JSON"], c:1,
+   e:"Ej.: reportes que no matan a MariaDB y luego envían JSON que el CRM entiende."},
+  {cat:5, t:"Estudiante 5001 en matrícula con sala de espera y sin funciones secundarias. Es:",
+   o:["Colapso","Degradación progresiva y controlada ante límite de capacidad","Fallo de coexistencia","Mala appropriateness"], c:1,
+   e:"Time behavior + resources + capacity: nunca dejar de funcionar abruptamente."},
+  {cat:5, t:"Tarjeta vencida con botón bloqueado y mensaje claro. Aplica:",
+   o:["Nada","User error protection + self-descriptiveness","Solo availability","Solo portability"], c:1,
+   e:"Evita el error y guía la recuperación, no un Error 500 genérico."},
+  {cat:5, t:"Aerolínea que oculta pago con tarjeta y usa puntos ante caída bancaria. Es:",
+   o:["Faultlessness","Fault tolerance con degradación progresiva","Falta de availability","Mala security"], c:1,
+   e:"Sigue funcionando degradada en vez de pantalla en blanco."},
+  {cat:5, t:"Reinicio en 30 s sin ingeniero y sin perder reserva. Es:",
+   o:["Recoverability","Faultlessness","Co-existence","Installability"], c:0,
+   e:"¿Se recupera solo y sin perder datos? Disponibilidad 99.99% aparte."},
+  {cat:5, t:"Security by design significa:",
+   o:["Añadir seguridad antes de producción","Incorporarla desde el diseño inicial","Solo firewall","Nada"], c:1,
+   e:"Confidencialidad, integridad, no repudio, accountability, autenticidad y resistencia. Ej. hospital."},
+  {cat:5, t:"Receta firmada que impide negar autoría. Es:",
+   o:["Confidencialidad","No repudio","Disponibilidad","Capacidad"], c:1,
+   e:"Evidencia irrefutable con certificado digital."},
+  {cat:5, t:"Registro de quién, cuándo y desde dónde recetó. Es:",
+   o:["Accountability (trazabilidad de responsabilidad)","Solo throughput","Nada","Estética"], c:0,
+   e:"Auditable e inmutable para auditores."},
+  {cat:5, t:"Equipo nuevo que halla el archivo de retenciones en horas. Es alta:",
+   o:["Reusability","Analyzability","Availability","Capacity"], c:1,
+   e:"Mantenibilidad 5 años después: analizar, reutilizar, modularidad, modificabilidad y testabilidad."},
+  {cat:5, t:"Tienda que pasa de servidores propios a AWS sin reescribir lógica. Es:",
+   o:["Installability","Adaptability","Replaceability","Safety"], c:1,
+   e:"Flexibility: adaptarse, instalar en 3 min, escalar x50 y reemplazar correos en 1 día."},
+  {cat:5, t:"Láser que no supera 10 W aunque se pise el pedal. Es:",
+   o:["Security","Operational Constraint de safety","Compatibility","Nada"], c:1,
+   e:"Barrera lógica a parámetros seguros. Apagón con láser off es fail-safe."},
+
+  {cat:6, t:"El dilema central de calidad es:",
+   o:["Elegir lenguaje","Tensión entre rigor técnico y viabilidad comercial","Solo testing","Nada"], c:1,
+   e:"Ni mala calidad que quema mercado ni perfección que agota recursos."},
+  {cat:6, t:"Good Enough es aceptable en multinacionales y letal en startups porque:",
+   o:["No hay diferencia","Dominantes absorben mala 1.0 y pequeñas mueren por reputación antes de 2.0","Las startups no venden","Siempre es negligencia"], c:1,
+   e:"Depende de posición de mercado y dominio."},
+  {cat:6, t:"En sistemas safety-critical (avión, UCI):",
+   o:["Vale Good Enough","Tolerancia cero: DO-178C, IEC 62304, formal, MC/DC y N-versiones","No hay 2.0 pero da igual","No hay normas"], c:1,
+   e:"Liberar con errores puede ser negligencia o delito."},
+  {cat:6, t:"Velocidad frente a estabilidad: se prioriza velocidad con:",
+   o:["Monolito sin tests","E-commerce con toggles y canary al 1%","Core bancario","Siempre"], c:1,
+   e:"Impacto bajo y despliegue controlado sí; legacy sin red no."},
+  {cat:6, t:"Usabilidad frente a seguridad se resuelve con:",
+   o:["Fricción cero siempre","Seguridad adaptativa: más fricción solo si el riesgo lo justifica","Sin MFA nunca","Nada"], c:1,
+   e:"Catálogo público usable; pagos y salud con rigidez."},
+  {cat:6, t:"La deuda técnica deliberada es buena práctica cuando:",
+   o:["Nunca","Valida MVP y se registra en backlog para refactorizar","Se oculta","En core sin control"], c:1,
+   e:"En core (facturación) SOLID no es negociable."},
+
+  {cat:7, t:"Costos de prevención son:",
+   o:["Arreglar en producción","Inversión estructural para evitar defectos, con mayor ROI","Pérdida total","Solo soporte"], c:1,
+   e:"TDD, pair, ADRs y secure coding. CapEx capitalizable."},
+  {cat:7, t:"Si el costo de evaluación es nulo significa que:",
+   o:["Todo va bien","El cliente actúa como QA: catastrófico","No hay defectos","Hay prevención total"], c:1,
+   e:"Sin revisiones, métricas ni pruebas baratas, el fallo llega caro al usuario."},
+  {cat:7, t:"Falla interna frente a externa:",
+   o:["Iguales","Interna es antes del envío (rework) y externa tras envío (SLA, churn, GDPR)","Externa es barata","Interna no se mide"], c:1,
+   e:"Interna mata velocity; externa mata marca. Retrabajo objetivo menor de 15%."},
+  {cat:7, t:"La curva de costos dice que un defecto de $139 en requisitos llega a:",
+   o:["$100 en producción","$14.102 en mantenimiento","Más barato","Igual"], c:1,
+   e:"455 diseño, 977 código, 7.136 pruebas y 14.102 producción: Shift-Left."},
+  {cat:7, t:"Shift-Left Quality consiste en:",
+   o:["Probar al final","Mover inversión a prevención y evaluación temprana","No prevenir","Solo SRE"], c:1,
+   e:"Ahorrar resolviendo a $139 en vez de reconstruir a $14k."},
+  {cat:7, t:"Se invierte fuerte en prevención y evaluación en:",
+   o:["MVP de semanas","Core transaccional, pagos, salud y cloud","Prototipo UX","Nunca"], c:1,
+   e:"Falla externa supera al costo del 90% de cobertura; en MVP se acepta riesgo no crítico."},
+
+  {cat:8, t:"Los 3 frentes de orquestación son:",
+   o:["Solo código","Prácticas de ingeniería, administración y dicotomía QC/QA","Solo marketing","Solo ventas"], c:1,
+   e:"Operan concurrentemente para lograr calidad sistemática."},
+  {cat:8, t:"Un fallo en análisis de requisitos:",
+   o:["Se arregla solo","Invalida todo esfuerzo posterior de programación","No importa","Solo afecta a docs"], c:1,
+   e:"Traducir ambigüedad a specs comprobables es la fase crítica."},
+  {cat:8, t:"La administración protege la calidad evitando:",
+   o:["Planificar","Despliegues heroicos por mala estimación, bloqueos y falta de contingencia","Tener calendario","Contratar"], c:1,
+   e:"Estimación realista, camino crítico y riesgo evitan atajos fatales."},
+  {cat:8, t:"QC frente a QA:",
+   o:["Son lo mismo","QC inspecciona producto y QA audita proceso con gobernanza y visibilidad","QA programa todo","QC no mide"], c:1,
+   e:"QC: UML, PRs y Sonar (temas 2,4-7). QA: estándares, CI y readiness (tema 3)."},
+  {cat:8, t:"QA provee visibilidad cuando:",
+   o:["Oculta métricas","Traduce cobertura y deuda en salud del proyecto para decidir el release","No informa","Solo testea"], c:1,
+   e:"Sin QA el QC va ciego; sin QC el QA es papel."}
+];
+
+const N = QS.length;
+const answers = new Array(N).fill(-1);
+const LETRAS = ["a","b","c","d"];
+
+function render() {
+  const container = document.getElementById("container");
+  let html = "";
+  for (let c = 0; c < CATS.length; c++) {
+    html += '<section class="cat"><div class="cat-title">' + CATS[c][0] + "</div>";
+    QS.forEach((q, i) => {
+      if (q.cat !== c) return;
+      html += '<div class="q" id="q' + i + '">';
+      html += '<div class="num">Pregunta ' + (i+1) + "/" + N + "</div>";
+      html += '<div class="text">' + q.t + "</div>";
+      html += '<div class="opts">';
+      q.o.forEach((opt, j) => {
+        html += '<label class="opt" data-q="' + i + '" data-opt="' + j + '">';
+        html += '<input type="radio" name="q' + i + '" value="' + j + '">';
+        html += '<span><b class="letter">' + LETRAS[j] + ")</b> " + opt + "</span></label>";
+      });
+      html += "</div>";
+      html += '<div class="explain" id="exp' + i + '"></div>';
+      html += "</div>";
+    });
+    html += "</section>";
+  }
+  container.innerHTML = html;
+  container.querySelectorAll("input[type=radio]").forEach(inp => {
+    inp.addEventListener("change", () => {
+      const q = +inp.getAttribute("name").slice(1);
+      if (answers[q] !== -1) return;
+      answers[q] = +inp.value;
+      gradeQuestion(q);
+      updateLocaleProgress();
+    });
+  });
+  updateProgress();
+}
+
+function gradeQuestion(i) {
+  const q = QS[i];
+  const card = document.getElementById("q" + i);
+  const chosen = answers[i];
+  const ok = chosen === q.c;
+
+  card.classList.add(ok ? "correct" : "wrong");
+  card.querySelectorAll("label.opt").forEach(lbl => {
+    const o = +lbl.getAttribute("data-opt");
+    if (o === chosen && o === q.c) lbl.classList.add("selected-ok");
+    else if (o === chosen) lbl.classList.add("selected-ko");
+    else if (o === q.c) lbl.classList.add("show-ok");
+    lbl.classList.add("locked");
+  });
+  card.querySelectorAll("input").forEach(inp => inp.disabled = true);
+
+  const exp = document.getElementById("exp" + i);
+  exp.classList.add("show", ok ? "correct" : "wrong");
+  const head = ok
+    ? '\u2714 Correcto.'
+    : '\u2718 Incorrecto. La respuesta correcta es <b>' + LETRAS[q.c] + ")</b>.";
+  exp.innerHTML = '<div class="head">' + head + '</div><span>' + q.e + "</span>";
+}
+
+function updateProgress() {
+  const done = answers.filter(a => a !== -1).length;
+  const ok = answers.filter((a, i) => a === QS[i].c).length;
+  document.getElementById("answered").textContent = done;
+  document.getElementById("correct").textContent = ok;
+  document.getElementById("barFill").style.width = (done / N * 100) + "%";
+
+  if (done === N) showResult(ok);
+}
+
+function updateLocaleProgress() { updateProgress(); }
+
+function showResult(ok) {
+  const pct = Math.round(ok / N * 100);
+  const res = document.getElementById("resultado");
+  res.style.display = "block";
+  if (pct >= 90) { res.className = "bien"; res.innerHTML = "Excelente: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Dominas el tema. Repasa solo lo fallado.</div>"; }
+  else if (pct >= 70) { res.className = "aceptable"; res.innerHTML = "Bien: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Buen nivel, pero repasa las secciones con fallos.</div>"; }
+  else { res.className = "mal"; res.innerHTML = "A estudiar: " + ok + "/" + N + " (" + pct + "%)<div class=\"sub\">Reinicia y repite con calma.</div>"; }
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+document.getElementById("btnReiniciar").addEventListener("click", () => {
+  if (!confirm("¿Reiniciar el test? Se perderán las respuestas.")) return;
+  answers.fill(-1);
+  document.getElementById("resultado").style.display = "none";
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
