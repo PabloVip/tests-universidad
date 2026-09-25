@@ -1,8 +1,0 @@
-{
-  "_nota": "Ejemplo. El archivo real users.json lo crea 'python3 server.py --add-user <nombre>' y NO se sube a git.",
-  "ejemplo_usuario": {
-    "salt": "<hex>",
-    "hash": "<hex>",
-    "iterations": 210000
-  }
-}
