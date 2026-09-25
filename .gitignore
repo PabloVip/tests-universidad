@@ -1,0 +1,5 @@
+# login seguro (servidor)
+users.json
+__pycache__/
+*.pyc
+.env

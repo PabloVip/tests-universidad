@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar · Mis Tests de Universidad</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
+<style>
+  .login-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 28px 26px; max-width: 420px; margin: 8vh auto 0;
+  }
+  .login-card h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  .login-card p.sub { color: var(--muted); margin: 0 0 18px; font-size: .93rem; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 6px; }
+  .field input {
+    width: 100%; font: inherit; padding: 10px 12px;
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--surface); color: var(--text);
+  }
+  .login-err {
+    display: none; margin: 0 0 14px; padding: 10px 12px; font-size: .9rem;
+    border-radius: 10px; background: var(--ko-soft); color: var(--ko);
+    border: 1px solid color-mix(in srgb, var(--ko) 35%, transparent);
+  }
+  .login-err.show { display: block; }
+</style>
+</head>
+<body data-no-topbar>
+
+<main class="wrap">
+  <div class="login-card">
+    <span class="eyebrow">Grado en Ingeniería Informática</span>
+    <h1>Entrar</h1>
+    <p class="sub">Acceso privado a los tests y resúmenes.</p>
+    <p class="login-err" id="err" role="alert"></p>
+    <form id="f" autocomplete="on">
+      <div class="field">
+        <label for="u">Usuario</label>
+        <input id="u" name="username" type="text" autocomplete="username" required autofocus>
+      </div>
+      <div class="field">
+        <label for="p">Contraseña</label>
+        <input id="p" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn primary" id="b" type="submit" style="width:100%">Entrar</button>
+    </form>
+  </div>
+</main>
+
+<script>
+(function () {
+  var next = new URLSearchParams(location.search).get("next") || "index.html";
+  if (next.charAt(0) === "/" && next.charAt(1) === "/") next = "index.html"; // evita open-redirect //
+  fetch("api/me", { credentials: "same-origin" }).then(function (r) {
+    if (r.ok) location.replace(next);
+  }).catch(function () {});
+
+  var f = document.getElementById("f"), err = document.getElementById("err"),
+      b = document.getElementById("b");
+  f.addEventListener("submit", function (e) {
+    e.preventDefault();
+    err.classList.remove("show");
+    b.disabled = true; b.textContent = "Comprobando…";
+    fetch("api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({
+        username: document.getElementById("u").value,
+        password: document.getElementById("p").value
+      })
+    }).then(function (r) {
+      return r.json().then(function (j) { return { status: r.status, body: j }; });
+    }).then(function (res) {
+      if (res.status === 200) { location.replace(next); return; }
+      err.textContent = (res.body && res.body.error) || "No se pudo entrar";
+      err.classList.add("show");
+    }).catch(function () {
+      err.textContent = "Error de conexión con el servidor";
+      err.classList.add("show");
+    }).finally(function () {
+      b.disabled = false; b.textContent = "Entrar";
+    });
+  });
+})();
+</script>
+</body>
+</html>
