@@ -75,6 +75,13 @@ def verify_password(password: str, rec: dict) -> bool:
 
 
 def load_users(path: Path = USERS_FILE) -> dict:
+    inline = os.environ.get("USERS_JSON", "").strip()
+    if inline:
+        try:
+            data = json.loads(inline)
+            return data if isinstance(data, dict) else {}
+        except json.JSONDecodeError:
+            return {}
     if not path.exists():
         return {}
     try:

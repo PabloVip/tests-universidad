@@ -63,3 +63,20 @@ HTTP en texto plano vale en tu LAN, pero **no lo expongas directo a
 internet**. Opciones seguras: Tailscale, Cloudflare Tunnel o Caddy
 (terminan TLS por ti). El servidor escucha en `127.0.0.1` por defecto
 precisamente para no exponerse sin querer.
+
+## 6. Despliegue permanente en Render (gratis, con login)
+
+El repo ya lleva `render.yaml` (Blueprint) y `server.py` lee los
+usuarios desde la variable de entorno `USERS_JSON` (sin subir
+contraseñas a git):
+
+```bash
+# genera el valor para USERS_JSON (una línea, pégala en Render):
+python3 -c "import json; print(json.dumps(json.load(open('users.json'))))"
+```
+
+Pasos: crea cuenta en Render → New → Blueprint → conecta el repo
+`tests-universidad` → pega `USERS_JSON` en Environment → Deploy.
+Te dará una URL `https://tests-universidad.onrender.com` con tu login
+delante. (En plan gratis el servicio se duerme tras inactividad y
+tarda ~1 min en despertar con la primera visita.)
