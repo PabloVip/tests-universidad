@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen ASIS Tema 2 · Virtualización</title>
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/app.js"></script>
+<script src="../assets/auth.js"></script>
+</head>
+<body data-crumb="ASIS · Tema 2 · Resumen">
+
+<main class="wrap">
+<div class="page-head">
+  <span class="eyebrow">Administración de Sistemas · Tema 2</span>
+  <h1>Resumen: Virtualización</h1>
+  <p class="lead">De abstraer recursos a Docker: VM, hipervisores, VMware, alta disponibilidad, cloud y contenedores.</p>
+  <div class="actions-row"><a class="btn primary" href="asis-tema-2.html">Hacer el test</a><a class="btn" href="../index.html">Inicio</a></div>
+</div>
+
+<nav class="toc" id="toc">
+  <a href="#sec0">Fundamentos</a>
+  <a href="#sec1">Tipos</a>
+  <a href="#sec2">Hipervisores</a>
+  <a href="#sec3">VMware</a>
+  <a href="#sec4">Por qué virtualizar</a>
+  <a href="#sec5">Cloud y AWS</a>
+  <a href="#sec6">Docker</a>
+</nav>
+
+<section class="cat" id="sec0">
+  <h2 class="cat-title">1. Fundamentos: abstraer recursos</h2>
+  <div class="bloque">
+    <h4>Virtualizar ≠ agregar</h4>
+<pre>VIRTUALIZACIÓN: 1 computador físico → parece → N computadores
+AGREGACIÓN/GRID: N computadores físicos → parecen → 1 computador</pre>
+    <p><b>Virtualización:</b> tecnología software que <b>abstrae recursos</b> dando acceso lógico a recursos físicos. Quien los usa no necesita conocer el hardware real, y varios SO pueden correr sobre el mismo equipo.</p>
+    <div class="note">No es reciente: el <b>Atlas (1962)</b> ya repartía procesador y almacenamiento entre terminales, partiendo disco, memoria y cómputo sin interferencias.</div>
+  </div>
+  <div class="bloque">
+    <h4>Recursos virtualizables y los dos conceptos clave</h4>
+    <p>Sobre un <b>host</b> se virtualizan CPU, memoria, almacenamiento y red. Ej. servidor de 16 núcleos / 64 GB / 2 TB repartido en VMs de 4-8 vCPU, 16-32 GB y cientos de GB: cada VM los percibe como propios.</p>
+    <ul>
+      <li><b>VM:</b> contenedor software aislado con <b>hardware simulado + SO + aplicaciones</b>. Para el SO guest es como un ordenador propio.</li>
+      <li><b>Hipervisor (VMM):</b> capa que <b>desvincula las VM del host, reparte recursos dinámicamente y gestiona el acceso al hardware</b>. Corre sobre el hardware o sobre un SO anfitrión.</li>
+    </ul>
+<pre>VM1 · VM2 · VM3 → HIPERVISOR → HARDWARE</pre>
+    <div class="key"><b>VM = ordenador virtual. Hipervisor = quien los administra y reparte el hardware.</b></div>
+  </div>
+  <div class="bloque">
+    <h4>Virtualización ≠ Cloud Computing</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th></th><th>Virtualización</th><th>Cloud</th></tr>
+      <tr><td><b>Qué es</b></td><td>Tecnología</td><td>Metodología</td></tr>
+      <tr><td><b>Objetivo</b></td><td>Múltiples entornos sobre un físico</td><td>Recursos automatizados bajo demanda</td></tr>
+      <tr><td><b>Gestión</b></td><td>El admin gestiona hipervisor y VM</td><td>Mucho se automatiza vía APIs</td></tr>
+      <tr><td><b>Recursos</b></td><td>Conjunto particular</td><td>Conjunto variable según necesidad</td></tr>
+    </table></div>
+    <div class="note">La virtualización <b>posibilita</b> el cloud, pero no equivale a él.</div>
+  </div>
+</section>
+
+<section class="cat" id="sec1">
+  <h2 class="cat-title">2. Tipos de virtualización</h2>
+  <div class="bloque">
+    <h4>De plataforma: emulación, paravirtualización y completa</h4>
+    <ul>
+      <li><b>Emulación nativa:</b> replica una arquitectura sobre otra (guest → HW virtual → emulador → HW real). Vale aunque el software espere otra arquitectura.</li>
+      <li><b>Paravirtualización:</b> el hipervisor expone <b>hypercalls</b> y el <b>guest modificado colabora</b> en vez de emularlo todo.</li>
+      <li><b>Completa:</b> el <b>guest no necesita modificarse</b> ni colaborar explícitamente.</li>
+    </ul>
+    <div class="key">Para = el guest <b>participa</b>. Completa = el guest <b>no se modifica</b>.</div>
+  </div>
+  <div class="bloque">
+    <h4>SO, recursos, aplicaciones y escritorio</h4>
+    <ul>
+      <li><b>De SO:</b> entornos independientes sobre el <b>mismo kernel</b> del host. Clave para entender contenedores.</li>
+      <li><b>De recursos:</b> abstrae <b>un recurso</b>, no el computador (memoria virtual con <b>swap</b> de Linux, red con <b>VPN</b>, RAM combinada en red).</li>
+      <li><b>De aplicaciones:</b> encapsula la app tras una capa intermedia para <b>portabilidad y compatibilidad</b>. Ej. <b>Wine, JVM, CLR (.NET)</b>.</li>
+      <li><b>De escritorio:</b> el escritorio vive en un <b>servidor remoto</b> y se usa desde PC, portátil o móvil. Ej. <b>Citrix</b>.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cat" id="sec2">
+  <h2 class="cat-title">3. Cómo funciona y tipos de hipervisor</h2>
+  <div class="bloque">
+    <h4>Por software o asistida por hardware</h4>
+    <p>La asistida usa extensiones de CPU (<b>Intel VT, AMD-V</b>). El hipervisor corre en <b>ring -1</b>, más privilegiado que el SO guest (ring 0) y las apps (ring 3): la CPU captura operaciones privilegiadas del guest, el VMM las gestiona y el guest sigue creyendo estar en ring 0.</p>
+  </div>
+  <div class="bloque">
+    <h4>Tipo 1 vs Tipo 2 (fundamental)</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th></th><th>Tipo 1 (bare metal)</th><th>Tipo 2</th></tr>
+      <tr><td><b>Dónde corre</b></td><td>Directo sobre hardware</td><td>Sobre un SO host</td></tr>
+      <tr><td><b>Ejemplos</b></td><td><b>VMware ESXi</b></td><td><b>Workstation, VirtualBox, Parallels, VirtualPC</b></td></tr>
+      <tr><td><b>Balance</b></td><td><b>Mayor rendimiento</b></td><td>Más compatibilidad/funciones, pero <b>menor rendimiento y estabilidad</b></td></tr>
+    </table></div>
+    <div class="key">Tipo 1 = hipervisor sobre <b>hardware</b>. Tipo 2 = hipervisor sobre <b>SO</b>.</div>
+  </div>
+</section>
+
+<section class="cat" id="sec3">
+  <h2 class="cat-title">4. VMware: ficheros de la VM y snapshots</h2>
+  <div class="bloque">
+    <h4>Una VM son varios ficheros</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>Fichero</th><th>Contiene</th></tr>
+      <tr><td><b>.vmx</b></td><td>Configuración de la VM (texto plano, fichero raíz)</td></tr>
+      <tr><td><b>.nvram</b></td><td>Estado de la <b>BIOS</b></td></tr>
+      <tr><td><b>.log</b></td><td>Registro principal de <b>eventos</b></td></tr>
+      <tr><td><b>.vmdk</b></td><td><b>Disco virtual</b> (uno o varios ficheros; <code>s###.vmdk</code> por trozos, <code>f###.vmdk</code> si se reserva todo el espacio)</td></tr>
+      <tr><td><b>.vmsd</b></td><td>Metadatos de los <b>snapshots</b></td></tr>
+      <tr><td><b>.vmsn</b></td><td><b>Estado de la VM</b> en el momento del snapshot</td></tr>
+    </table></div>
+    <div class="note">El <code>.vmdk</code> parece un disco (<code>C:\</code>, <code>/</code>) para la VM, pero físicamente son archivos en el host. El snapshot permite <b>recuperar un estado anterior</b>.</div>
+  </div>
+</section>
+
+<section class="cat" id="sec4">
+  <h2 class="cat-title">5. Por qué virtualizar: ventajas e inconvenientes</h2>
+  <div class="bloque">
+    <h4>El problema: servidores infrautilizados</h4>
+    <p>Cuatro servidores al 10/15/8/20 % consumen electricidad, espacio, refrigeración y mantenimiento casi para nada. Virtualizando se <b>consolida</b>: esas cuatro cargas viven como VMs en un físico con alta utilización.</p>
+    <p>Otras razones: falta de espacio en CPD, abstraer almacenamiento, eficiencia energética, menos coste de administración, monitorización centralizada, aprovisionamiento automático, backups y restauración simples, redundancia, alta disponibilidad y rendimiento. Los servicios modernos aspiran a <b>24×365</b>.</p>
+  </div>
+  <div class="bloque">
+    <h4>Ventajas, alta disponibilidad e inconvenientes</h4>
+    <ul>
+      <li><b>Consolidación, administración simple</b> (clonar, desplegar, copiar, restaurar), <b>redundancia</b> repartida, <b>menos costes</b>, backups fáciles y <b>eficiencia energética</b>.</li>
+      <li><b>Alta disponibilidad:</b> si cae el host A, la VM del servicio pasa al host B gracias a separar máquina lógica y física.</li>
+    </ul>
+    <div class="warn"><b>Coste:</b> capa adicional → <b>pérdida de rendimiento</b> (App → SO guest → hipervisor → HW), y los recursos físicos siguen siendo <b>finitos</b>: hay que dimensionar bien el host. La <b>hiperconvergencia</b> (cómputo + almacenamiento + red + virtualización gestionados juntos) busca simplificar aún más.</div>
+  </div>
+</section>
+
+<section class="cat" id="sec5">
+  <h2 class="cat-title">6. De la virtualización al cloud: AWS</h2>
+  <div class="bloque">
+    <h4>La cadena y el ejemplo</h4>
+<pre>HARDWARE → VIRTUALIZACIÓN → RECURSOS VIRTUALES → AUTOMATIZACIÓN → CLOUD</pre>
+    <p>La virtualización abstrae; el <b>cloud añade automatización y consumo bajo demanda</b>. <b>AWS</b> lo ejemplifica: el usuario solicita computación, almacenamiento o red y consume <b>recursos lógicos sin comprar el servidor físico</b>.</p>
+  </div>
+</section>
+
+<section class="cat" id="sec6">
+  <h2 class="cat-title">7. Contenedores y Docker</h2>
+  <div class="bloque">
+    <h4>VM vs contenedor</h4>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>VM</th><th>Contenedor</th></tr>
+      <tr><td>Virtualiza una máquina (SO guest propio)</td><td>Aísla el entorno compartiendo el <b>kernel</b></td></tr>
+      <tr><td>Más pesada, más recursos, arranque más lento</td><td>Más ligero, menos recursos, arranque más rápido</td></tr>
+    </table></div>
+    <div class="key"><b>VM → virtualiza hardware. Contenedor → aísla apps compartiendo kernel.</b></div>
+    <p><b>Docker</b> encapsula app + dependencias + configuración en un entorno reproducible: adiós al «en mi ordenador funciona».</p>
+  </div>
+  <div class="bloque">
+    <h4>Arquitectura y la cadena Dockerfile → imagen → contenedor</h4>
+<pre>Usuario → Docker Client → Engine/Daemon → Imágenes / Contenedores
+Registry ──pull──► Imagen ──run──► Contenedor
+Dockerfile ──build──► Imagen ──run──► Contenedor</pre>
+    <ul>
+      <li><b>Imagen:</b> <b>plantilla</b> con lo necesario para crear contenedores (una imagen → muchos contenedores, ej. <code>nginx</code> ×2).</li>
+      <li><b>Contenedor:</b> <b>instancia en ejecución</b> (procesos, filesystem, config, red). Analogías: clase→objeto, receta→plato.</li>
+      <li><b>Dockerfile:</b> instrucciones de construcción (<code>FROM, WORKDIR, COPY, RUN, EXPOSE, CMD</code>). <b>La idea más importante de Docker.</b></li>
+      <li><b>Capas:</b> imagen base + runtime + dependencias + app; se reutilizan y distribuyen fácil.</li>
+    </ul>
+  </div>
+  <div class="bloque">
+    <h4>Persistencia: el contenedor es efímero, los datos no</h4>
+    <p>El ciclo es crear → ejecutar → detener → eliminar → recrear. <b>Vida del contenedor ≠ vida de los datos</b>: si una BBDD vive solo en el filesystem interno, borrar el contenedor es un problema.</p>
+    <p>Solución: <b>volúmenes</b>. El contenedor monta <code>/datos</code> en un volumen; al eliminar el contenedor los datos se mantienen y un contenedor nuevo los reutiliza.</p>
+    <div class="key">Ventajas Docker: <b>ligereza, rapidez, portabilidad, aislamiento, reproducibilidad, automatización y eficiencia</b> sobre el mismo host.</div>
+  </div>
+  <div class="bloque">
+    <h4>Hilo conductor del Tema 2</h4>
+    <p>Servidores desaprovechados → abstraer CPU/RAM/disco/red → hipervisor con múltiples VM → consolidación y eficiencia → automatización (cloud, AWS) → aislamiento por kernel (contenedores) → Docker: Dockerfile, imagen-plantilla, contenedor-instancia y volúmenes para persistir.</p>
+  </div>
+</section>
+
+<footer class="page-foot">
+  <div class="next"><a class="btn primary" href="asis-tema-2.html">Hacer el test</a><a class="btn" href="asis-tema-1-resumen.html">Anterior: resumen del Tema 1</a></div>
+  Basado en los apuntes «Sistemas – Unidad 1 – Tema 2 – Virtualización».
+</footer>
+</main>
+
+</body>
+</html>

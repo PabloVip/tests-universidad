@@ -24,6 +24,14 @@
 
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
+  /* Prefijo hacia la raíz según la profundidad de la página (detrás de carpetas como ABD/). */
+  var PREFIX = (function () {
+    try {
+      var src = (document.currentScript && document.currentScript.getAttribute("src")) || "";
+      return src.replace(/assets\/app\.js.*$/, "");
+    } catch (e) { return ""; }
+  })();
+
   document.addEventListener("DOMContentLoaded", function () {
     var body = document.body;
     if (body.hasAttribute("data-no-topbar")) return;
@@ -32,8 +40,8 @@
     bar.className = "topbar";
     bar.innerHTML =
       '<div class="wrap">' +
-      '<a class="brand" href="index.html">Mis Tests</a>' +
-      '<span class="crumb">' + (crumb ? '<a href="index.html">Inicio</a> / ' + esc(crumb) : "") + "</span>" +
+      '<a class="brand" href="' + PREFIX + 'index.html">Mis Tests</a>' +
+      '<span class="crumb">' + (crumb ? '<a href="' + PREFIX + 'index.html">Inicio</a> / ' + esc(crumb) : "") + "</span>" +
       '<button class="icon-btn" type="button" id="themeBtn"></button>' +
       "</div>";
     body.insertBefore(bar, body.firstChild);
