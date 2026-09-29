@@ -1,7 +1,8 @@
 /* ==========================================================
    Motor de tests — Tests de Universidad
    Uso: definir window.TEST = { id, cats:[...], qs:[{cat, t, o:[...], e}] }
-   IMPORTANTE: en los datos, la opción CORRECTA es SIEMPRE la primera (o[0]).
+   IMPORTANTE: en los datos, la opción CORRECTA es la primera (o[0]) salvo que la
+   pregunta indique su índice con c. Con TEST.shuffle = false no se barajan.
    El motor baraja las opciones al mostrarlas, así que en pantalla nunca
    está en la misma posición. El progreso se guarda en el navegador.
    ========================================================== */
@@ -21,7 +22,9 @@
     return a;
   }
   function range(n) { var r = []; for (var i = 0; i < n; i++) r.push(i); return r; }
-  function freshPerm(i) { return shuffle(range(T.qs[i].o.length)); }
+  function freshPerm(i) { var r = range(T.qs[i].o.length); return T.shuffle === false ? r : shuffle(r); }
+  /* Índice de la opción correcta: por defecto 0; se puede fijar con q.c (p. ej. exámenes reales sin barajar). */
+  function cor(i) { var c = T.qs[i].c; return typeof c === "number" ? c : 0; }
 
   /* ---------- Estado ---------- */
   var st = store.get(KEY);
@@ -41,7 +44,7 @@
       perCat[q.cat].total++;
       if (st.ans[i] !== undefined) {
         done++; perCat[q.cat].done++;
-        if (st.ans[i] === 0) { ok++; perCat[q.cat].ok++; }
+        if (st.ans[i] === cor(i)) { ok++; perCat[q.cat].ok++; }
       }
     });
     return { done: done, ok: ok, ko: done - ok, perCat: perCat };
@@ -113,7 +116,7 @@
     var card = document.getElementById("q" + i);
     if (!card) return;
     var chosen = st.ans[i];
-    var ok = chosen === 0;
+    var ok = chosen === cor(i);
     card.classList.remove("correct", "wrong");
     card.classList.add(ok ? "correct" : "wrong");
     card.querySelector(".verdict").textContent = ok ? "✓ Correcta" : "✗ Incorrecta";
@@ -124,10 +127,10 @@
       inp.disabled = true;
       if (o === chosen) inp.checked = true;
       lbl.classList.add("locked");
-      if (o === 0) correctLetter = LET[k];
+      if (o === cor(i)) correctLetter = LET[k];
       if (o === chosen && ok) lbl.classList.add("pick-ok");
       else if (o === chosen) lbl.classList.add("pick-ko");
-      else if (o === 0) lbl.classList.add("show-ok");
+      else if (o === cor(i)) lbl.classList.add("show-ok");
     });
     var ex = card.querySelector(".explain");
     ex.hidden = false;
@@ -172,7 +175,7 @@
     document.querySelectorAll(".q").forEach(function (card) {
       var i = +card.getAttribute("data-i");
       var a = st.ans[i];
-      var show = f === "all" || (f === "pending" && a === undefined) || (f === "wrong" && a !== undefined && a !== 0);
+      var show = f === "all" || (f === "pending" && a === undefined) || (f === "wrong" && a !== undefined && a !== cor(i));
       card.hidden = !show;
       if (show) visible++;
     });
@@ -186,7 +189,7 @@
 
   function retryWrong() {
     Object.keys(st.ans).forEach(function (k) {
-      if (st.ans[k] !== 0) { delete st.ans[k]; st.perm[k] = freshPerm(+k); }
+      if (st.ans[k] !== cor(+k)) { delete st.ans[k]; st.perm[k] = freshPerm(+k); }
     });
     st.filter = "pending";
     save(); render();

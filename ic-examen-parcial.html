@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen parcial · Ingeniería del Conocimiento</title>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/app.js"></script>
+<script src="assets/auth.js"></script>
+</head>
+<body data-crumb="IC · Examen parcial">
+
+<main class="wrap">
+  <div class="page-head">
+    <span class="eyebrow">Ingeniería del Conocimiento · Examen parcial</span>
+    <h1>Examen parcial</h1>
+    <p class="lead">Las 30 preguntas del examen parcial, en su orden y con las opciones como en el original (sin barajar, porque algunas dicen «A y B» o «todas las anteriores»). Cada pregunta se corrige al responder y trae su explicación.</p>
+    <div class="note">El examen no trae solucionario: las respuestas están resueltas a partir de los apuntes (Temas 1, 1.1 y 2). En las preguntas 13, 16 y 27 la explicación indica la interpretación elegida.</div>
+    <div class="actions-row"><a class="btn" href="ic-tema-2-resumen.html">Repasar el Tema 2 (IA)</a></div>
+  </div>
+  <div id="app"></div>
+  <footer class="page-foot">Transcrito de las fotos del examen parcial de Ingeniería del Conocimiento.</footer>
+</main>
+
+<script>
+/* Examen real: opciones en el orden original (shuffle:false) y respuesta correcta indicada con c (0 = a, 1 = b, 2 = c, 3 = d). */
+window.TEST = {
+  id: "ic-examen-parcial",
+  shuffle: false,
+  cats: ["Examen parcial"],
+  qs: [
+  {cat:0, c:1, t:"¿Qué técnica se puede utilizar para reducir la dimensionalidad de un conjunto de datos?",
+   o:["Discretización","PCA (Análisis de Componentes Principales)","Codificación categórica","Limpieza de datos"],
+   e:"PCA es la técnica clásica de reducción de dimensionalidad (junto a t-SNE o NMF). Discretizar convierte continuas en categorías; la codificación categórica hace lo contrario."},
+  {cat:0, c:0, t:"¿Qué diferencia hay entre el aprendizaje automático y el aprendizaje profundo?",
+   o:["El machine learning utiliza métodos estadísticos/algorítmicos mientras que el deep learning utiliza métodos estocásticos","El machine learning utiliza métodos estocásticos mientras que el deep learning utiliza métodos estadísticos/algorítmicos","El machine learning es una parte de la inteligencia artificial y el deep learning no","No existen diferencias entre ambas disciplinas"],
+   e:"Tal cual en los apuntes: ML = métodos estadísticos/algorítmicos; DL = redes neuronales multicapa (métodos estocásticos). El DL también forma parte de la IA (es un subconjunto del ML)."},
+  {cat:0, c:1, t:"La recién creada República de Navalpijo es una isla turística artificial creada por el fundador de la empresa tecnológica Achosoft. Cada año tiene millones de visitantes y es muy avanzada en tecnología. Para controlar quién entra en su isla quieren desarrollar un algoritmo de reconocimiento facial. ¿Qué tipo de algoritmo le recomiendas usar?",
+   o:["Uno de Machine Learning","Uno de Deep Learning","Uno de preprocesamiento de datos","Ninguno de los anteriores"],
+   e:"Reconocimiento facial = imágenes y muchísimos datos → Deep Learning (redes convolucionales)."},
+  {cat:0, c:0, t:"Elrond Mask, CEO de Testa SA, quiere analizar el consumo en litros de keroseno de sus cohetes autónomos. Para ello, ha estado recopilando datos de ellos y quiere utilizar un algoritmo de IA. ¿Qué tipo de aprendizaje deberá realizar para ello?",
+   o:["Aprendizaje supervisado","Aprendizaje semi-supervisado","Aprendizaje por transferencia","Aprendizaje por refuerzo"],
+   e:"Tiene datos históricos con el valor a predecir (litros consumidos): es una regresión, aprendizaje supervisado."},
+  {cat:0, c:3, t:"Jurgen Suecansson, presidente del MOKEA, ha desarrollado un juguete nuevo: una pelusa autónoma que se mueve por toda la casa y despierta a tu gato. ¿Qué tipo de aprendizaje utiliza la pelusa para moverse?",
+   o:["Aprendizaje supervisado","Aprendizaje semi-supervisado","Aprendizaje por transferencia","Aprendizaje por refuerzo"],
+   e:"Navegación autónoma aprendiendo con recompensas y penalizaciones, sin datos históricos: aprendizaje por refuerzo."},
+  {cat:0, c:3, t:"¿Para qué se utiliza el algoritmo de retropropagación en inteligencia artificial?",
+   o:["Para reajustar los pesos de las neuronas y aumentar el error de salida del modelo","Para aumentar los pesos de las neuronas y disminuir el error de salida del modelo","Para eliminar neuronas de las capas intermedias y disminuir el error de salida del modelo","Para reajustar los pesos de las neuronas y disminuir el error de salida del modelo"],
+   e:"Backpropagation propaga el error hacia atrás para reajustar los pesos (subiendo o bajando cada uno según su gradiente) y reducir el error."},
+  {cat:0, c:1, t:"El investigador del Mandril FC, David Mal Habas, está procesando los datos para realizar un estudio. Necesita convertir una variable continua en una variable cualitativa. ¿Qué proceso debe realizar?",
+   o:["Reducción de la dimensionalidad","Discretización","Codificación categórica","Limpieza de texto"],
+   e:"Discretizar = pasar de continua a intervalos o categorías (p. ej. edad → joven/adulto/senior)."},
+  {cat:0, c:2, t:"El investigador del Real Farsa, Juan Las Puertas, está procesando los datos para realizar un estudio. Necesita convertir una variable categórica en una variable numérica. ¿Qué proceso debe realizar?",
+   o:["Reducción de la dimensionalidad","Discretización","Codificación categórica","Limpieza de texto"],
+   e:"Codificación categórica (variables dummy / one-hot, label encoding): de categorías a números."},
+  {cat:0, c:2, t:"Juan Las Puertas se ha encontrado con algunos datos faltantes en su conjunto de entrenamiento, ¿qué puede hacer?",
+   o:["Suspender el estudio ya que los datos no existen","Recopilar los datos de nuevo","Imputar los datos mediante la media, mediana o moda","Todas las anteriores son incorrectas"],
+   e:"El tratamiento habitual de valores ausentes es imputarlos (media, mediana o moda) o eliminar esas filas."},
+  {cat:0, c:1, t:"Un investigador de Timofónica está entrenando un modelo para estimar los metros de cable de fibra óptica que tienen que solicitar para el siguiente mes. De repente, ha medido la calidad de su modelo y se ha encontrado que este presenta un alto valor de error de entrenamiento y un alto valor de error de testeo. ¿Qué problema está teniendo?",
+   o:["Está teniendo problema de sobreajuste (overfitting)","Está tenido problemas de bajo ajuste (underfitting)","Está entrenando perfectamente","Algo está haciendo mal. No se puede tener un alto valor de error de entrenamiento y test"],
+   e:"Error alto en entrenamiento y en test = modelo demasiado simple (sesgo alto): underfitting. En overfitting el error de entrenamiento sería bajo."},
+  {cat:0, c:0, t:"El Farsa CF ha recibido varias ofertas por su jugador, Aluminio Mayal. El investigador Josep María Pereñiguez Negreira ha recopilado información de los clubes y quiere predecir si van a ser capaces de pagar o no. Para ello, ha utilizado una regresión logística. ¿Ha hecho bien?",
+   o:["Sí, es un problema de clasificación y las regresiones logísticas se pueden utilizar para ello","No, nunca se puede utilizar una regresión logística para clasificación","No, debería haber utilizado una regresión lineal para clasificación","No, debería haber utilizado un k-means"],
+   e:"Pagar / no pagar es clasificación binaria, y la regresión logística es un clasificador (a pesar del nombre). K-means es clustering (no supervisado)."},
+  {cat:0, c:2, t:"En el caso de que el señor Pereñiguez Negreira quiera utilizar una red neuronal, ¿qué tipo de función de activación debe poner en la neurona de salida?",
+   o:["Una lineal","Una ReLU","Una sigmoide","Una softmax"],
+   e:"Clasificación binaria → una neurona de salida con sigmoide (probabilidad entre 0 y 1). Softmax es para multiclase; lineal, para regresión."},
+  {cat:0, c:3, t:"El investigador del Mandril FC, Élber Limitao está diseñando un modelo para determinar si un jugador se va a lesionar con una determinada probabilidad (ej. 80%) en el siguiente partido en base a una serie de parámetros fisiológicos. Para ello, ha escogido una Support Vector Machine (SVM) de clasificación, ¿ha hecho bien?",
+   o:["No, las SVM solo se pueden utilizar en clustering","Sí, las SVM de clasificación se pueden usar en regresión","No, las SVM no se pueden utilizar en clasificación","No, solo las Support Vector Regression (SVR) se pueden utilizar en regresión"],
+   e:"Interpretación: el enunciado pide predecir un valor numérico (la probabilidad, p. ej. 80 %), así que se plantea como regresión, y para regresión se usa la variante SVR, no la SVM de clasificación. Las opciones a, b y c son falsas en cualquier caso."},
+  {cat:0, c:2, t:"Élber Limitao está entrenando su modelo. Durante el entrenamiento del modelo, ha obtenido un bajo error de entrenamiento y un error de validación parecido, ¿hay algún problema?",
+   o:["Está teniendo problema de sobreajuste (overfitting)","Está tenido problemas de bajo ajuste (underfitting)","Está entrenando perfectamente","Está teniendo problemas de sobredimensionalidad del modelo"],
+   e:"Error bajo en entrenamiento y similar en validación = buen ajuste. Overfitting sería error de validación mucho mayor que el de entrenamiento."},
+  {cat:0, c:2, t:"Élber Limitao ha empezado a recopilar información historia de esas condiciones fisiológicas. Recientes estudios dicen que tener en cuenta la condición física de las últimas cinco semanas, puede ayudar a predecir si un jugador se va a lesionar esta semana. ¿Qué tipo de algoritmo le recomendarías para entrenar su modelo?",
+   o:["Redes neuronales convolucionales (CNN)","Un perceptrón multicapa (MLP)","Una Long Short-Term Memory (LSTM)","Una regresión lineal"],
+   e:"Datos secuenciales en el tiempo (series temporales de 5 semanas) → red recurrente tipo LSTM. Las CNN son para imágenes."},
+  {cat:0, c:0, t:"En este caso, ¿qué tipo de función de activación puede poner Élber Limitao en la neurona de salida?",
+   o:["Una lineal","Una ReLU","Una softmax","No hace falta ninguna neurona de salida"],
+   e:"Interpretación (coherente con la 13): se predice un valor numérico (la probabilidad), es decir, regresión → salida lineal. Softmax es para clasificación multiclase y siempre hace falta una neurona de salida. (Si se planteara como clasificación binaria, lo ideal sería una sigmoide, pero no está entre las opciones.)"},
+  {cat:0, c:1, t:"Los investigadores de la clínica ASISAR quieren crear un modelo a través del cual se le pase una imagen de una rodilla y se determine si se ha producido la temible lesión conocida como triada. ¿Qué modelo le recomendarías usar?",
+   o:["Una Gated Recurrent Unit (GRU)","Una red neuronal convolucional (CNN)","Una Long Short-Term Memory (LSTM)","Una regresión logística"],
+   e:"La entrada es una imagen → CNN. GRU y LSTM son recurrentes, para secuencias."},
+  {cat:0, c:0, t:"¿Qué función de coste podría utilizar a los investigadores de ASISAR?",
+   o:["Binary cross-entropy","Sparse Multiclass Cross-Entropy Loss","Mean Squared Error","Mean Absolute Error Loss"],
+   e:"Lesión sí/no = clasificación binaria → binary cross-entropy. La sparse multiclass es para varias clases; MSE y MAE, para regresión."},
+  {cat:0, c:2, t:"En el estudio de ASISAR sobre si una rodilla tiene una lesión de triada, ¿qué tipo de métrica le interesa utilizar para evaluar el modelo?",
+   o:["R²","MSE","Recall o sensibilidad","SSE"],
+   e:"Es clasificación y en diagnóstico médico interesa no dejar escapar positivos: recall (sensibilidad). R², MSE y SSE son métricas de regresión."},
+  {cat:0, c:3, t:"Un científico de datos del banco BMVA, se ha puesto a evaluar la calidad de un modelo con un 20% de datos de train, 60% de datos de validación y 20% de datos de test. ¿Ha cometido algún error?",
+   o:["No, son unos porcentajes aceptables para entrenar y evaluar un modelo","Sí, siempre se debe utilizar validación cruzada","Sí, siempre se debe utilizar Bootstrap","Sí, el porcentaje de entrenamiento debe ser mayor"],
+   e:"El conjunto de entrenamiento debe ser el mayor (p. ej. 60/20/20 o 70/15/15). Hold-out, cross-validation y bootstrap son todas válidas: ninguna es obligatoria «siempre»."},
+  {cat:0, c:3, t:"El científico de BMVA ha decidido utilizar una LSTM para predecir la evolución del precio de las acciones de bolsa de la empresa murciana de móviles Achofone. ¿Qué tipo de métrica le interesa utilizar para evaluar el modelo?",
+   o:["R²","MSE","Recall o sensibilidad","A y B son correctas"],
+   e:"Predecir un precio es regresión: R² y MSE sirven. Recall es de clasificación."},
+  {cat:0, c:0, t:"Señala la respuesta falsa relacionada con una CNN:",
+   o:["Solo puede tener una sola capa convolucional","La función de activación de las capas intermedias suele ser la ReLu","Puede tener varias capas de pooling","La función de activación de la capa de salida puede ser softmax si es un problema multiclase"],
+   e:"Es falsa la a: una CNN suele apilar varias capas convolucionales (y de pooling). El resto es cierto."},
+  {cat:0, c:0, t:"El TUCAM CB ha perdido por lesión a su pívot estrella, Matutes Bol. Para ello, el entrenador Pito Alfonso ha pedido a sus analistas de datos que analicen todos los pívots disponibles en el mercado y generen diferentes grupos para encontrar un pívot que se asemeje a él. ¿Qué algoritmo podría utilizar?",
+   o:["DBScan","SVM","LSTM","Ninguno de los anteriores"],
+   e:"Generar grupos por similitud sin etiquetas = clustering. DBSCAN es un algoritmo de clustering (como K-means o el jerárquico)."},
+  {cat:0, c:2, t:"¿Qué métrica pueden utilizar los analistas para evaluar el problema anterior?",
+   o:["Área Bajo la Curva","MAE","Índice silueta","F1 Score"],
+   e:"Para clustering se usa el índice (coeficiente) de silueta: mide lo compactos y separados que están los grupos. AUC y F1 son de clasificación; MAE, de regresión."},
+  {cat:0, c:3, t:"¿Qué método puedo utilizar para evaluar los hiperparámetros de un modelo de clasificación?",
+   o:["GridSearch","RandomSearch","Método manual","Puedo utilizar todos los anteriores"],
+   e:"La búsqueda de hiperparámetros puede hacerse en rejilla, aleatoria o a mano."},
+  {cat:0, c:3, t:"Los analistas de datos de la red social Tuister quieren analizar los sentimientos (positivos o negativos) de la gente que publica sus mensajes. Al hacer un análisis exploratorio se dan cuenta que la gente está llena de odio y la mayor cantidad de datos son negativos. ¿Qué puede hacer con el conjunto de datos para balancearlo?",
+   o:["Aumentar el número de comentarios positivos, repitiendo los existentes (oversampling)","Reducir el número de comentarios negativos (undersampling)","Inventarse comentarios positivos con un SMOTE","Todas las anteriores son válidas"],
+   e:"Oversampling, undersampling y SMOTE (genera ejemplos sintéticos de la clase minoritaria) son técnicas válidas de balanceo."},
+  {cat:0, c:0, t:"Una vez balanceadas las clases, ¿qué métrica de evaluación del modelo aconsejas utilizar a los analistas de Tuister?",
+   o:["Accuracy","Índice silueta","F1 Score","Error cuadrático medio"],
+   e:"Interpretación: con las clases ya balanceadas, la accuracy vuelve a ser representativa (el F1 es la métrica recomendada cuando hay desbalanceo, aunque tampoco sería incorrecto aquí). Silueta es para clustering y el ECM, para regresión."},
+  {cat:0, c:1, t:"Peter Lion preparador físico del Atlético de Bacon Bridge quiere determinar el número de kilómetros que pueden recorrer sus futbolistas en base a parámetros médicos que ha ido recopilando durante los partidos. Para ello, ha entrenado una SVR y un perceptrón multicapa. Si ha obtenido un MSE=0,5 y un R²= 0,75 para el perceptrón y un MSE= 0,5 y un R²=0,6 para el SVR, ¿qué modelo debería escoger?",
+   o:["El SVR","EL perceptrón","Da igual cuál coja tienen el mismo MSE","Ninguno de los dos ya que su MSE y R² es muy alto"],
+   e:"Con el mismo MSE se desempata por R²: cuanto más cerca de 1, mejor explica la varianza. 0,75 > 0,6 → el perceptrón."},
+  {cat:0, c:0, t:"A su vez, Peter Lion, quiere determinar si sus futbolistas están fatigados o no. Para ello, ha creado un modelo con una SVM, un Random Forest, una MLP y un KNN. Evaluando los modelos ha obtenido que el F-Score del SVM es 0.61. En el Random Forest un F-Score de 0.5. En el MLP un R² de 0.45 y en el KNN un accuracy de 0.1 ¿qué modelo debería escoger?",
+   o:["El SVM","El RF","El KNN","El MLP"],
+   e:"Solo se pueden comparar métricas iguales: entre los F-Score, el SVM (0,61) gana al RF (0,5). R² no es una métrica de clasificación y una accuracy de 0,1 es malísima."},
+  {cat:0, c:0, t:"Para medir la calidad final de nuestro modelo…",
+   o:["Comparo los outputs predichos de mi modelo (y_pred) con los outputs reales (y_test)","Comparo los outputs de entrenamiento (y_train) con los outputs estimados por mi modelo (y_pred)","Comparo los inputs de entrenamiento (x_train) con los outputs estimados por mi modelo (y_pred)","Comparo los inputs de entrenamiento (x_train) con los inputs de test (x_test)"],
+   e:"La calidad final se mide sobre el conjunto de test: predicciones (y_pred) frente a valores reales (y_test)."}
+  ]
+};
+</script>
+<script src="assets/test.js"></script>
+</body>
+</html>
